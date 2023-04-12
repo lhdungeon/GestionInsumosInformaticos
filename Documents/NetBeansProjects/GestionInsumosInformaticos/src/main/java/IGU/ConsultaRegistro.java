@@ -1,5 +1,4 @@
 
-
 package IGU;
 
 import Logica.Controladora;
@@ -20,7 +19,6 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     
     public ConsultaRegistro() {
         initComponents();
-        this.setTitle("Gestion de insumos informaticos");
         listaServicio = controlLogica.buscarListaServicio();
     }
 
@@ -54,7 +52,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(102, 102, 102));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/wolf (1).png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrador\\Documents\\NetBeansProjects\\GestionInsumosFinal\\src\\main\\java\\IGU\\Icons\\wolf (1).png")); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -68,7 +66,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
@@ -84,7 +82,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(102, 102, 102));
 
         btnAtras2.setBackground(new java.awt.Color(102, 102, 102));
-        btnAtras2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flecha-izquierda.png"))); // NOI18N
+        btnAtras2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrador\\Downloads\\flecha-izquierda.png")); // NOI18N
         btnAtras2.setBorderPainted(false);
         btnAtras2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +108,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         txtId.setText("  ");
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seo (1).png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrador\\Downloads\\seo (1).png")); // NOI18N
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,7 +218,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     private void btnAtras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras2ActionPerformed
         Primaria primaria = new Primaria();
         primaria.setVisible(true);
-        primaria.setLocationRelativeTo(null);
+        primaria.setLocationRelativeTo(this);
         this.dispose();
     }//GEN-LAST:event_btnAtras2ActionPerformed
 
@@ -238,7 +236,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             
             txtRegistros.setText("");
             int numeroDeRegistro=0;
-            LinkedList<Registro>listaRegistros=servicio.getListaRegistros();
+            ArrayList<Registro>listaRegistros=servicio.getListaRegistros();
             
             for(Registro registro : listaRegistros){
                 
