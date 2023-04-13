@@ -18,7 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Primaria extends javax.swing.JFrame {
 
-            
+         
+    
     Controladora controlLogica = new Controladora();
     ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicio();       
     ArrayList <Tinta> listaTinta = controlLogica.buscarListaTinta();
