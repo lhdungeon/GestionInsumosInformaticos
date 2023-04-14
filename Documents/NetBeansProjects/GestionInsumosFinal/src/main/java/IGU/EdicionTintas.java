@@ -96,7 +96,7 @@ public class EdicionTintas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btnEdit.setBackground(new java.awt.Color(102, 102, 102));
-        btnEdit.setIcon(new javax.swing.ImageIcon("C:\\Users\\Administrador\\Downloads\\edit (1).png")); // NOI18N
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit (1).png"))); // NOI18N
         btnEdit.setBorderPainted(false);
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

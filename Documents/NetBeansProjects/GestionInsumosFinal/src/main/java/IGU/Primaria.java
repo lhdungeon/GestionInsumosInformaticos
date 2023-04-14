@@ -831,9 +831,10 @@ public class Primaria extends javax.swing.JFrame {
             listaRegistro.add(registro);
                       
             registro.setServi(servicioSeleccionado);
-                  
-            controlLogica.editarServicio(servicioSeleccionado);
+            
             controlLogica.nuevoRegistro(registro);
+            controlLogica.editarServicio(servicioSeleccionado);
+           
             
             mostrarMensaje("La carga se completo correctamente","Informacion","Puede retirar su insumo");
             reset();
