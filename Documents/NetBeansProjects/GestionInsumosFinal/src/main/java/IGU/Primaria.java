@@ -685,7 +685,7 @@ public class Primaria extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaMouseClicked
 
     private void btnEliminarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarItem1ActionPerformed
- 
+
          if(tableCarrito.getSelectedRow()!=-1){
            
            int selectedRow = tableCarrito.getSelectedRow();
@@ -694,7 +694,6 @@ public class Primaria extends javax.swing.JFrame {
            int cantidad =Integer.parseInt(valueAt);
            
            //Si hay mas de un item identico en la lista del carrito
-          // int idSeleccionado = 0;//Integer.parseInt(tableCarrito.getValueAt(selectedRow, 4).toString())-1;//buscar el id restando 1 es un error
            int stock = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 3).toString());
        
            if(cantidad > 0){
@@ -716,8 +715,6 @@ public class Primaria extends javax.swing.JFrame {
                                 tableCarrito.setValueAt(cantidad-1, selectedRow,1);                                     
                                 tableCarrito.setValueAt(stock+1, selectedRow, 3);
 
-
-
                                if(tableCarrito.getValueAt(selectedRow, 0).equals(boxListaStock.getSelectedItem().toString())){
                                    txtCantidadNum.setText(Integer.toString(tinta.getCantidad()));
                                }
@@ -728,7 +725,7 @@ public class Primaria extends javax.swing.JFrame {
                                }
                                break;
                             }
-                        }
+                        }break;
                     }
                                       
                    case "Hardware":
@@ -753,7 +750,7 @@ public class Primaria extends javax.swing.JFrame {
                                     }
                                     break;
                                 }
-                            }
+                            }break;
                         }
                        
                        
@@ -780,23 +777,8 @@ public class Primaria extends javax.swing.JFrame {
                                     }
                                     break;
                                 }
-                            }
+                            }break;
                         }
-                       /*                       
-                       Computadora compu = listaCompu.get(boxListaStock.getSelectedIndex());
-                       compu.setCantidad(compu.getCantidad()+1);
-                       listaCompu.set(boxListaStock.getSelectedIndex(), compu);
-                       
-                       tableCarrito.setValueAt(cantidad-1, selectedRow,1);
-                       tableCarrito.setValueAt(stock+1,selectedRow,3);
-                       
-                       if(tableCarrito.getValueAt(selectedRow,0).equals(boxListaStock.getSelectedItem().toString())){
-                            txtCantidadNum.setText(Integer.toString(compu.getCantidad()));
-                       }
-                       if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
-                            removerFila(selectedRow);
-                       }
-                       break;*/
                }
            }
             
