@@ -694,7 +694,7 @@ public class Primaria extends javax.swing.JFrame {
            int cantidad =Integer.parseInt(valueAt);
            
            //Si hay mas de un item identico en la lista del carrito
-           int idSeleccionado = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 4).toString())-1;
+           int idSeleccionado = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 4).toString())-1;//buscar el id restando 1 es un error
            int stock = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 3).toString());
        
            if(cantidad > 0){
