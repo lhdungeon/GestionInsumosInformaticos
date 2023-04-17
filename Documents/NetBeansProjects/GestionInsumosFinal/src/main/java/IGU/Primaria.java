@@ -694,52 +694,95 @@ public class Primaria extends javax.swing.JFrame {
            int cantidad =Integer.parseInt(valueAt);
            
            //Si hay mas de un item identico en la lista del carrito
-           int idSeleccionado = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 4).toString())-1;//buscar el id restando 1 es un error
+           int idSeleccionado = 0;//Integer.parseInt(tableCarrito.getValueAt(selectedRow, 4).toString())-1;//buscar el id restando 1 es un error
            int stock = Integer.parseInt(tableCarrito.getValueAt(selectedRow, 3).toString());
        
            if(cantidad > 0){
                
          
                switch(tableCarrito.getValueAt(tableCarrito.getSelectedRow(), 2).toString()){
-                   case "Tinta":
-                     
-                     Tinta tinta = listaTinta.get(idSeleccionado);  
-                     
-                     tinta.setCantidad(tinta.getCantidad()+1);
-                     listaTinta.set(idSeleccionado, tinta);
-                     
-                     tableCarrito.setValueAt(cantidad-1, selectedRow,1);                                     
-                     tableCarrito.setValueAt(stock+1, selectedRow, 3);
-                     
-                     if(tableCarrito.getValueAt(selectedRow, 0).equals(boxListaStock.getSelectedItem().toString())){
-                         txtCantidadNum.setText(Integer.toString(tinta.getCantidad()));
-                     }
-                     
-                     if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
-                        
-                         removerFila(selectedRow);
-                     }
-                     break;
-                   
+                   case "Tinta":                                          
+
+                     if(listaTinta!=null){
+                        for(int i=0;i<listaTinta.size();i++)
+                        {
+                            if (listaTinta.get(i).getModelo().equals(tableCarrito.getValueAt(tableCarrito.getSelectedRow(),0 ).toString()))
+                            {
+                                Tinta tinta=listaTinta.get(i);  
+
+                                tinta.setCantidad(tinta.getCantidad()+1);
+                                listaTinta.set(i, tinta);
+
+                                tableCarrito.setValueAt(cantidad-1, selectedRow,1);                                     
+                                tableCarrito.setValueAt(stock+1, selectedRow, 3);
+
+
+
+                               if(tableCarrito.getValueAt(selectedRow, 0).equals(boxListaStock.getSelectedItem().toString())){
+                                   txtCantidadNum.setText(Integer.toString(tinta.getCantidad()));
+                               }
+
+                               if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
+
+                                   removerFila(selectedRow);
+                               }
+                               break;
+                            }
+                        }
+                    }
+                                      
                    case "Hardware":
-                       Hardware hard = listaHard.get(idSeleccionado);
-                       hard.setCantidad(hard.getCantidad()+1);
-                       listaHard.set(boxListaStock.getSelectedIndex(),hard);
+                       if(listaHard!=null){
+                           for(int i=0;i<listaHard.size();i++){
+                               if(listaHard.get(i).getNombre().equals(tableCarrito.getValueAt(tableCarrito.getSelectedRow(),0).toString())){
+                                    
+                                    Hardware hard = listaHard.get(i);
+                                    hard.setCantidad(hard.getCantidad()+1);
+                                    listaHard.set(i,hard);
+
+                                    tableCarrito.setValueAt(cantidad-1, selectedRow,1);
+                                    tableCarrito.setValueAt(stock+1, selectedRow,3);
+
+                                    if(tableCarrito.getValueAt(selectedRow,0).equals(boxListaStock.getSelectedItem().toString())){
+                                         txtCantidadNum.setText(Integer.toString(hard.getCantidad()));
+                                    }
+                                    
+                                    if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
+
+                                         removerFila(selectedRow);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
                        
-                       tableCarrito.setValueAt(cantidad-1, selectedRow,1);
-                       tableCarrito.setValueAt(stock+1, selectedRow,3);
                        
-                       if(tableCarrito.getValueAt(selectedRow,0).equals(boxListaStock.getSelectedItem().toString())){
-                            txtCantidadNum.setText(Integer.toString(hard.getCantidad()));
-                       }
-                       if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
-                        
-                       removerFila(selectedRow);
-                       
-                       }
-                       break;
-                   
                    case "Computadoras":
+                       
+                       if(listaCompu!=null){
+                           for(int i=0;i<listaCompu.size();i++){
+                               if(listaCompu.get(i).getMarca().equals(tableCarrito.getValueAt(tableCarrito.getSelectedRow(),0).toString())){
+                                    
+                                    Computadora compu = listaCompu.get(i);
+                                    compu.setCantidad(compu.getCantidad()+1);
+                                    listaHard.set(i,hard);
+
+                                    tableCarrito.setValueAt(cantidad-1, selectedRow,1);
+                                    tableCarrito.setValueAt(stock+1, selectedRow,3);
+
+                                    if(tableCarrito.getValueAt(selectedRow,0).equals(boxListaStock.getSelectedItem().toString())){
+                                         txtCantidadNum.setText(Integer.toString(compu.getCantidad()));
+                                    }
+                                    
+                                    if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
+
+                                         removerFila(selectedRow);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                       /*                       
                        Computadora compu = listaCompu.get(boxListaStock.getSelectedIndex());
                        compu.setCantidad(compu.getCantidad()+1);
                        listaCompu.set(boxListaStock.getSelectedIndex(), compu);
@@ -753,7 +796,7 @@ public class Primaria extends javax.swing.JFrame {
                        if(Integer.parseInt(tableCarrito.getValueAt(selectedRow,1).toString())<=0){
                             removerFila(selectedRow);
                        }
-                       break;
+                       break;*/
                }
            }
             
