@@ -19,7 +19,7 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnAtras2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbConsulta = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,7 +83,12 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione la consulta", "Consulta por servicio", "Consulta por insumo", "Consulta por fecha" }));
+        cmbConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbConsultaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione la consulta que desea realizar:");
@@ -92,7 +97,7 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cmbConsulta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -104,7 +109,7 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(177, Short.MAX_VALUE))
         );
 
@@ -147,6 +152,7 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnAtras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras2ActionPerformed
         Primaria primaria = new Primaria();
         primaria.setVisible(true);
@@ -154,11 +160,28 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtras2ActionPerformed
 
+    private void cmbConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbConsultaActionPerformed
+        String consulta = cmbConsulta.getSelectedItem().toString();
+        switch(consulta){
+                case "Seleccione la consulta":{}break;
+                
+                case "Consulta por servicio": {
+                    ConsultaRegistro consuServicio = new ConsultaRegistro();
+                    consuServicio.setVisible(true);
+                    consuServicio.setLocationRelativeTo(this);
+                    this.dispose();
+                }break;
+                
+                case "Consulta por insumo":{}break;
+                case "Consulta por fecha":{}break;                
+        }
+    }//GEN-LAST:event_cmbConsultaActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbConsulta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

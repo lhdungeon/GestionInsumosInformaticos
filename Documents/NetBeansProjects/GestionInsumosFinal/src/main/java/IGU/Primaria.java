@@ -875,7 +875,7 @@ public class Primaria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarInsumoActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
-        ConsultaRegistro consulta = new ConsultaRegistro();
+        SeleccionarConsultaRegistro consulta = new SeleccionarConsultaRegistro();
         consulta.setVisible(true);
         consulta.setLocationRelativeTo(this);
         this.dispose();

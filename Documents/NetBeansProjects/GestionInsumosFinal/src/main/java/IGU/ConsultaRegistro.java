@@ -6,6 +6,7 @@ import Logica.Controladora;
 import Logica.Registro;
 import Logica.Servicio;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 
@@ -229,6 +230,10 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        ArrayList <String> insumosNombreTotal = new ArrayList();
+        ArrayList <Integer> insumosCantidadTotal = new ArrayList();
+
         if(jListaServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
            txtObservaciones.setEnabled(false);
            txtObservaciones.setText("");
@@ -236,27 +241,54 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         }
         else{
             
+            
             txtRegistros.setText("");
             int numeroDeRegistro=0;
-            LinkedList<Registro>listaRegistros=servicio.getListaRegistros();
+            LinkedList<Registro>listaRegistros=servicio.getListaRegistros();                              
             
-            for(Registro registro : listaRegistros){
+            for(int x=0;x<listaRegistros.size();x++){
                 
                 numeroDeRegistro++;
                 txtRegistros.append("Registro numero "+numeroDeRegistro + " :" + "\n" +
-                        "Fecha: "+ servicio.getListaRegistros().get(numeroDeRegistro-1).getFecha() +"\n" + "Insumos: " + "\n");
+                        "Fecha: "+ servicio.getListaRegistros().get(x).getFecha() +"\n" + "Insumos: " + "\n");
                 
-                for(int i=0;i<servicio.getListaRegistros().get(numeroDeRegistro-1).getCantidad_Insumos().size();i++)              {
-                    txtRegistros.append("                  "+ servicio.getListaRegistros().get(numeroDeRegistro-1).getInsumos_retirados().get(i)+" x "+servicio.getListaRegistros().get(numeroDeRegistro-1).getCantidad_Insumos().get(i)+ "\n");
+                for(int i=0;i<servicio.getListaRegistros().get(x).getCantidad_Insumos().size();i++)              {
+                    
+                    String insumoAListar = servicio.getListaRegistros().get(x).getInsumos_retirados().get(i);
+                    int cantidadListar = servicio.getListaRegistros().get(x).getCantidad_Insumos().get(i);
+                    
+                    txtRegistros.append("                          "+ insumoAListar + "x "+ cantidadListar +"\n" );
+                    
+                    insumosNombreTotal.add(insumoAListar);
+                    insumosCantidadTotal.add(cantidadListar);
+                    
+
                 }
                 
-                txtRegistros.append("\n" + "Retira: "+ servicio.getListaRegistros().get(numeroDeRegistro-1).getServi().getNombreResponsable() + "\n" +
-                "Dni: " + servicio.getListaRegistros().get(numeroDeRegistro-1).getServi().getDniResponsable()+ "\n" + "---------------------------------------------------------" + "\n");
-                
+                txtRegistros.append("\n" + "Retira: "+ servicio.getListaRegistros().get(x).getServi().getNombreResponsable() + "\n" +
+                "Dni: " + servicio.getListaRegistros().get(x).getServi().getDniResponsable()+ "\n" + "---------------------------------------------------------" + "\n");                                
                 
             }
             
+            //Revisar la forma en que se muestra y se setea el registro por servicio
+            //ya que tengo problemas para enlazar las listas del tipo de insumo con su cantidad
+            //quiza mejor sea cambiar a una tabla y setear cada columna para tener una especificacion mas detallada y organizada
+            // de cada registro y hacer un conteo total en la ultima o en la primer fila
+            
+            for(int a=0;a<insumosNombreTotal.size();a++){
+
+                if(insumosNombreTotal.size()>=a+1){
+                    
+                    if(insumosNombreTotal.get(a+1).equals(insumosNombreTotal.get(a))){
+                        
+                        System.out.println(insumosNombreTotal.get(a) + insumosCantidadTotal.get(a));                   
+                    }
+                }
+            }
+            
+
             txtObservaciones.setEnabled(true);
+        
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
