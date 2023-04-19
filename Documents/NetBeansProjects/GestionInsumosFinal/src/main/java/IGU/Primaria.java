@@ -8,6 +8,8 @@ import Logica.Registro;
 import Logica.Servicio;
 import Logica.Tinta;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
@@ -960,6 +962,14 @@ public class Primaria extends javax.swing.JFrame {
     }
     
     private void rellenarCamposServicio() {
+        
+        Collections.sort(listaServicios, new Comparator <Servicio>() {
+            @Override
+            public int compare(Servicio o1, Servicio o2) {
+                return o1.getServicio().compareTo(o2.getServicio());
+            }
+        });
+        
         for(Servicio servicio : listaServicios)
         {
             boxServicio.addItem(servicio.getServicio());

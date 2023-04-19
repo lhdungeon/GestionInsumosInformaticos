@@ -7,6 +7,7 @@ import Logica.Registro;
 import Logica.Servicio;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 
@@ -19,6 +20,11 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     ArrayList<Servicio> listaServicio;
     int idSelect;
     
+    ArrayList <String> insumosNombreTotal = new ArrayList();
+    ArrayList <Integer> insumosCantidadTotal = new ArrayList();
+    ArrayList <Integer> punteroAlInsumo = new ArrayList();
+    
+
     public ConsultaRegistro() {
         initComponents();
         this.setTitle("Gestion de insumos informaticos");
@@ -45,6 +51,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
+        btnBuscarTotalInsumo = new javax.swing.JButton();
+        comboListaIndividualInsumos = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -136,6 +144,20 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarTotalInsumo.setText("Contar");
+        btnBuscarTotalInsumo.setEnabled(false);
+        btnBuscarTotalInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarTotalInsumoActionPerformed(evt);
+            }
+        });
+
+        comboListaIndividualInsumos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListaIndividualInsumosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -150,9 +172,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAtras2))
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(btnAtras2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboListaIndividualInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscarTotalInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(56, 56, 56)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
@@ -179,9 +206,12 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAtras2)
-                    .addComponent(jButton2))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAtras2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscarTotalInsumo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboListaIndividualInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -231,13 +261,17 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        ArrayList <String> insumosNombreTotal = new ArrayList();
-        ArrayList <Integer> insumosCantidadTotal = new ArrayList();
-
+        insumosNombreTotal.clear();
+        btnBuscarTotalInsumo.setEnabled(false);            
+        comboListaIndividualInsumos.removeAllItems();
+        //comboListaIndividualInsumos.addItem("Seleccione el insumo que desea consultar");
+        
         if(jListaServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
            txtObservaciones.setEnabled(false);
            txtObservaciones.setText("");
            txtRegistros.setText("");
+           btnBuscarTotalInsumo.setEnabled(false);            
+
         }
         else{
             
@@ -259,36 +293,33 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                     
                     txtRegistros.append("                          "+ insumoAListar + "x "+ cantidadListar +"\n" );
                     
-                    insumosNombreTotal.add(insumoAListar);
-                    insumosCantidadTotal.add(cantidadListar);
+                    if(!insumosNombreTotal.contains(insumoAListar)){
+                        insumosNombreTotal.add(insumoAListar);                 
+                    }
                     
+                    insumosCantidadTotal.add(cantidadListar);
 
                 }
                 
                 txtRegistros.append("\n" + "Retira: "+ servicio.getListaRegistros().get(x).getServi().getNombreResponsable() + "\n" +
                 "Dni: " + servicio.getListaRegistros().get(x).getServi().getDniResponsable()+ "\n" + "---------------------------------------------------------" + "\n");                                
-                
+                               
             }
             
-            //Revisar la forma en que se muestra y se setea el registro por servicio
-            //ya que tengo problemas para enlazar las listas del tipo de insumo con su cantidad
-            //quiza mejor sea cambiar a una tabla y setear cada columna para tener una especificacion mas detallada y organizada
-            // de cada registro y hacer un conteo total en la ultima o en la primer fila
+            Collections.sort(insumosNombreTotal);
             
-            for(int a=0;a<insumosNombreTotal.size();a++){
-
-                if(insumosNombreTotal.size()>=a+1){
-                    
-                    if(insumosNombreTotal.get(a+1).equals(insumosNombreTotal.get(a))){
-                        
-                        System.out.println(insumosNombreTotal.get(a) + insumosCantidadTotal.get(a));                   
-                    }
-                }
+            for(int z=0;z<insumosNombreTotal.size();z++){
+                comboListaIndividualInsumos.addItem(insumosNombreTotal.get(z));
+            } 
+            
+            if(comboListaIndividualInsumos.getSelectedItem() == null){
+                btnBuscarTotalInsumo.setEnabled(false);
             }
-            
-
-            txtObservaciones.setEnabled(true);
-        
+            else{
+                btnBuscarTotalInsumo.setEnabled(true);            
+            }   
+             
+            txtObservaciones.setEnabled(true); 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -316,6 +347,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnBuscarTotalInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTotalInsumoActionPerformed
+        //String insTotal = comboListaIndividualInsumos.getSelectedItem().toString();
+    }//GEN-LAST:event_btnBuscarTotalInsumoActionPerformed
+
+    private void comboListaIndividualInsumosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListaIndividualInsumosActionPerformed
+    
+    }//GEN-LAST:event_comboListaIndividualInsumosActionPerformed
+
 
     private void cargarListaServicios() {
         DefaultComboBoxModel comboBox = new DefaultComboBoxModel();
@@ -329,6 +368,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras2;
+    private javax.swing.JButton btnBuscarTotalInsumo;
+    private javax.swing.JComboBox<String> comboListaIndividualInsumos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
