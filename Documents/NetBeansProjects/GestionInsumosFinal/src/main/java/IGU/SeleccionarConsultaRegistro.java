@@ -172,7 +172,13 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
                     this.dispose();
                 }break;
                 
-                case "Consulta por insumo":{}break;
+                case "Consulta por insumo":{
+                    ConsultaRegistroInsumo consuInsumo = new ConsultaRegistroInsumo();
+                    consuInsumo.setVisible(true);
+                    consuInsumo.setLocationRelativeTo(this);
+                    this.dispose();
+                }break;
+                
                 case "Consulta por fecha":{}break;                
         }
     }//GEN-LAST:event_cmbConsultaActionPerformed

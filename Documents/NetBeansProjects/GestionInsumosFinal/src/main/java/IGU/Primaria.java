@@ -133,12 +133,13 @@ public class Primaria extends javax.swing.JFrame {
         jPanel1.add(jPanel2, gridBagConstraints);
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         btnCompu.setBackground(new java.awt.Color(102, 102, 102));
         btnCompu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/computer-tower.png"))); // NOI18N
         btnCompu.setToolTipText("Computadoras");
         btnCompu.setBorder(null);
+        btnCompu.setBorderPainted(false);
         btnCompu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCompuActionPerformed(evt);
@@ -181,7 +182,7 @@ public class Primaria extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(102, 102, 102));
 
         tableCarrito.setBackground(new java.awt.Color(102, 102, 102));
-        tableCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        tableCarrito.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tableCarrito.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         tableCarrito.setForeground(new java.awt.Color(0, 0, 0));
         tableCarrito.setModel(new javax.swing.table.DefaultTableModel(

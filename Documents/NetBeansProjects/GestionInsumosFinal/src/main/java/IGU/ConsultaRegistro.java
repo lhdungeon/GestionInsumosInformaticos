@@ -26,8 +26,6 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     int idSelect;
     
     ArrayList <String> insumosNombreTotal = new ArrayList();
-    ArrayList <Integer> insumosCantidadTotal = new ArrayList();
-    ArrayList <Integer> punteroAlInsumo = new ArrayList();
     DefaultTableModel tabla=null;
 
     public ConsultaRegistro() {
@@ -273,7 +271,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             @Override
             public boolean isCellEditable(int row, int column){return false;}
         };
-    
+        
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -326,11 +324,16 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Object[] itemAgregar = {"", "", "","","",""};
         String titulos[] = {"Registro N°", "Fecha de retiro", "Insumos","Cantidad","Retira","Dni"};
-        tabla.setColumnIdentifiers(titulos);
-        tabla.addRow(itemAgregar);
-        tabla = new DefaultTableModel();  
+        
+        tabla = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){return false;}
+        };
+    
+        
+        tabla.setColumnIdentifiers(titulos);       
+        
         jTableRegistro.setModel(tabla);
 
      
@@ -346,7 +349,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         }
         else{
 
-            int numeroDeRegistro=0;
+            int numeroDeRegistro=1;
             listaRegistros=servicio.getListaRegistros();
     
             String insumoAListar ="";
@@ -411,6 +414,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             }
 
             txtObservaciones.setEnabled(true);
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
