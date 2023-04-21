@@ -292,7 +292,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         String fechaFinal=servicio.getListaRegistros().getLast().getFecha().toString();
         int total=0;
         
-        System.out.println(jTableRegistro.getValueAt(10, 2));
+      //  System.out.println(jTableRegistro.getValueAt(10, 2));
         
         for(int i=0; i<jTableRegistro.getRowCount();i++){
             if(jTableRegistro.getValueAt(i,2).toString().contains(insTotal)){
@@ -357,13 +357,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                     tabla.addRow(registroAgregar);
 
                     jTableRegistro.setModel(tabla);
-
-                    
-                    //Genera Problemas
-                    for(int a=0;a<listaRegistros.get(i).getInsumos_retirados().size();a++){
-                        insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(a);
-
-                    }
+                  
+                    insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(0);   
                     if(!insumosNombreTotal.contains(insumoAListar)){
                         insumosNombreTotal.add(insumoAListar);
                     }
@@ -378,21 +373,19 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                         tabla.addRow(registroAgregar);
 
                         jTableRegistro.setModel(tabla);
-
-                        //Genera problemas
-                        for(int a=0;a<listaRegistros.get(i).getInsumos_retirados().size();a++){
-                            insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(a);
-
-                        }
+                      
+                        insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(z);
                         if(!insumosNombreTotal.contains(insumoAListar)){
                             insumosNombreTotal.add(insumoAListar);
                         }
                     } 
                     numeroDeRegistro++;
-                }
+                }              
+                    
+                Collections.sort(insumosNombreTotal);
             }
 
-            Collections.sort(insumosNombreTotal);
+            
 
             for(int z=0;z<insumosNombreTotal.size();z++){
                 comboListaIndividualInsumos.addItem(insumosNombreTotal.get(z));
