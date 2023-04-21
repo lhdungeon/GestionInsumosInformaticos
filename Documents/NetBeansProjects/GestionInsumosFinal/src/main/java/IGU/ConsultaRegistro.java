@@ -8,6 +8,7 @@ import Logica.Servicio;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
@@ -119,7 +120,6 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seo (1).png"))); // NOI18N
-        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -277,6 +277,13 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        Collections.sort(listaServicio, new Comparator <Servicio>() {
+            @Override
+            public int compare(Servicio o1, Servicio o2) {
+                return o1.getServicio().compareTo(o2.getServicio());
+            }
+        });
         cargarListaServicios();
     }//GEN-LAST:event_formWindowOpened
 
@@ -291,15 +298,13 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         String fechaInicial=servicio.getListaRegistros().getFirst().getFecha().toString();
         String fechaFinal=servicio.getListaRegistros().getLast().getFecha().toString();
         int total=0;
-        
-      //  System.out.println(jTableRegistro.getValueAt(10, 2));
-        
+       
         for(int i=0; i<jTableRegistro.getRowCount();i++){
             if(jTableRegistro.getValueAt(i,2).toString().contains(insTotal)){
                 int valor = Integer.parseInt(jTableRegistro.getValueAt(i,3).toString());
                 total=total+valor;
             }
-            else{System.out.println("no");}
+            else{}
         }
         
 
@@ -347,7 +352,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             String insumoAListar ="";
 
             tabla.setColumnIdentifiers(titulos);
-
+            
+            Collections.sort(listaRegistros, new Comparator<Registro>() {
+                @Override
+                public int compare(Registro o1, Registro o2) {
+                    return o1.getFecha().compareTo(o2.getFecha());
+                }
+            });
+            
             for(int i=0;i<listaRegistros.size();i++){
                
                 if(listaRegistros.get(i).getInsumos_retirados().size()==1){
@@ -403,6 +415,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jListaServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaServiciosActionPerformed
+        
+ 
         if(listaServicio!=null){
             for(Servicio servi : listaServicio){
                 if(jListaServicios.getSelectedItem().toString().equals(servi.getServicio())){
