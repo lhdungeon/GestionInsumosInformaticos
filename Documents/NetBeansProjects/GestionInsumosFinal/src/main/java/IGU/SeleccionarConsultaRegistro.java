@@ -90,7 +90,6 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Seleccione la consulta que desea realizar:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -179,7 +178,12 @@ public class SeleccionarConsultaRegistro extends javax.swing.JFrame {
                     this.dispose();
                 }break;
                 
-                case "Consulta por fecha":{}break;                
+                case "Consulta por fecha":{
+                    ConsultaRegistroFecha consuFecha = new ConsultaRegistroFecha();
+                        consuFecha.setVisible(true);
+                        consuFecha.setLocationRelativeTo(this);
+                        this.dispose();
+                }break;                
         }
     }//GEN-LAST:event_cmbConsultaActionPerformed
 

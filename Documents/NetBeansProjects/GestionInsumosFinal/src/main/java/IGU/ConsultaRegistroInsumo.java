@@ -8,6 +8,8 @@ import Logica.Hardware;
 import Logica.Registro;
 import Logica.Servicio;
 import Logica.Tinta;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -308,11 +310,15 @@ public class ConsultaRegistroInsumo extends javax.swing.JFrame {
         String insumoSelec = jListaInsumos1.getSelectedItem().toString();
         int numeroDeRegistro=1;
         
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
         for(Registro registro : listaRegistros){
             for(int i=0;i<registro.getInsumos_retirados().size();i++){
                 if(insumoSelec.equals(registro.getInsumos_retirados().get(i))){
                     
-                    Object[] registroAgregar = {numeroDeRegistro,registro.getFecha(), 
+                    String date = dateFormat.format(registro.getFecha());
+                    
+                    Object[] registroAgregar = {numeroDeRegistro,date, 
                                                 registro.getInsumos_retirados().get(i),
                                                 registro.getCantidad_Insumos().get(i),
                                                 registro.getServicio()};

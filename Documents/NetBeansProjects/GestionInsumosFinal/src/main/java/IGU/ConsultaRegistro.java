@@ -5,6 +5,8 @@ package IGU;
 import Logica.Controladora;
 import Logica.Registro;
 import Logica.Servicio;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +27,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     LinkedList<Registro>listaRegistros;
     int idSelect;
     
+    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            
     ArrayList <String> insumosNombreTotal = new ArrayList();
     DefaultTableModel tabla=null;
 
@@ -292,9 +296,11 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     private void btnBuscarTotalInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTotalInsumoActionPerformed
         btnBuscarTotalInsumo.setEnabled(false);
 
+
         String insTotal = comboListaIndividualInsumos.getSelectedItem().toString();
-        String fechaInicial=servicio.getListaRegistros().getFirst().getFecha().toString();
-        String fechaFinal=servicio.getListaRegistros().getLast().getFecha().toString();
+        String fechaInicial=dateFormat.format(servicio.getListaRegistros().getFirst().getFecha());
+        String fechaFinal=dateFormat.format(servicio.getListaRegistros().getLast().getFecha());
+        
         int total=0;
        
         for(int i=0; i<jTableRegistro.getRowCount();i++){
@@ -363,11 +369,13 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                 }
             });
             
+            
             for(int i=0;i<listaRegistros.size();i++){
                
                 if(listaRegistros.get(i).getInsumos_retirados().size()==1){
-                    
-                    Object[] registroAgregar = {numeroDeRegistro,servicio.getListaRegistros().get(i).getFecha(), listaRegistros.get(i).getInsumos_retirados().get(0),
+                
+                    String date = dateFormat.format(servicio.getListaRegistros().get(i).getFecha());
+                    Object[] registroAgregar = {numeroDeRegistro,date, listaRegistros.get(i).getInsumos_retirados().get(0),
                         listaRegistros.get(i).getCantidad_Insumos().get(0), listaRegistros.get(i).getServi().getNombreResponsable(),listaRegistros.get(i).getServi().getDniResponsable()};
                     tabla.addRow(registroAgregar);
 

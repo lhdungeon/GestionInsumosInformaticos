@@ -2,17 +2,16 @@
 
 package IGU;
 
-import Logica.Computadora;
 import Logica.Controladora;
-import Logica.Hardware;
 import Logica.Registro;
-import Logica.Servicio;
-import Logica.Tinta;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -23,31 +22,19 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
 
 
     Controladora controlLogica = new Controladora();
-    
-    Tinta tinta=null;
-    Hardware hard=null;
-    Computadora compu=null;
-    
-    ArrayList<Hardware> listaHard;
-    ArrayList<Computadora>listaCompu;
-    ArrayList<Tinta>listaTinta;
+ 
     ArrayList<Registro>listaRegistros;
-    int idSelect;
-    
-    DefaultTableModel tabla=null;
 
+    DefaultTableModel tabla=null;
+    
     public ConsultaRegistroFecha() {
         initComponents();
         
         this.setTitle("Gestion de insumos informaticos");
         
         cargarTabla();
-        
-        listaTinta = controlLogica.buscarListaTinta();
-        listaHard = controlLogica.buscarListaHardware();
-        listaCompu = controlLogica.buscarListaComputadora();
         listaRegistros = controlLogica.buscarListaRegistro();
-        
+             
     }
 
 
@@ -61,12 +48,11 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         btnAtras2 = new javax.swing.JButton();
-        jListaInsumos = new javax.swing.JComboBox<>();
         txtId = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        btnBuscarTotalInsumo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRegistro = new javax.swing.JTable();
+        jDate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -114,31 +100,15 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
             }
         });
 
-        jListaInsumos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jListaInsumos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jListaInsumosActionPerformed(evt);
-            }
-        });
-
         txtId.setBackground(new java.awt.Color(102, 102, 102));
         txtId.setForeground(new java.awt.Color(102, 102, 102));
         txtId.setText("  ");
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seo (1).png"))); // NOI18N
-        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnBuscarTotalInsumo.setText("Contar");
-        btnBuscarTotalInsumo.setEnabled(false);
-        btnBuscarTotalInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarTotalInsumoActionPerformed(evt);
             }
         });
 
@@ -168,14 +138,11 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(btnAtras2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscarTotalInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAtras2)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jListaInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,15 +155,13 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jListaInsumos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAtras2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBuscarTotalInsumo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnAtras2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -239,47 +204,19 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
             @Override
             public boolean isCellEditable(int row, int column){return false;}
         };
-    
+        
+        
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        DefaultComboBoxModel comboBox = new DefaultComboBoxModel();
-        comboBox.addElement("Seleccione un tipo de insumo");
-        comboBox.addElement("Tinta");
-        comboBox.addElement("Hardware");
-        comboBox.addElement("Computadoras");
-        jListaInsumos.setModel(comboBox);
+
+        jDate.setMinSelectableDate(listaRegistros.get(1).getFecha());
+        jDate.setMaxSelectableDate(controlLogica.getDateUnformat());
         
-        DefaultComboBoxModel comboBoxTipo = new DefaultComboBoxModel();
-        comboBoxTipo.addElement("Seleccione el insumo");
-        
-  
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnBuscarTotalInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTotalInsumoActionPerformed
-        
-        btnBuscarTotalInsumo.setEnabled(false);
-        
-        String fechaInicial = jTableRegistro.getValueAt(0, 1).toString();
-        String fechaFinal = jTableRegistro.getValueAt(jTableRegistro.getRowCount()-1, 1).toString();
-        
-        int total=0;
-       
-        for(int i=0; i<jTableRegistro.getRowCount();i++){
-           
-            int valor = Integer.parseInt(jTableRegistro.getValueAt(i,3).toString());
-            total=total+valor;           
-        }        
-        
-        
-        String mensaje = "El insumo "+ jTableRegistro.getValueAt(0, 2)+" tiene un consumo total de: "+total+ "\n"+"Desde la fecha "+fechaInicial+" hasta la fecha "+ fechaFinal;
-        mostrarMensaje(mensaje,"Informacion", "Conteo finalizado");
-
-        btnBuscarTotalInsumo.setEnabled(true); 
-    }//GEN-LAST:event_btnBuscarTotalInsumoActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-             
+                                  
         String titulos[] = {"Registro N°", "Fecha de retiro", "Insumos","Cantidad","Servicio"};
         
         tabla = new DefaultTableModel(){
@@ -290,48 +227,32 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
         tabla.setColumnIdentifiers(titulos);
      
         jTableRegistro.setModel(tabla);
-       
+               
         int numeroDeRegistro=1;
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
-        if(listaRegistros.size()>0){
-            btnBuscarTotalInsumo.setEnabled(true);
+        for(Registro regis : listaRegistros){
+    
+            String date = dateFormat.format(regis.getFecha());
+            String date2 = dateFormat.format(jDate.getDate());
+
+            
+            if(date.equals(date2)){
+                
+                Object[]regisAgregar={numeroDeRegistro,date,regis.getInsumos_retirados(),
+                                    regis.getCantidad_Insumos(),regis.getServicio()};
+                
+                tabla.addRow(regisAgregar);
+                jTableRegistro.setModel(tabla);
+                                   
+                numeroDeRegistro++;
+            }
         }
-     
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jListaInsumosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaInsumosActionPerformed
-                             
     
-        switch (jListaInsumos.getSelectedItem().toString()){
-                
-            case "Seleccione un tipo de insumo":{
-                jButton1.setEnabled(false);
-                    
-            }
-            break;
-                
-            case "Tinta":
-                for(Tinta tinta : listaTinta){
-                  
-                }
-                break;
-                    
-            case "Hardware":
-                for(Hardware hard : listaHard){
-             
-                }
-                break;
-                    
-            case "Computadoras":
-                for(Computadora compu : listaCompu){
     
-                }
-                break;            
-        }
-            
-   
-    }//GEN-LAST:event_jListaInsumosActionPerformed
-
     private void btnAtras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras2ActionPerformed
         Primaria primaria = new Primaria();
         primaria.setVisible(true);
@@ -355,11 +276,10 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
     }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras2;
-    private javax.swing.JButton btnBuscarTotalInsumo;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JComboBox<String> jListaInsumos;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel9;
