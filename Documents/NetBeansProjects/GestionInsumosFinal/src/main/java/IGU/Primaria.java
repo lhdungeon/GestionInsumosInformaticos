@@ -61,6 +61,10 @@ public class Primaria extends javax.swing.JFrame {
         btnCompu = new javax.swing.JButton();
         btnHardware = new javax.swing.JButton();
         btnTinta = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        btnConsulta = new javax.swing.JButton();
+        btnEditarInsumo = new javax.swing.JButton();
+        btnAgregarInsumo = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -83,10 +87,6 @@ public class Primaria extends javax.swing.JFrame {
         btnFinalizarCompra = new javax.swing.JButton();
         txtFecha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel4 = new javax.swing.JPanel();
-        btnConsulta = new javax.swing.JButton();
-        btnEditarInsumo = new javax.swing.JButton();
-        btnAgregarInsumo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -169,6 +169,61 @@ public class Primaria extends javax.swing.JFrame {
         });
         jPanel3.add(btnTinta);
 
+        jPanel4.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        btnConsulta.setBackground(new java.awt.Color(102, 102, 102));
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/find.png"))); // NOI18N
+        btnConsulta.setToolTipText("Consultas");
+        btnConsulta.setBorderPainted(false);
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 6);
+        jPanel4.add(btnConsulta, gridBagConstraints);
+
+        btnEditarInsumo.setBackground(new java.awt.Color(102, 102, 102));
+        btnEditarInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit (1).png"))); // NOI18N
+        btnEditarInsumo.setToolTipText("Editar un insumo existente");
+        btnEditarInsumo.setBorderPainted(false);
+        btnEditarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarInsumoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 6);
+        jPanel4.add(btnEditarInsumo, gridBagConstraints);
+
+        btnAgregarInsumo.setBackground(new java.awt.Color(102, 102, 102));
+        btnAgregarInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
+        btnAgregarInsumo.setToolTipText("Agregar insumo al stock");
+        btnAgregarInsumo.setBorderPainted(false);
+        btnAgregarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarInsumoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 8;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
+        jPanel4.add(btnAgregarInsumo, gridBagConstraints);
+
+        jPanel3.add(jPanel4);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -194,7 +249,7 @@ public class Primaria extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -228,8 +283,12 @@ public class Primaria extends javax.swing.JFrame {
 
         txtCantidadNum.setText("        ");
 
+        txtCantidad1.setBackground(new java.awt.Color(102, 102, 102));
+        txtCantidad1.setForeground(new java.awt.Color(102, 102, 102));
         txtCantidad1.setText("ID:");
 
+        txtId.setBackground(new java.awt.Color(102, 102, 102));
+        txtId.setForeground(new java.awt.Color(102, 102, 102));
         txtId.setText("    ");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -300,6 +359,7 @@ public class Primaria extends javax.swing.JFrame {
         jPanel5.add(btnEliminarItem1, gridBagConstraints);
 
         btnAgregarAlCarrito.setBackground(new java.awt.Color(102, 102, 102));
+        btnAgregarAlCarrito.setForeground(new java.awt.Color(102, 102, 102));
         btnAgregarAlCarrito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
         btnAgregarAlCarrito.setToolTipText("Aguante el amargo obrero");
         btnAgregarAlCarrito.setBorderPainted(false);
@@ -377,7 +437,7 @@ public class Primaria extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -465,67 +525,6 @@ public class Primaria extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(27, 12, 0, 0);
         jPanel1.add(jSeparator1, gridBagConstraints);
 
-        jPanel4.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel4.setLayout(new java.awt.GridBagLayout());
-
-        btnConsulta.setBackground(new java.awt.Color(102, 102, 102));
-        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/find.png"))); // NOI18N
-        btnConsulta.setToolTipText("Consultas");
-        btnConsulta.setBorderPainted(false);
-        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultaActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 6);
-        jPanel4.add(btnConsulta, gridBagConstraints);
-
-        btnEditarInsumo.setBackground(new java.awt.Color(102, 102, 102));
-        btnEditarInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit (1).png"))); // NOI18N
-        btnEditarInsumo.setToolTipText("Editar un insumo existente");
-        btnEditarInsumo.setBorderPainted(false);
-        btnEditarInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarInsumoActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 6);
-        jPanel4.add(btnEditarInsumo, gridBagConstraints);
-
-        btnAgregarInsumo.setBackground(new java.awt.Color(102, 102, 102));
-        btnAgregarInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
-        btnAgregarInsumo.setToolTipText("Agregar insumo al stock");
-        btnAgregarInsumo.setBorderPainted(false);
-        btnAgregarInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarInsumoActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 8;
-        gridBagConstraints.ipady = 14;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        jPanel4.add(btnAgregarInsumo, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 67, 0, 0);
-        jPanel1.add(jPanel4, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -546,12 +545,15 @@ public class Primaria extends javax.swing.JFrame {
        limpiarListaStock();    
        txtTipo.setText("Hardware"); 
        
-       if(listaHard != null){
+        if(!listaHard.isEmpty()){
             for(Hardware hard: listaHard){
                 comboModel.addElement(hard.getNombre());
                 boxListaStock.setModel(comboModel);
             }
-       }
+        }
+        else{
+           txtCantidadNum.setText("");
+        }
     }//GEN-LAST:event_btnHardwareActionPerformed
 
     private void btnAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumoActionPerformed
@@ -566,12 +568,16 @@ public class Primaria extends javax.swing.JFrame {
 
         limpiarListaStock();
         txtTipo.setText("Tinta");   
-        if(listaTinta!=null){
+        
+        if(!listaTinta.isEmpty()){
             for(Tinta tinta: listaTinta){
                comboModel.addElement(tinta.getModelo());
                boxListaStock.setModel(comboModel);
             }
-        }     
+        }   
+        else {
+           txtCantidadNum.setText("");
+       }
     }//GEN-LAST:event_btnTintaActionPerformed
 
     private void boxListaStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxListaStockActionPerformed
@@ -614,18 +620,23 @@ public class Primaria extends javax.swing.JFrame {
     private void btnCompuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompuActionPerformed
        limpiarListaStock();
        txtTipo.setText("Computadoras");
-       
-       for(Computadora compu : listaCompu){
-           comboModel.addElement(compu.getMarca());
-           boxListaStock.setModel(comboModel);
+       if(!listaCompu.isEmpty()){
+           
+           for(Computadora compu : listaCompu){
+                comboModel.addElement(compu.getMarca());
+                boxListaStock.setModel(comboModel);
+            }
+       }
+       else {
+           txtCantidadNum.setText("");
        }
        
     }//GEN-LAST:event_btnCompuActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void btnAgregarAlCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAlCarritoActionPerformed
-        
-        if(txtTipo.getText().equals("-")){
+ 
+        if(txtTipo.getText().equals("-")||boxListaStock.getItemAt(0)==null){
             mostrarMensaje("Seleccione un insumo a agregar", "Informacion","Ningun insumo seleccionado");
         }
         else if(Integer.parseInt(txtCantidadNum.getText())>0){
