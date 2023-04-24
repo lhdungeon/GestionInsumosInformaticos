@@ -34,6 +34,9 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
         
         cargarTabla();
         listaRegistros = controlLogica.buscarListaRegistro();
+        
+        Date currentDate = new Date(); 
+        jDate.setDate(currentDate);
              
     }
 
@@ -229,26 +232,27 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
         jTableRegistro.setModel(tabla);
                
         int numeroDeRegistro=1;
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
-        for(Registro regis : listaRegistros){
-    
-            String date = dateFormat.format(regis.getFecha());
-            String date2 = dateFormat.format(jDate.getDate());
+        if(jDate.getDate()!=null){
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-            
-            if(date.equals(date2)){
-                
-                Object[]regisAgregar={numeroDeRegistro,date,regis.getInsumos_retirados(),
-                                    regis.getCantidad_Insumos(),regis.getServicio()};
-                
-                tabla.addRow(regisAgregar);
-                jTableRegistro.setModel(tabla);
-                                   
-                numeroDeRegistro++;
+            for(Registro regis : listaRegistros){
+
+                String date = dateFormat.format(regis.getFecha());
+                String date2 = dateFormat.format(jDate.getDate());
+
+                if(date.equals(date2)){
+
+                    Object[]regisAgregar={numeroDeRegistro,date,regis.getInsumos_retirados(),
+                                        regis.getCantidad_Insumos(),regis.getServicio()};
+
+                    tabla.addRow(regisAgregar);
+                    jTableRegistro.setModel(tabla);
+
+                    numeroDeRegistro++;
+                }
             }
-        }
+        }    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     

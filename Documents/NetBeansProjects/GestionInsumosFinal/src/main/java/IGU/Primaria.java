@@ -7,12 +7,18 @@ import Logica.Hardware;
 import Logica.Registro;
 import Logica.Servicio;
 import Logica.Tinta;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+import java.awt.print.*;
+import java.awt.PrintJob;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +37,8 @@ public class Primaria extends javax.swing.JFrame {
     int idServicio;
     DefaultTableModel tablaCarrito = null;
     DefaultComboBoxModel comboModel =new DefaultComboBoxModel();
-
+    String resumen ="";
+    
     public Primaria() {
         initComponents();
  
@@ -85,7 +92,7 @@ public class Primaria extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         btnExit = new javax.swing.JButton();
         btnFinalizarCompra = new javax.swing.JButton();
-        txtFecha = new javax.swing.JLabel();
+        btnPrint = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -416,40 +423,6 @@ public class Primaria extends javax.swing.JFrame {
 
         jLabel5.setText("Seleccione el servicio");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnAgregarServicio)
-                .addGap(99, 99, 99))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarServicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 26, Short.MAX_VALUE))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = -68;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
-        jPanel1.add(jPanel8, gridBagConstraints);
-
         jPanel9.setBackground(new java.awt.Color(102, 102, 102));
 
         btnExit.setBackground(new java.awt.Color(102, 102, 102));
@@ -471,12 +444,13 @@ public class Primaria extends javax.swing.JFrame {
             }
         });
 
-        txtFecha.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        txtFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtFecha.setText("Fecha");
-        txtFecha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtFechaMouseClicked(evt);
+        btnPrint.setBackground(new java.awt.Color(102, 102, 102));
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/expediente.png"))); // NOI18N
+        btnPrint.setBorderPainted(false);
+        btnPrint.setEnabled(false);
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
             }
         });
 
@@ -487,9 +461,9 @@ public class Primaria extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -497,24 +471,51 @@ public class Primaria extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnFinalizarCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnFinalizarCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnAgregarServicio)
+                .addGap(99, 99, 99))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarServicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = -68;
+        gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 17, 0, 0);
-        jPanel1.add(jPanel9, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
+        jPanel1.add(jPanel8, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -693,11 +694,6 @@ public class Primaria extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnAgregarServicioActionPerformed
 
-    private void txtFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaMouseClicked
-        setearFecha();
-        
-    }//GEN-LAST:event_txtFechaMouseClicked
-
     private void btnEliminarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarItem1ActionPerformed
 
          if(tableCarrito.getSelectedRow()!=-1){
@@ -810,74 +806,81 @@ public class Primaria extends javax.swing.JFrame {
         if(boxServicio.getSelectedItem().toString().equals("Seleccione un servicio")){
             mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
         }
+                
         else{
+        
+            servicioSeleccionado = controlLogica.buscarServicio(idServicio);
+         
             for(int i =0;i<tableCarrito.getRowCount();i++){
                 if(tableCarrito.getValueAt(i, 2).toString().equals("Tinta")){
                     tintaCargada = true;
                 }
                 if(tableCarrito.getValueAt(i, 2).toString().equals("Hardware")){
-                   hardCargada=true;
+                    hardCargada=true;
                 }
                 if(tableCarrito.getValueAt(i, 2).toString().equals("Computadoras")){
                     compuCargada=true;
                 }
             }   
-            
+
             if(tintaCargada){
+
                 for(Tinta tinta : listaTinta){
-                int idT;
-                idT = tinta.getId();
-                 if(tinta.getCantidad()!= controlLogica.buscarTinta(idT).getCantidad()){
-                    controlLogica.editarTinta(tinta);
-                    }
-                }
-                }
-                if(hardCargada){
-                    for(Hardware hard : listaHard){
-                        int idH = hard.getId();
-                        if(hard.getCantidad()!= controlLogica.buscarHardware(idH).getCantidad()){
-                            controlLogica.editarHardware(hard);
+                    int idT;
+                    idT = tinta.getId();
+                    if(tinta.getCantidad()!= controlLogica.buscarTinta(idT).getCantidad()){
+                        controlLogica.editarTinta(tinta);
                         }
                     }
                 }
-                if(compuCargada){
-                    for(Computadora compu : listaCompu){
-                        int idC=compu.getId();
-                        if (compu.getCantidad()!=controlLogica.buscarComputadora(idC).getCantidad()){
-                            controlLogica.editarComputadora(compu);
+
+            if(hardCargada){
+
+                for(Hardware hard : listaHard){
+                    int idH = hard.getId();
+                    if(hard.getCantidad()!= controlLogica.buscarHardware(idH).getCantidad()){
+                        controlLogica.editarHardware(hard);
                         }
                     }
                 }
-                
+
+            if(compuCargada){
+
+                for(Computadora compu : listaCompu){
+                    int idC=compu.getId();
+                    if (compu.getCantidad()!=controlLogica.buscarComputadora(idC).getCantidad()){
+                        controlLogica.editarComputadora(compu);
+                        }
+                    }
+                }
+
             ArrayList <String> lista = new ArrayList();  
             ArrayList <Integer>listaCantidad = new ArrayList();
-            
+
             for(int i=0;i<tableCarrito.getRowCount();i++){
                 String insumoSel = tableCarrito.getValueAt(i, 0).toString();
                 int insCantidad = Integer.parseInt(tableCarrito.getValueAt(i,1).toString());
                 lista.add(lista.size(), insumoSel);               
                 listaCantidad.add(listaCantidad.size(), insCantidad);
             }
-            
-            servicioSeleccionado = controlLogica.buscarServicio(idServicio);
+
+
             LinkedList<Registro>listaRegistro = servicioSeleccionado.getListaRegistros();                    
-          
+
             Registro registro = new Registro();
             registro.setFecha(controlLogica.getDateUnformat());
             registro.setServicio(boxServicio.getSelectedItem().toString());
             registro.setInsumos_retirados(lista);
             registro.setCantidad_Insumos(listaCantidad);
             listaRegistro.add(registro);
-                      
+
             registro.setServi(servicioSeleccionado);
-            
+
             controlLogica.nuevoRegistro(registro);
             controlLogica.editarServicio(servicioSeleccionado);
-           
-            
+
             mostrarMensaje("La carga se completo correctamente","Informacion","Puede retirar su insumo");
-            reset();
-                 
+            reset();                    
         }
     }//GEN-LAST:event_btnFinalizarCompraActionPerformed
 
@@ -906,6 +909,31 @@ public class Primaria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_boxServicioActionPerformed
 
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        if(!boxServicio.getSelectedItem().toString().equals("Seleccione un servicio")){
+            servicioSeleccionado = controlLogica.buscarServicio(idServicio);
+
+            resumen ="El servicio de " + servicioSeleccionado.getServicio()+ " : " + servicioSeleccionado.getSala() + " lleva " + "\n";
+
+            for(int a=0;a<tableCarrito.getRowCount();a++){
+                resumen = resumen + tableCarrito.getValueAt(a, 0) +" x " +tableCarrito.getValueAt(a,1)+ "\n";
+            }
+
+            resumen = resumen + "\n" + "Responsable a cargo: " + servicioSeleccionado.getJefeSala() + "\n" + controlLogica.getDate();
+
+
+
+            ResumenRetiro resumenW = new ResumenRetiro(resumen);
+            resumenW.setVisible(true);
+            resumenW.setLocationRelativeTo(null);
+            resumenW.setResizable(false);
+            resumenW.setAlwaysOnTop(true);
+        }
+        else{
+            mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
+        }
+    }//GEN-LAST:event_btnPrintActionPerformed
+
     private void limpiarListaStock(){
         comboModel = new DefaultComboBoxModel();
         
@@ -926,6 +954,7 @@ public class Primaria extends javax.swing.JFrame {
             restarInsumoLocal();  
             btnEliminarItem1.setEnabled(true);
             btnFinalizarCompra.setEnabled(true);
+            btnPrint.setEnabled(true);
 
         }      
     }
@@ -955,7 +984,7 @@ public class Primaria extends javax.swing.JFrame {
     }
     
     private void setearFecha() {
-        txtFecha.setText(controlLogica.getDate());
+
     }
      
     private void mostrarMensaje(String mensaje, String tipo, String titulo) {
@@ -1002,7 +1031,9 @@ public class Primaria extends javax.swing.JFrame {
                 tablaCarrito.addRow(itemAgregar);
                 tablaCarrito = new DefaultTableModel();  
                 btnEliminarItem1.setEnabled(false);
+                btnPrint.setEnabled(false);
                 btnFinalizarCompra.setEnabled(false);
+                
 
           }
         }catch(ArrayIndexOutOfBoundsException aIE){};
@@ -1033,6 +1064,7 @@ public class Primaria extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnFinalizarCompra;
     private javax.swing.JButton btnHardware;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnTinta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -1052,10 +1084,10 @@ public class Primaria extends javax.swing.JFrame {
     private javax.swing.JLabel txtCantidad;
     private javax.swing.JLabel txtCantidad1;
     private javax.swing.JLabel txtCantidadNum;
-    private javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtId;
     private javax.swing.JLabel txtTipo;
     // End of variables declaration//GEN-END:variables
+
 
 
 
