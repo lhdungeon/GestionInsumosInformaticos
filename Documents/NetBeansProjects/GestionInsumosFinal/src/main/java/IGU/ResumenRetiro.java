@@ -2,7 +2,9 @@ package IGU;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.print.Book;
 import java.awt.print.PageFormat;
+import java.awt.print.Pageable;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -54,6 +56,7 @@ public class ResumenRetiro extends javax.swing.JFrame {
             }
         });
 
+        txtResumen.setEditable(false);
         txtResumen.setColumns(20);
         txtResumen.setRows(5);
         jScrollPane1.setViewportView(txtResumen);
@@ -107,26 +110,22 @@ public class ResumenRetiro extends javax.swing.JFrame {
                 Graphics2D g2 = (Graphics2D)graphics;
                 g2.translate(pageFormat.getImageableX(),pageFormat.getImageableY());
                 g2.scale(1,1);
+                
                 jPanel1.paint(g2);
                 
                 return Printable.PAGE_EXISTS;                                
             }           
                 
         });
-        impresion.setCopies(1);
         
         PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
         attr.add(new PageRanges(1,1));
         attr.add(new Copies(1));
-        //attr.addAll(attr);
-        
-        //QUEDA SETEAR QUE EL INTERVALO SEA DE 1 A 1
-        impresion.getPageFormat(attr);
-        
-        boolean ok = impresion.printDialog();        
+ 
+        boolean ok = impresion.printDialog(attr);        
         if(ok){
             try {
-                impresion.print();
+                impresion.print(attr);
                 
             } catch (PrinterException ex) {
                 Logger.getLogger(Primaria.class.getName()).log(Level.SEVERE, null, ex);

@@ -216,7 +216,7 @@ public class EditarServicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCargarTintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTintaActionPerformed
-        servicio.setServicio(txtNombre.getText());
+        servicio.setServicio(capitalize(txtNombre.getText()));
         servicio.setSala(txtNumeroServ.getText());
         servicio.setJefeSala(txtJefe.getText());
         servicio.setNombreResponsable(txtResponsable.getText());
@@ -234,6 +234,11 @@ public class EditarServicio extends javax.swing.JFrame {
     
     }//GEN-LAST:event_btnCargarTintaActionPerformed
 
+    public static final String capitalize(String str)   {  
+        if (str == null || str.length() == 0) return str;  
+        return str.substring(0, 1).toUpperCase() + str.substring(1);  
+    }  
+    
     private void btnCancelarCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCargaActionPerformed
         Primaria primaria = new Primaria();
         primaria.setVisible(true);

@@ -41,6 +41,7 @@ public class NuevoServicio extends javax.swing.JFrame {
         txtDni = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtNumeroInterno = new javax.swing.JTextField();
+        txtError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,9 +76,9 @@ public class NuevoServicio extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
 
-        jLabel7.setText("Nombre");
+        jLabel7.setText("Nombre de servicio ");
 
-        jLabel8.setText("Numero del servicio");
+        jLabel8.setText("Sala / Sector");
 
         jLabel9.setText("Responsable (Jefatura)");
 
@@ -102,6 +103,9 @@ public class NuevoServicio extends javax.swing.JFrame {
         jLabel11.setText("Dni responsable");
 
         jLabel12.setText("Numero interno");
+
+        txtError.setForeground(new java.awt.Color(255, 0, 51));
+        txtError.setText("-");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -134,6 +138,8 @@ public class NuevoServicio extends javax.swing.JFrame {
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addGap(9, 9, 9)
                                     .addComponent(btnCargarTinta)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnCancelarCarga)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -175,8 +181,10 @@ public class NuevoServicio extends javax.swing.JFrame {
                     .addComponent(txtNumeroInterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCargarTinta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelarCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnCargarTinta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelarCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtError, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -217,10 +225,10 @@ public class NuevoServicio extends javax.swing.JFrame {
         //Evalua que todos los campos estes completos
         if(!txtNombre.getText().equals("")){
             if(!txtNumeroServ.getText().equals("")){
-                if(!txtResponsable.getText().equals("")){
+                if(!txtJefe.getText().equals("")){
                     Servicio servicio = new Servicio();
                     servicio.setSala(txtNumeroServ.getText());
-                    servicio.setServicio(txtNombre.getText());
+                    servicio.setServicio(capitalize(txtNombre.getText()));
                     servicio.setJefeSala(txtJefe.getText());
                     servicio.setNombreResponsable(txtResponsable.getText());
                     servicio.setNumeroInterno(txtNumeroInterno.getText());
@@ -244,31 +252,17 @@ public class NuevoServicio extends javax.swing.JFrame {
 
                     this.dispose();
                 }
-
-                /*JOptionPane ventana = new JOptionPane("Faltan datos a completar");
-                ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-                JDialog dialog = ventana.createDialog("Complete todos los datos");
-                dialog.setAlwaysOnTop(true);
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);*/
+                else{
+                    txtError.setText("Ingrese un responsable");
+                }                
             }
-
-            /*JOptionPane ventana = new JOptionPane("Faltan datos a completar");
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = ventana.createDialog("Complete todos los datos");
-            dialog.setAlwaysOnTop(true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);*/
+            else{
+                txtError.setText("Ingrese un nombre de sala o sector");
+            }
         }
 
         else {
-
-           /* JOptionPane ventana = new JOptionPane("Faltan datos a completar");
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = ventana.createDialog("Complete todos los datos");
-            dialog.setAlwaysOnTop(true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);*/
+            txtError.setText("Ingrese un nombre de servicio");
         }
     }//GEN-LAST:event_btnCargarTintaActionPerformed
 
@@ -279,7 +273,10 @@ public class NuevoServicio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarCargaActionPerformed
 
- 
+    public static final String capitalize(String str)   {  
+        if (str == null || str.length() == 0) return str;  
+        return str.substring(0, 1).toUpperCase() + str.substring(1);  
+   }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarCarga;
@@ -296,6 +293,7 @@ public class NuevoServicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField txtDni;
+    private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtJefe;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumeroInterno;

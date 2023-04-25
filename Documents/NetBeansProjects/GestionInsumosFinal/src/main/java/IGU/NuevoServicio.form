@@ -150,6 +150,8 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                           <Component id="btnCargarTinta" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtError" min="-2" pref="162" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="btnCancelarCarga" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -206,8 +208,11 @@
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnCargarTinta" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="btnCancelarCarga" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="btnCargarTinta" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="btnCancelarCarga" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtError" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -217,14 +222,14 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nombre"/>
+                <Property name="text" type="java.lang.String" value="Nombre de servicio "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombre">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Numero del servicio"/>
+                <Property name="text" type="java.lang.String" value="Sala / Sector"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
@@ -278,6 +283,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNumeroInterno">
+            </Component>
+            <Component class="javax.swing.JLabel" name="txtError">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="0" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
