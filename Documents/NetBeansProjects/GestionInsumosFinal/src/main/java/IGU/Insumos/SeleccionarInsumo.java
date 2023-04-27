@@ -1,5 +1,5 @@
 
-package IGU;
+package IGU.Insumos;
 
 
 public class SeleccionarInsumo extends javax.swing.JFrame {
@@ -162,7 +162,7 @@ public class SeleccionarInsumo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHardwareActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-       Primaria primaria = new Primaria();
+       PrimariaInsumos primaria = new PrimariaInsumos();
        primaria.setVisible(true);
        primaria.setLocationRelativeTo(this);
        this.dispose();

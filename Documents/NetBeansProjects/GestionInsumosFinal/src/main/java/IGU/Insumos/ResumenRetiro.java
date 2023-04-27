@@ -1,4 +1,4 @@
-package IGU;
+package IGU.Insumos;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -128,7 +128,7 @@ public class ResumenRetiro extends javax.swing.JFrame {
                 impresion.print(attr);
                 
             } catch (PrinterException ex) {
-                Logger.getLogger(Primaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrimariaInsumos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }      
     }//GEN-LAST:event_btnPrintActionPerformed

@@ -1,6 +1,6 @@
 
 
-package IGU;
+package IGU.Insumos;
 
 import Logica.Controladora;
 import Logica.Registro;
@@ -240,7 +240,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 884, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +443,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     }//GEN-LAST:event_jListaServiciosActionPerformed
 
     private void btnAtras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras2ActionPerformed
-        Primaria primaria = new Primaria();
+        PrimariaInsumos primaria = new PrimariaInsumos();
         primaria.setVisible(true);
         primaria.setLocationRelativeTo(null);
         this.dispose();

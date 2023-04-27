@@ -1,28 +1,19 @@
 
-package IGU;
+package IGU.Insumos;
 import Logica.Computadora;
 import Logica.Controladora;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-public class EditarCompu extends javax.swing.JFrame {
+public class NuevaCompu extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
-    int id;
-    Computadora compu =null;
 
-    public EditarCompu(int id) {
-        
+    public NuevaCompu() {
         initComponents();
-        compu = controlLogica.buscarComputadora(id);
-        cargarDatos(id);
-        this.setTitle("Gestion de insumos informaticos");
+        this.setTitle("Gestion de insumos informaticos");        
     }
-    
-    private void buscarCompu(int id){
-        controlLogica.buscarComputadora(id);
-    }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -40,7 +31,7 @@ public class EditarCompu extends javax.swing.JFrame {
         txtMotherboard = new javax.swing.JTextField();
         txtProcesador = new javax.swing.JTextField();
         txtMemoria = new javax.swing.JTextField();
-        btnCargarComputadora = new javax.swing.JButton();
+        btnCargarTinta = new javax.swing.JButton();
         btnCancelarCarga = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtDisco = new javax.swing.JTextField();
@@ -52,11 +43,6 @@ public class EditarCompu extends javax.swing.JFrame {
         txtCantidad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -97,11 +83,11 @@ public class EditarCompu extends javax.swing.JFrame {
 
         jLabel10.setText("Memoria");
 
-        btnCargarComputadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lifting.png"))); // NOI18N
-        btnCargarComputadora.setToolTipText("Cargar");
-        btnCargarComputadora.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarTinta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lifting.png"))); // NOI18N
+        btnCargarTinta.setToolTipText("Cargar");
+        btnCargarTinta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarComputadoraActionPerformed(evt);
+                btnCargarTintaActionPerformed(evt);
             }
         });
 
@@ -151,7 +137,7 @@ public class EditarCompu extends javax.swing.JFrame {
                                     .addComponent(txtProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addGap(9, 9, 9)
-                                    .addComponent(btnCargarComputadora)
+                                    .addComponent(btnCargarTinta)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnCancelarCarga)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -209,7 +195,7 @@ public class EditarCompu extends javax.swing.JFrame {
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCargarComputadora, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCargarTinta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelarCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -247,43 +233,78 @@ public class EditarCompu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCargarComputadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarComputadoraActionPerformed
+    private void btnCargarTintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTintaActionPerformed
+        //Evalua que todos los campos estes completos
+        if(!txtMarca.getText().equals("")){
+            if(!txtMotherboard.getText().equals("")){
+                if(!txtCantidad.getText().equals("")){
+                    Computadora compu = new Computadora();
+                    compu.setMarca(txtMotherboard.getText());
+                    compu.setMotherboard(txtMarca.getText());
+                    compu.setProveedor(txtProcesador.getText());
+                    compu.setCantidad(Integer.parseInt(txtCantidad.getText()));
+                    compu.setFechaIngreso(controlLogica.getDate());
+                    compu.setTipo("Computadoras");
+                    compu.setProcesador(txtProcesador.getText());
+                    compu.setMemoria(txtMemoria.getText());
+                    compu.setDiscoRigido(txtDisco.getText());
+                    compu.setPlacaVideo(txtPlacaVideo.getText());
+                    
 
-        compu.setMarca(txtMarca.getText());
-        compu.setMotherboard(txtMotherboard.getText());
-        compu.setProcesador(txtProcesador.getText());
-        compu.setMemoria(txtMemoria.getText());
-        compu.setDiscoRigido(txtDisco.getText());
-        compu.setPlacaVideo(txtPlacaVideo.getText());
-        compu.setProveedor(txtProveedor.getText());
-        compu.setCantidad(Integer.parseInt(txtCantidad.getText()));
-        compu.setFechaIngreso(controlLogica.getDate());
-        
-        controlLogica.editarComputadora(compu);
-        
-        mostrarMensaje("La edicion se completo correctamente","Informacion","Completo");
-        
-        EdicionComputadoras edicionCompus = new EdicionComputadoras();
-        edicionCompus.setVisible(true);
-        edicionCompus.setLocationRelativeTo(this);
-        this.dispose();       
-    }//GEN-LAST:event_btnCargarComputadoraActionPerformed
+                    controlLogica.nuevoComputadora(compu);
+
+                    JOptionPane ventana = new JOptionPane("Carga Exitosa");
+                    ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = ventana.createDialog("La carga se completo correctamente");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+
+                    PrimariaInsumos primaria = new PrimariaInsumos();
+                    primaria.setVisible(true);
+                    primaria.setLocationRelativeTo(this);
+
+                    this.dispose();
+                }
+/*
+                JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+                ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = ventana.createDialog("Complete todos los datos");
+                dialog.setAlwaysOnTop(true);
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);*/
+            }
+
+           /* JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = ventana.createDialog("Complete todos los datos");
+            dialog.setAlwaysOnTop(true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);*/
+        }
+
+        else {
+
+          /*  JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = ventana.createDialog("Complete todos los datos");
+            dialog.setAlwaysOnTop(true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);*/
+        }
+    }//GEN-LAST:event_btnCargarTintaActionPerformed
 
     private void btnCancelarCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCargaActionPerformed
-        EdicionComputadoras edicionCompus = new EdicionComputadoras();
-        edicionCompus.setVisible(true);
-        edicionCompus.setLocationRelativeTo(this);
+        PrimariaInsumos primaria = new PrimariaInsumos();
+        primaria.setVisible(true);
+        primaria.setLocationRelativeTo(this);
         this.dispose();
     }//GEN-LAST:event_btnCancelarCargaActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-    }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarCarga;
-    private javax.swing.JButton btnCargarComputadora;
+    private javax.swing.JButton btnCargarTinta;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -306,31 +327,4 @@ public class EditarCompu extends javax.swing.JFrame {
     private javax.swing.JTextField txtProcesador;
     private javax.swing.JTextField txtProveedor;
     // End of variables declaration//GEN-END:variables
-
-    private void cargarDatos(int id) {
-        
-        txtMarca.setText(compu.getMarca());
-        txtMotherboard.setText(compu.getMotherboard());
-        txtProcesador.setText(compu.getProcesador());
-        txtMemoria.setText(compu.getMemoria());
-        txtDisco.setText(compu.getDiscoRigido());
-        txtPlacaVideo.setText(compu.getPlacaVideo());
-        txtProveedor.setText(compu.getProveedor());
-        txtCantidad.setText(Integer.toString(compu.getCantidad()));
-    }
-
-    private void mostrarMensaje(String mensaje, String tipo, String titulo) {
-        JOptionPane ventana = new JOptionPane(mensaje);
-        if(tipo.equals("Error")){
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-        }
-        else if(tipo.equals("Informacion")){
-            ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        JDialog dialog = ventana.createDialog(titulo);
-        dialog.setAlwaysOnTop(true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }
 }

@@ -1,5 +1,5 @@
 
-package IGU;
+package IGU.Insumos;
 
 import Logica.Controladora;
 import Logica.Tinta;
@@ -175,7 +175,7 @@ public class EdicionTintas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        Primaria primaria = new Primaria();
+        PrimariaInsumos primaria = new PrimariaInsumos();
         primaria.setVisible(true);
         primaria.setLocationRelativeTo(this);
         this.dispose();

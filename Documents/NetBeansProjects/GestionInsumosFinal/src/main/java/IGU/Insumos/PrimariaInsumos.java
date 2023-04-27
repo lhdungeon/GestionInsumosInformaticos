@@ -1,6 +1,7 @@
 
-package IGU;
+package IGU.Insumos;
 
+import IGU.InicialServer;
 import Logica.Computadora;
 import Logica.Controladora;
 import Logica.Hardware;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Primaria extends javax.swing.JFrame {
+public class PrimariaInsumos extends javax.swing.JFrame {
 
          
     
@@ -39,7 +40,7 @@ public class Primaria extends javax.swing.JFrame {
     DefaultComboBoxModel comboModel =new DefaultComboBoxModel();
     String resumen ="";
     
-    public Primaria() {
+    public PrimariaInsumos() {
         initComponents();
  
         setearTabla();
@@ -95,9 +96,14 @@ public class Primaria extends javax.swing.JFrame {
         btnPrint = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
         setSize(new java.awt.Dimension(400, 500));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -937,6 +943,10 @@ public class Primaria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPrintActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+    }//GEN-LAST:event_formWindowClosed
+
     private void limpiarListaStock(){
         comboModel = new DefaultComboBoxModel();
         
@@ -1046,7 +1056,7 @@ public class Primaria extends javax.swing.JFrame {
 
 
     private void reset() {
-        Primaria primaria = new Primaria();
+        PrimariaInsumos primaria = new PrimariaInsumos();
         primaria.setVisible(true);
         primaria.setLocationRelativeTo(this);
         this.dispose();

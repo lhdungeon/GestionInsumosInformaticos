@@ -1,20 +1,20 @@
 
-package IGU;
+package IGU.Insumos;
 
+import Logica.Computadora;
 import Logica.Controladora;
-import Logica.Hardware;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class EdicionHardware extends javax.swing.JFrame {
+public class EdicionComputadoras extends javax.swing.JFrame {
 
-    Controladora controlLogica = new Controladora();
     DefaultTableModel tabla = null;
+    Controladora controlLogica = new Controladora();
     
-    public EdicionHardware() {
+    public EdicionComputadoras() {
         initComponents();
         this.setTitle("Gestion de insumos informaticos");        
     }
@@ -32,7 +32,7 @@ public class EdicionHardware extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnAtras1 = new javax.swing.JButton();
+        btnEditarItem = new javax.swing.JButton();
         btnDeleted = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,7 +48,7 @@ public class EdicionHardware extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Editar hardware");
+        jLabel3.setText("Editar computadoras");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -59,7 +59,7 @@ public class EdicionHardware extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,14 +94,18 @@ public class EdicionHardware extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        jTable1.setMinimumSize(new java.awt.Dimension(200, 64));
+        jTable1.setSelectionBackground(new java.awt.Color(0, 204, 255));
+        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTable1);
 
-        btnAtras1.setBackground(new java.awt.Color(102, 102, 102));
-        btnAtras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit (1).png"))); // NOI18N
-        btnAtras1.setBorderPainted(false);
-        btnAtras1.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarItem.setBackground(new java.awt.Color(102, 102, 102));
+        btnEditarItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit (1).png"))); // NOI18N
+        btnEditarItem.setBorderPainted(false);
+        btnEditarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtras1ActionPerformed(evt);
+                btnEditarItemActionPerformed(evt);
             }
         });
 
@@ -122,14 +126,14 @@ public class EdicionHardware extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnAtras)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDeleted)
-                        .addGap(54, 54, 54)
-                        .addComponent(btnAtras1)
+                        .addGap(53, 53, 53)
+                        .addComponent(btnEditarItem)
                         .addGap(17, 17, 17))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -140,7 +144,7 @@ public class EdicionHardware extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAtras)
-                    .addComponent(btnAtras1)
+                    .addComponent(btnEditarItem)
                     .addComponent(btnDeleted))
                 .addContainerGap())
         );
@@ -176,23 +180,22 @@ public class EdicionHardware extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        Primaria primaria = new Primaria();
+        PrimariaInsumos primaria = new PrimariaInsumos();
         primaria.setVisible(true);
         primaria.setLocationRelativeTo(this);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
-    private void btnAtras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras1ActionPerformed
+    private void btnEditarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarItemActionPerformed
        if(jTable1.getSelectedRow()!=-1){
-        int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),5).toString());
+        int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),0).toString());
         
-        EditarHard editarHard = new EditarHard(id);
-        editarHard.setVisible(true);
-        editarHard.setLocationRelativeTo(this);
+        EditarCompu editarCompu = new EditarCompu(id);
+        editarCompu.setVisible(true);
+        editarCompu.setLocationRelativeTo(this);
         this.dispose();
         }
-    
-    }//GEN-LAST:event_btnAtras1ActionPerformed
+    }//GEN-LAST:event_btnEditarItemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         cargarTabla();
@@ -200,23 +203,41 @@ public class EdicionHardware extends javax.swing.JFrame {
 
     private void btnDeletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletedActionPerformed
         if(jTable1.getSelectedRow()!=-1){
-            int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),5).toString());
+            int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(),0).toString());
 
-            controlLogica.eliminarHardware(id);
+            controlLogica.eliminarComputadora(id);
             mostrarMensaje("El item se elimino correctamente","Informacion","Completo");
             
-            EdicionHardware edicionhard = new EdicionHardware();
-            edicionhard.setVisible(true);
-            edicionhard.setLocationRelativeTo(this);
-            this.dispose();
-
+            EdicionComputadoras edicionCompu = new EdicionComputadoras();
+            edicionCompu.setVisible(true);
+            edicionCompu.setLocationRelativeTo(this);
+            this.dispose();            
         }
     }//GEN-LAST:event_btnDeletedActionPerformed
-
+    
+    private void cargarTabla() {
+            tabla = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){return false;}
+        };
+        
+        String titulos[]={"ID","Marca","Motherboard","Procesador","Memoria","Disco","Placa de video","Proveedor","Cantidad","Ingreso"};
+        tabla.setColumnIdentifiers(titulos);
+        
+        List <Computadora> listaCompu = controlLogica.buscarListaComputadora();
+        if(listaCompu!=null){
+            for(Computadora compu : listaCompu){
+                Object[] objeto ={ compu.getId(), compu.getMarca(), compu.getMotherboard(), compu.getProcesador(),compu.getMemoria(),compu.getDiscoRigido(),compu.getPlacaVideo(),compu.getProveedor(),compu.getCantidad(),compu.getFechaIngreso()};
+                
+                tabla.addRow(objeto);
+                jTable1.setModel(tabla);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnAtras1;
     private javax.swing.JButton btnDeleted;
+    private javax.swing.JButton btnEditarItem;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
@@ -226,24 +247,6 @@ public class EdicionHardware extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarTabla() {
-        DefaultTableModel tabla = new DefaultTableModel(){
-            @Override
-            public boolean isCellEditable(int row, int column){return false;}
-        };
-        
-        String titulos[]={"Nombre","Marca","Proveedor","Cantidad","Ingreso","ID"};
-        tabla.setColumnIdentifiers(titulos);
-        
-        List<Hardware> listaHard = controlLogica.buscarListaHardware();
-        if(listaHard!=null){
-            for(Hardware hard : listaHard){
-                Object objeto[] = {hard.getNombre(),hard.getMarca(),hard.getProveedor(),hard.getCantidad(),hard.getFechaIngreso(),hard.getId()};
-                tabla.addRow(objeto);
-                jTable1.setModel(tabla);
-            }
-        }
-    }
 private void mostrarMensaje(String mensaje, String tipo, String titulo) {
         JOptionPane ventana = new JOptionPane(mensaje);
         if(tipo.equals("Error")){

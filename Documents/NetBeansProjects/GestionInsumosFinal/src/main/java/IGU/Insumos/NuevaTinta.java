@@ -1,5 +1,5 @@
 
-package IGU;
+package IGU.Insumos;
 
 import Logica.Controladora;
 import Logica.Tinta;
@@ -8,16 +8,12 @@ import javax.swing.JOptionPane;
 
 
 
-public class EditarTinta extends javax.swing.JFrame {
+public class NuevaTinta extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
-    int id;
-    Tinta tinta = null;
   
-    public EditarTinta(int id) {
+    public NuevaTinta() {
         initComponents();
-        tinta = controlLogica.buscarTinta(id);
-        cargarDatos(id);
         this.setTitle("Gestion de insumos informaticos");        
     }
 
@@ -193,28 +189,66 @@ public class EditarTinta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCargaActionPerformed
-        EdicionTintas edicionTinta = new EdicionTintas();
-        edicionTinta.setVisible(true);
-        edicionTinta.setLocationRelativeTo(this);
+        PrimariaInsumos primaria = new PrimariaInsumos();
+        primaria.setVisible(true);
+        primaria.setLocationRelativeTo(this);
         this.dispose();
     }//GEN-LAST:event_btnCancelarCargaActionPerformed
 
     private void btnCargarTintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTintaActionPerformed
-        tinta.setMarca(txtMarca.getText());
-        tinta.setModelo(txtModelo.getText());
-        tinta.setProveedor(txtProveedor.getText());
-        tinta.setCantidad(Integer.parseInt(txtCantidad.getText()));
-        tinta.setFechaIngreso(controlLogica.getDate());
+        //Evalua que todos los campos estes completos
+        if(!txtModelo.getText().equals("")){
+            if(!txtMarca.getText().equals("")){
+                if(!txtCantidad.getText().equals("")){
+                    Tinta tinta = new Tinta();
+                    tinta.setMarca(txtMarca.getText());
+                    tinta.setModelo(txtModelo.getText());
+                    tinta.setProveedor(txtProveedor.getText());
+                    tinta.setCantidad(Integer.parseInt(txtCantidad.getText()));
+                    tinta.setFechaIngreso(controlLogica.getDate());
+                    tinta.setTipo("Tinta");
+
+                    controlLogica.nuevoTinta(tinta);
+
+                    JOptionPane ventana = new JOptionPane("Carga Exitosa");
+                    ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    JDialog dialog = ventana.createDialog("La carga de tinta se completo correctamente");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+
+                    PrimariaInsumos primaria = new PrimariaInsumos();
+                    primaria.setVisible(true);
+                    primaria.setLocationRelativeTo(this);
+
+                    this.dispose();
+                }
+                              
+                /*JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+                ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = ventana.createDialog("Complete todos los datos");
+                dialog.setAlwaysOnTop(true);
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);  */   
+            }    
+                          
+           /* JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = ventana.createDialog("Complete todos los datos");
+            dialog.setAlwaysOnTop(true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true); */    
+        }
         
-        controlLogica.editarTinta(tinta);
-        
-        mostrarMensaje("La edicion se completo correctamente","Informacion","Completo");
-        
-        EdicionTintas edicionTinta = new EdicionTintas();
-        edicionTinta.setVisible(true);
-        edicionTinta.setLocationRelativeTo(this);
-        this.dispose();
-    
+        else {
+              
+            /*JOptionPane ventana = new JOptionPane("Faltan datos a completas");
+            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = ventana.createDialog("Complete todos los datos");
+            dialog.setAlwaysOnTop(true);
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);*/       
+        }                                      
     }//GEN-LAST:event_btnCargarTintaActionPerformed
 
 
@@ -235,27 +269,4 @@ public class EditarTinta extends javax.swing.JFrame {
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtProveedor;
     // End of variables declaration//GEN-END:variables
-
-    private void cargarDatos(int id) {
-        txtModelo.setText(tinta.getModelo());
-        txtMarca.setText(tinta.getMarca());
-        txtProveedor.setText(tinta.getProveedor());
-        txtCantidad.setText(Integer.toString(tinta.getCantidad()));
-                
-    }
-
-    private void mostrarMensaje(String mensaje, String tipo, String titulo) {
-        JOptionPane ventana = new JOptionPane(mensaje);
-        if(tipo.equals("Error")){
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-        }
-        else if(tipo.equals("Informacion")){
-            ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        JDialog dialog = ventana.createDialog(titulo);
-        dialog.setAlwaysOnTop(true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }    
 }
