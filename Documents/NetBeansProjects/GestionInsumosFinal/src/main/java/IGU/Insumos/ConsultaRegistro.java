@@ -4,7 +4,7 @@ package IGU.Insumos;
 
 import Logica.Controladora;
 import Logica.Registro;
-import Logica.Servicio;
+import Logica.Sala;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
 
     Controladora controlLogica = new Controladora();
-    Servicio servicio = null;
-    ArrayList<Servicio> listaServicio;
+    Sala servicio = null;
+    ArrayList<Sala> listaServicio;
     LinkedList<Registro>listaRegistros;
     int idSelect;
     
@@ -280,10 +280,10 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
-        Collections.sort(listaServicio, new Comparator <Servicio>() {
+        Collections.sort(listaServicio, new Comparator <Sala>() {
             @Override
-            public int compare(Servicio o1, Servicio o2) {
-                return o1.getServicio().compareTo(o2.getServicio());
+            public int compare(Sala o1, Sala o2) {
+                return o1.getSala().compareTo(o2.getSala());
             }
         });
         cargarListaServicios();
@@ -376,7 +376,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                 
                     String date = dateFormat.format(servicio.getListaRegistros().get(i).getFecha());
                     Object[] registroAgregar = {numeroDeRegistro,date, listaRegistros.get(i).getInsumos_retirados().get(0),
-                        listaRegistros.get(i).getCantidad_Insumos().get(0), listaRegistros.get(i).getServi().getNombreResponsable(),listaRegistros.get(i).getServi().getDniResponsable()};
+                        listaRegistros.get(i).getCantidad_Insumos().get(0), listaRegistros.get(i).getSala().getNombreResponsable(),listaRegistros.get(i).getSala().getDniResponsable()};
                     tabla.addRow(registroAgregar);
 
                     jTableRegistro.setModel(tabla);
@@ -392,7 +392,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                     
                     for(int z=0;z<listaRegistros.get(i).getInsumos_retirados().size();z++){
                         Object[] registroAgregar = {numeroDeRegistro,servicio.getListaRegistros().get(i).getFecha(), listaRegistros.get(i).getInsumos_retirados().get(z),
-                        listaRegistros.get(i).getCantidad_Insumos().get(z), listaRegistros.get(i).getServi().getNombreResponsable(),listaRegistros.get(i).getServi().getDniResponsable()};
+                        listaRegistros.get(i).getCantidad_Insumos().get(z), listaRegistros.get(i).getSala().getNombreResponsable(),listaRegistros.get(i).getSala().getDniResponsable()};
                         tabla.addRow(registroAgregar);
 
                         jTableRegistro.setModel(tabla);
@@ -430,7 +430,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         
  
         if(listaServicio!=null){
-            for(Servicio servi : listaServicio){
+            for(Sala servi : listaServicio){
                 if(jListaServicios.getSelectedItem().toString().equals(servi.getServicio())){
                     idSelect = (servi.getId());
                     servicio = controlLogica.buscarServicio(idSelect);
@@ -454,7 +454,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         DefaultComboBoxModel comboBox = new DefaultComboBoxModel();
         comboBox.addElement("Seleccione un servicio");
         if(listaServicio!=null){
-            for(Servicio servicio : listaServicio){
+            for(Sala servicio : listaServicio){
                 comboBox.addElement(servicio.getServicio());
                 jListaServicios.setModel(comboBox);
             }

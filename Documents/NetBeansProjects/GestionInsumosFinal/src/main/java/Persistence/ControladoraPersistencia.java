@@ -2,9 +2,10 @@
 package Persistence;
 
 import Logica.Hardware;
-import Logica.Servicio;
+import Logica.Sala;
 import Logica.Computadora;
 import Logica.Registro;
+import Logica.Servicio;
 import Logica.Tinta;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class ControladoraPersistencia {
     
     ComputadoraJpaController compuJpaControl = new ComputadoraJpaController();
     HardwareJpaController hardJpaControl = new HardwareJpaController();
+    SalaJpaController salaJpaControl = new SalaJpaController();
     ServicioJpaController servicioJpaControl = new ServicioJpaController();
     TintaJpaController tintaJpaControl = new TintaJpaController();
     RegistroJpaController registroJpaControl = new RegistroJpaController();
@@ -26,6 +28,10 @@ public class ControladoraPersistencia {
         tintaJpaControl.create(nuevoTinta);
     }
 
+    public void nuevoSala(Sala nuevoSala) {
+        salaJpaControl.create(nuevoSala);
+    }
+    
     public void nuevoServicio(Servicio nuevoServicio){     
         servicioJpaControl.create(nuevoServicio);
     }
@@ -51,6 +57,15 @@ public class ControladoraPersistencia {
         }
     }
 
+    public void eliminarSala(int id){
+    
+        try {
+            salaJpaControl.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void eliminarServicio(int id){
         try {
             servicioJpaControl.destroy(id);
@@ -92,6 +107,14 @@ public class ControladoraPersistencia {
         }
     }
 
+    public void editarSala(Sala sala){
+        
+        try {
+            salaJpaControl.edit(sala);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void editarHardware(Hardware hardware) {
         try {
             hardJpaControl.edit(hardware);
@@ -135,6 +158,10 @@ public class ControladoraPersistencia {
         return hardJpaControl.findHardware(Id);
     }
 
+    public Sala buscarSala(int id){
+        return salaJpaControl.findSala(id);
+    }
+    
     public Servicio buscarServicio(int Id) {
         return servicioJpaControl.findServicio(Id);
     }
@@ -161,10 +188,16 @@ public class ControladoraPersistencia {
          return listaHardArrayList;
     }
 
-    public ArrayList<Servicio> buscarListaServicio() {
-         List<Servicio> listaServicio = servicioJpaControl.findServicioEntities();
-         ArrayList<Servicio>listaServicioArrayList = new ArrayList(listaServicio);
-         return listaServicioArrayList;
+    public ArrayList<Sala> buscarListaSalas() {
+         List<Sala> listaSala = salaJpaControl.findSalaEntities();
+         ArrayList<Sala>listaSalaArrayList = new ArrayList(listaSala);
+         return listaSalaArrayList;
+    }
+    
+    public ArrayList<Servicio> buscarListaServicios(){
+        List<Servicio>listaServicio= servicioJpaControl.findServicioEntities();
+        ArrayList<Servicio>listaServicioArrayList= new ArrayList(listaServicio);
+        return listaServicioArrayList;
     }
     
     public ArrayList<Registro> buscarListaRegistro(){
@@ -172,6 +205,8 @@ public class ControladoraPersistencia {
         ArrayList<Registro>listaRegistroArrayList = new ArrayList(listaRegistro);
         return listaRegistroArrayList;
     }
+
+
 
 
 }

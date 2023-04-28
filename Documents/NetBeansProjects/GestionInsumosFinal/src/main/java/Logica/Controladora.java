@@ -38,6 +38,9 @@ public class Controladora {
         controlPersis.nuevoTinta(nuevoTinta);
     }
     
+    public void nuevoSala(Sala nuevoSala){
+        controlPersis.nuevoSala(nuevoSala);
+    }
     public void nuevoServicio(Servicio nuevoServicio){
         controlPersis.nuevoServicio(nuevoServicio);
     }
@@ -84,7 +87,11 @@ public class Controladora {
         controlPersis.editarHardware(hardware);
     }
     
-    public void editarServicio(Servicio servicio){
+    public void editarSala(Sala sala){
+        controlPersis.editarSala(sala);
+    }
+    
+    public void editarServicio (Servicio servicio){
         controlPersis.editarServicio(servicio);
     }
     
@@ -110,6 +117,10 @@ public class Controladora {
         return controlPersis.buscarHardware(Id);
     }
     
+    public Sala buscarSala(int Id){
+        return controlPersis.buscarSala(Id);
+    }
+    
     public Servicio buscarServicio(int Id){
         return controlPersis.buscarServicio(Id);
     }
@@ -130,8 +141,12 @@ public class Controladora {
         return controlPersis.buscarListaHardware();
     }
     
-    public ArrayList<Servicio>buscarListaServicio(){
-        return controlPersis.buscarListaServicio();
+    public ArrayList<Sala>buscarListaSala(){
+        return controlPersis.buscarListaSalas();
+    }
+    
+    public ArrayList<Servicio>buscarListaServicios(){
+        return controlPersis.buscarListaServicios();
     }
     
     public ArrayList<Registro>buscarListaRegistro(){

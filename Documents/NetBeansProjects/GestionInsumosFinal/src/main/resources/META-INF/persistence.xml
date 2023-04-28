@@ -5,8 +5,9 @@
     <class>Logica.Computadora</class>
     <class>Logica.Hardware</class>
     <class>Logica.Registro</class>
-    <class>Logica.Servicio</class>
     <class>Logica.Tinta</class>
+    <class>Logica.Sala</class>
+    <class>Logica.Servicio</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestioninsumos?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

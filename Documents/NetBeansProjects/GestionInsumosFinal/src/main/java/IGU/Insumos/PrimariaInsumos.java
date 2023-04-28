@@ -6,6 +6,7 @@ import Logica.Computadora;
 import Logica.Controladora;
 import Logica.Hardware;
 import Logica.Registro;
+import Logica.Sala;
 import Logica.Servicio;
 import Logica.Tinta;
 import java.awt.Graphics;
@@ -30,11 +31,11 @@ public class PrimariaInsumos extends javax.swing.JFrame {
          
     
     Controladora controlLogica = new Controladora();
-    ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicio();       
+    ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicios();       
     ArrayList <Tinta> listaTinta = controlLogica.buscarListaTinta();
     ArrayList <Hardware> listaHard = controlLogica.buscarListaHardware();
     ArrayList <Computadora> listaCompu = controlLogica.buscarListaComputadora();
-    Servicio servicioSeleccionado = null;
+    Sala servicioSeleccionado = null;
     int idServicio;
     DefaultTableModel tablaCarrito = null;
     DefaultComboBoxModel comboModel =new DefaultComboBoxModel();
@@ -909,7 +910,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
 
     private void boxServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxServicioActionPerformed
         if(listaServicios!=null){
-            for(Servicio servicio : listaServicios){
+            for(Sala servicio : listaServicios){
                 if(servicio.getServicio().equals(boxServicio.getSelectedItem().toString())){
                     idServicio = servicio.getId();
                     break;
@@ -1017,14 +1018,14 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     
     private void rellenarCamposServicio() {
         
-        Collections.sort(listaServicios, new Comparator <Servicio>() {
+        Collections.sort(listaServicios, new Comparator <Sala>() {
             @Override
-            public int compare(Servicio o1, Servicio o2) {
+            public int compare(Sala o1, Sala o2) {
                 return o1.getServicio().compareTo(o2.getServicio());
             }
         });
         
-        for(Servicio servicio : listaServicios)
+        for(Sala servicio : listaServicios)
         {
             boxServicio.addItem(servicio.getServicio());
         }

@@ -6,7 +6,7 @@ import Logica.Computadora;
 import Logica.Controladora;
 import Logica.Hardware;
 import Logica.Registro;
-import Logica.Servicio;
+import Logica.Sala;
 import Logica.Tinta;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

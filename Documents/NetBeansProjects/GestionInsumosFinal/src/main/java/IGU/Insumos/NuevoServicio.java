@@ -2,7 +2,7 @@
 package IGU.Insumos;
 import Logica.Controladora;
 import Logica.Registro;
-import Logica.Servicio;
+import Logica.Sala;
 import java.util.LinkedList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -226,7 +226,7 @@ public class NuevoServicio extends javax.swing.JFrame {
         if(!txtNombre.getText().equals("")){
             if(!txtNumeroServ.getText().equals("")){
                 if(!txtJefe.getText().equals("")){
-                    Servicio servicio = new Servicio();
+                    Sala servicio = new Sala();
                     servicio.setSala(txtNumeroServ.getText());
                     servicio.setServicio(capitalize(txtNombre.getText()));
                     servicio.setJefeSala(txtJefe.getText());

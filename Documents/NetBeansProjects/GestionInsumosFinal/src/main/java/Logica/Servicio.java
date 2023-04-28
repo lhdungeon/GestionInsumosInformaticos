@@ -2,8 +2,7 @@
 package Logica;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import javax.persistence.Basic;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,57 +11,28 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Servicio implements Serializable {
-    
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int id;
 
-    @Basic
-    private String jefeSala;
-    private String sala;
-    private String servicio;
-    private String nombreResponsable;
-    private String dniResponsable;
-    private String numeroInterno;
-    private String Observaciones;
-            
-   @OneToMany(mappedBy="servi")
-   private LinkedList<Registro> listaRegistros;
-    
     public Servicio() {
+
     }
 
-    public Servicio(int id, String jefeSala, String sala, String servicio, String nombreResponsable, String dniResponsable, String numeroInterno, String Observaciones, LinkedList<Registro> listaRegistros) {
+    public Servicio(int id, String nombreServicio, String jefeServicio, ArrayList<Sala> sala) {
         this.id = id;
-        this.jefeSala = jefeSala;
+        this.nombreServicio = nombreServicio;
+        this.jefeServicio = jefeServicio;
         this.sala = sala;
-        this.servicio = servicio;
-        this.nombreResponsable = nombreResponsable;
-        this.dniResponsable = dniResponsable;
-        this.numeroInterno = numeroInterno;
-        this.Observaciones = Observaciones;
-        this.listaRegistros = listaRegistros;
-    }
-
-    public String getObservaciones() {
-        return Observaciones;
-    }
-
-    public void setObservaciones(String Observaciones) {
-        this.Observaciones = Observaciones;
     }
 
 
-
-    public LinkedList<Registro> getListaRegistros() {
-        return listaRegistros;
-    }
-
-    public void setListaRegistros(LinkedList<Registro> listaRegistros) {
-        this.listaRegistros = listaRegistros;
-    }
-
-
+    
+    private String nombreServicio;
+    private String jefeServicio;
+    
+    @OneToMany(mappedBy="servicio")
+    private ArrayList <Sala> sala;
 
     public int getId() {
         return id;
@@ -72,53 +42,28 @@ public class Servicio implements Serializable {
         this.id = id;
     }
 
-    public String getJefeSala() {
-        return jefeSala;
+    public String getNombreServicio() {
+        return nombreServicio;
     }
 
-    public void setJefeSala(String jefeSala) {
-        this.jefeSala = jefeSala;
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
 
-    public String getSala() {
+    public String getJefeServicio() {
+        return jefeServicio;
+    }
+
+    public void setJefeServicio(String jefeServicio) {
+        this.jefeServicio = jefeServicio;
+    }
+
+    public ArrayList<Sala> getSala() {
         return sala;
     }
 
-    public void setSala(String sala) {
+    public void setSala(ArrayList<Sala> sala) {
         this.sala = sala;
     }
-
-    public String getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
-    }
-
-    public String getNombreResponsable() {
-        return nombreResponsable;
-    }
-
-    public void setNombreResponsable(String nombreResponsable) {
-        this.nombreResponsable = nombreResponsable;
-    }
-
-    public String getDniResponsable() {
-        return dniResponsable;
-    }
-
-    public void setDniResponsable(String dniResponsable) {
-        this.dniResponsable = dniResponsable;
-    }
-
-    public String getNumeroInterno() {
-        return numeroInterno;
-    }
-
-    public void setNumeroInterno(String numeroInterno) {
-        this.numeroInterno = numeroInterno;
-    }
-      
     
 }

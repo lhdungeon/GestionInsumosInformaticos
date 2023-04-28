@@ -26,6 +26,7 @@ public class RegistroJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+
     
     public RegistroJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");

@@ -1,7 +1,7 @@
 
 package IGU.Insumos;
 import Logica.Controladora;
-import Logica.Servicio;
+import Logica.Sala;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -10,7 +10,7 @@ public class EditarServicio extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
     int id;
-    Servicio servicio =null;
+    Sala servicio =null;
     
     public EditarServicio(int id) {
         initComponents();

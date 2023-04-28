@@ -29,18 +29,18 @@ public class Registro implements Serializable {
     Date fecha;
     
     @ManyToOne
-    private Servicio servi;
+    private Sala sala;
 
     public Registro() {
     }
 
-    public Registro(int id_registro, ArrayList<String> insumos_retirados, ArrayList<Integer> cantidad_Insumos, String servicio, Date fecha, Servicio servi) {
+    public Registro(int id_registro, ArrayList<String> insumos_retirados, ArrayList<Integer> cantidad_Insumos, String servicio, Date fecha, Sala sala) {
         this.id_registro = id_registro;
         this.insumos_retirados = insumos_retirados;
         this.cantidad_Insumos = cantidad_Insumos;
         this.servicio = servicio;
         this.fecha = fecha;
-        this.servi = servi;
+        this.sala = sala;
     }
 
     public ArrayList<Integer> getCantidad_Insumos() {
@@ -53,12 +53,12 @@ public class Registro implements Serializable {
 
 
 
-    public Servicio getServi() {
-        return servi;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setServi(Servicio servi) {
-        this.servi = servi;
+    public void setSala(Sala servi) {
+        this.sala = servi;
     }
 
     
