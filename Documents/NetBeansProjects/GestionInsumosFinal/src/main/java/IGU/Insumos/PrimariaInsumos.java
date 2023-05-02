@@ -9,19 +9,12 @@ import Logica.Registro;
 import Logica.Sala;
 import Logica.Servicio;
 import Logica.Tinta;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
-import java.awt.print.*;
-import java.awt.PrintJob;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,12 +24,20 @@ public class PrimariaInsumos extends javax.swing.JFrame {
          
     
     Controladora controlLogica = new Controladora();
-    ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicios();       
+    
+    ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicios();
+    ArrayList <Sala> listaSalas = new ArrayList();
     ArrayList <Tinta> listaTinta = controlLogica.buscarListaTinta();
     ArrayList <Hardware> listaHard = controlLogica.buscarListaHardware();
     ArrayList <Computadora> listaCompu = controlLogica.buscarListaComputadora();
-    Sala servicioSeleccionado = null;
+    
+    Sala salaSeleccionado = new Sala();
+    Servicio servicioSeleccionado = null;
+    String serviSelect="";
+    String salaSelect="";
     int idServicio;
+    int idSala;
+    
     DefaultTableModel tablaCarrito = null;
     DefaultComboBoxModel comboModel =new DefaultComboBoxModel();
     String resumen ="";
@@ -44,17 +45,18 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     public PrimariaInsumos() {
         initComponents();
  
-        setearTabla();
+        setearTablas();
         setearFecha();
         rellenarCamposServicio();
         this.setTitle("Gestion de insumos informaticos");        
     }
 
-    private void setearTabla(){
+    private void setearTablas(){
         tablaCarrito = new DefaultTableModel(){
             @Override
             public boolean isCellEditable (int row, int column){return false;} 
         };
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -88,13 +90,16 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         btnAgregarAlCarrito = new javax.swing.JButton();
         txtTipo = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        btnAgregarServicio = new javax.swing.JButton();
-        boxServicio = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         btnExit = new javax.swing.JButton();
         btnFinalizarCompra = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        boxServicios = new javax.swing.JComboBox<>();
+        boxListaSalas = new javax.swing.JComboBox<>();
+        btnAgregarServicio = new javax.swing.JButton();
+        btnAgregarSala = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -105,7 +110,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -411,23 +416,6 @@ public class PrimariaInsumos extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(102, 102, 102));
 
-        btnAgregarServicio.setBackground(new java.awt.Color(102, 102, 102));
-        btnAgregarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
-        btnAgregarServicio.setBorderPainted(false);
-        btnAgregarServicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarServicioActionPerformed(evt);
-            }
-        });
-
-        boxServicio.setBackground(new java.awt.Color(102, 102, 102));
-        boxServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un servicio" }));
-        boxServicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxServicioActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Seleccione el servicio");
 
         jPanel9.setBackground(new java.awt.Color(102, 102, 102));
@@ -485,31 +473,85 @@ public class PrimariaInsumos extends javax.swing.JFrame {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
+        jLabel6.setText("Seleccione el sector");
+
+        boxServicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxServiciosActionPerformed(evt);
+            }
+        });
+
+        boxListaSalas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxListaSalas.setEnabled(false);
+        boxListaSalas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxListaSalasActionPerformed(evt);
+            }
+        });
+
+        btnAgregarServicio.setBackground(new java.awt.Color(102, 102, 102));
+        btnAgregarServicio.setForeground(new java.awt.Color(102, 102, 102));
+        btnAgregarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
+        btnAgregarServicio.setToolTipText("Aguante el amargo obrero");
+        btnAgregarServicio.setBorderPainted(false);
+        btnAgregarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarServicioActionPerformed(evt);
+            }
+        });
+
+        btnAgregarSala.setBackground(new java.awt.Color(102, 102, 102));
+        btnAgregarSala.setForeground(new java.awt.Color(102, 102, 102));
+        btnAgregarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
+        btnAgregarSala.setToolTipText("Aguante el amargo obrero");
+        btnAgregarSala.setBorderPainted(false);
+        btnAgregarSala.setEnabled(false);
+        btnAgregarSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarSalaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnAgregarServicio)
-                .addGap(99, 99, 99))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(boxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boxListaSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarSala, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(183, 183, 183))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(boxServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarServicio))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarServicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(boxServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                    .addComponent(btnAgregarSala)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boxListaSalas, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -533,13 +575,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(27, 12, 0, 0);
         jPanel1.add(jSeparator1, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        getContentPane().add(jPanel1, gridBagConstraints);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 5, -1, 897));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -696,14 +732,6 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         else{mostrarMensaje("No quedan insumos de este tipo en el stock", "Error","Error de carga");}
     }//GEN-LAST:event_btnAgregarAlCarritoActionPerformed
 
-    private void btnAgregarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarServicioActionPerformed
-        NuevoServicio nuevoServicio = new NuevoServicio();
-        nuevoServicio.setVisible(true);
-        nuevoServicio.setLocationRelativeTo(this);
-        this.dispose();
-        
-    }//GEN-LAST:event_btnAgregarServicioActionPerformed
-
     private void btnEliminarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarItem1ActionPerformed
 
          if(tableCarrito.getSelectedRow()!=-1){
@@ -813,14 +841,13 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         boolean hardCargada=false;
         boolean compuCargada= false;
         
-        if(boxServicio.getSelectedItem().toString().equals("Seleccione un servicio")){
+        if(boxServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
             mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
         }
-                
         else{
         
             servicioSeleccionado = controlLogica.buscarServicio(idServicio);
-         
+            
             for(int i =0;i<tableCarrito.getRowCount();i++){
                 if(tableCarrito.getValueAt(i, 2).toString().equals("Tinta")){
                     tintaCargada = true;
@@ -870,28 +897,27 @@ public class PrimariaInsumos extends javax.swing.JFrame {
             for(int i=0;i<tableCarrito.getRowCount();i++){
                 String insumoSel = tableCarrito.getValueAt(i, 0).toString();
                 int insCantidad = Integer.parseInt(tableCarrito.getValueAt(i,1).toString());
-                lista.add(lista.size(), insumoSel);               
+                lista.add(lista.size(), insumoSel);                      
                 listaCantidad.add(listaCantidad.size(), insCantidad);
             }
 
 
-            LinkedList<Registro>listaRegistro = servicioSeleccionado.getListaRegistros();                    
+            LinkedList<Registro>listaRegistro = salaSeleccionado.getListaRegistros();                    
 
             Registro registro = new Registro();
             registro.setFecha(controlLogica.getDateUnformat());
-            registro.setServicio(boxServicio.getSelectedItem().toString());
+            registro.setServicio(boxServicios.getSelectedItem().toString());
             registro.setInsumos_retirados(lista);
             registro.setCantidad_Insumos(listaCantidad);
             listaRegistro.add(registro);
-
-            registro.setServi(servicioSeleccionado);
+            registro.setSala(salaSeleccionado);
 
             controlLogica.nuevoRegistro(registro);
-            controlLogica.editarServicio(servicioSeleccionado);
+            controlLogica.editarSala(salaSeleccionado);
 
             mostrarMensaje("La carga se completo correctamente","Informacion","Puede retirar su insumo");
             reset();                    
-        }
+        } 
     }//GEN-LAST:event_btnFinalizarCompraActionPerformed
 
     private void btnEditarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarInsumoActionPerformed
@@ -908,30 +934,18 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnConsultaActionPerformed
 
-    private void boxServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxServicioActionPerformed
-        if(listaServicios!=null){
-            for(Sala servicio : listaServicios){
-                if(servicio.getServicio().equals(boxServicio.getSelectedItem().toString())){
-                    idServicio = servicio.getId();
-                    break;
-                }
-            }
-        }
-    }//GEN-LAST:event_boxServicioActionPerformed
-
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        if(!boxServicio.getSelectedItem().toString().equals("Seleccione un servicio")){
+        if(!boxServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
+            
             servicioSeleccionado = controlLogica.buscarServicio(idServicio);
 
-            resumen ="El servicio de " + servicioSeleccionado.getServicio()+ " : " + servicioSeleccionado.getSala() + " lleva " + "\n";
+            resumen ="El servicio de " + servicioSeleccionado.getNombreServicio()+ " : " + salaSeleccionado.getSala() + " lleva " + "\n";
 
             for(int a=0;a<tableCarrito.getRowCount();a++){
                 resumen = resumen + tableCarrito.getValueAt(a, 0) +" x " +tableCarrito.getValueAt(a,1)+ "\n";
             }
 
-            resumen = resumen + "\n" + "Responsable a cargo: " + servicioSeleccionado.getJefeSala() + "\n" + controlLogica.getDate();
-
-
+            resumen = resumen + "\n" + "Responsable a cargo: " + salaSeleccionado.getJefeSala() + "\n" + controlLogica.getDate();
 
             ResumenRetiro resumenW = new ResumenRetiro(resumen);
             resumenW.setVisible(true);
@@ -948,9 +962,65 @@ public class PrimariaInsumos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosed
 
+    private void boxServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxServiciosActionPerformed
+        if(boxServicios.getSelectedIndex() != 0){
+            for(Servicio servi : listaServicios){
+                if(servi.getNombreServicio().equals(boxServicios.getSelectedItem())){
+                    servicioSeleccionado = servi;                    
+                    idServicio = servi.getId();
+                    
+                }
+            }
+            if(servicioSeleccionado != null){
+                
+                boxListaSalas.removeAllItems();
+                if(!servicioSeleccionado.getSala().isEmpty()){
+                    for(int i=0; i< servicioSeleccionado.getSala().size();i++){
+                        boxListaSalas.addItem(servicioSeleccionado.getSala().get(i).getSala());
+                    }
+                }
+                
+                listaSalas = servicioSeleccionado.getSala();
+                btnAgregarSala.setEnabled(true);
+                boxListaSalas.setEnabled(true);
+                                
+            }
+        }
+        
+        else{ 
+            
+            listaSalas.clear();
+            btnAgregarSala.setEnabled(false);
+            boxListaSalas.setEnabled(false);
+        }
+    }//GEN-LAST:event_boxServiciosActionPerformed
+
+    private void btnAgregarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarServicioActionPerformed
+        NuevoServicio nuevoServicio = new NuevoServicio();
+        nuevoServicio.setVisible(true);
+        nuevoServicio.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarServicioActionPerformed
+
+    private void btnAgregarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSalaActionPerformed
+        NuevoSala nuevoSala = new NuevoSala(servicioSeleccionado);
+        nuevoSala.setVisible(true);
+        nuevoSala.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarSalaActionPerformed
+
+    private void boxListaSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxListaSalasActionPerformed
+       
+            for(Sala sala : listaSalas){
+                if(sala.getSala().equals(boxListaSalas.getSelectedItem())){
+                    salaSeleccionado = sala;
+                    break;
+                }
+            }
+    }//GEN-LAST:event_boxListaSalasActionPerformed
+
     private void limpiarListaStock(){
         comboModel = new DefaultComboBoxModel();
-        
         
         comboModel.removeAllElements();
        
@@ -1018,17 +1088,30 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     
     private void rellenarCamposServicio() {
         
-        Collections.sort(listaServicios, new Comparator <Sala>() {
+        Collections.sort(listaServicios, new Comparator <Servicio>() {
             @Override
-            public int compare(Sala o1, Sala o2) {
-                return o1.getServicio().compareTo(o2.getServicio());
+            public int compare(Servicio o1, Servicio o2) {
+                return o1.getNombreServicio().compareTo(o2.getNombreServicio());
             }
+
         });
         
-        for(Sala servicio : listaServicios)
-        {
-            boxServicio.addItem(servicio.getServicio());
+        boxServicios.removeAllItems();
+        
+        if(!listaServicios.isEmpty()){         
+            boxServicios.addItem("Seleccione un servicio");
+            
+            for(Servicio servi : listaServicios){
+                boxServicios.addItem(servi.getNombreServicio());                 
+            }
         }
+        
+        else{
+            boxServicios.addItem("Cargue un servicio");
+        }
+           
+        boxListaSalas.removeAllItems();
+        
     }
     
     private void removerFila(int selectedRow) {
@@ -1066,10 +1149,12 @@ public class PrimariaInsumos extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxListaSalas;
     private javax.swing.JComboBox<String> boxListaStock;
-    private javax.swing.JComboBox<String> boxServicio;
+    private javax.swing.JComboBox<String> boxServicios;
     private javax.swing.JButton btnAgregarAlCarrito;
     private javax.swing.JButton btnAgregarInsumo;
+    private javax.swing.JButton btnAgregarSala;
     private javax.swing.JButton btnAgregarServicio;
     private javax.swing.JButton btnCompu;
     private javax.swing.JButton btnConsulta;
@@ -1083,6 +1168,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

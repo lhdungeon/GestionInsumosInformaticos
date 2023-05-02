@@ -2,6 +2,7 @@
 package IGU.Insumos;
 import Logica.Controladora;
 import Logica.Sala;
+import Logica.Servicio;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -10,7 +11,8 @@ public class EditarServicio extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
     int id;
-    Sala servicio =null;
+    Servicio servicio =null;
+    Sala sala = null;
     
     public EditarServicio(int id) {
         initComponents();
@@ -216,13 +218,13 @@ public class EditarServicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCargarTintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTintaActionPerformed
-        servicio.setServicio(capitalize(txtNombre.getText()));
+        /*servicio.setServicio(capitalize(txtNombre.getText()));
         servicio.setSala(txtNumeroServ.getText());
         servicio.setJefeSala(txtJefe.getText());
         servicio.setNombreResponsable(txtResponsable.getText());
         servicio.setDniResponsable(txtDni.getText());
         servicio.setNumeroInterno(txtNumeroInterno.getText());
-        
+        */
         controlLogica.editarServicio(servicio);
         
         mostrarMensaje("La edicion se completo correctamente","Informacion","Completo");
@@ -271,12 +273,12 @@ public class EditarServicio extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatos(int id) {
-        txtNombre.setText(servicio.getServicio());
+        /*txtNombre.setText(servicio.getServicio());
         txtNumeroServ.setText(servicio.getSala());
         txtJefe.setText(servicio.getJefeSala());
         txtResponsable.setText(servicio.getNombreResponsable());
         txtDni.setText(servicio.getDniResponsable());
-        txtNumeroInterno.setText(servicio.getNumeroInterno());
+        txtNumeroInterno.setText(servicio.getNumeroInterno());*/
     }
     
     private void mostrarMensaje(String mensaje, String tipo, String titulo) {

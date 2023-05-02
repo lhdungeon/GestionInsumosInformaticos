@@ -5,6 +5,7 @@ package IGU.Insumos;
 import Logica.Controladora;
 import Logica.Registro;
 import Logica.Sala;
+import Logica.Servicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
 
     Controladora controlLogica = new Controladora();
-    Sala servicio = null;
-    ArrayList<Sala> listaServicio;
+    Servicio servicio = null;
+    Sala sala = null;
+    ArrayList<Servicio> listaServicio;
     LinkedList<Registro>listaRegistros;
     int idSelect;
     
@@ -36,7 +38,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Gestion de insumos informaticos");
         cargarTabla();
-        listaServicio = controlLogica.buscarListaServicio();
+        listaServicio = controlLogica.buscarListaServicios();
         
     }
 
@@ -62,6 +64,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         comboListaIndividualInsumos = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRegistro = new javax.swing.JTable();
+        jListaServicios1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -170,6 +173,13 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTableRegistro);
 
+        jListaServicios1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jListaServicios1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jListaServicios1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -186,7 +196,9 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                             .addComponent(btnBuscarTotalInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jListaServicios1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +222,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel11Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jListaServicios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
@@ -240,7 +255,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 884, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,10 +295,10 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
-        Collections.sort(listaServicio, new Comparator <Sala>() {
+        Collections.sort(listaServicio, new Comparator <Servicio>() {
             @Override
-            public int compare(Sala o1, Sala o2) {
-                return o1.getSala().compareTo(o2.getSala());
+            public int compare(Servicio o1, Servicio o2) {
+                return o1.getNombreServicio().compareTo(o2.getNombreServicio());
             }
         });
         cargarListaServicios();
@@ -298,8 +313,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
 
         String insTotal = comboListaIndividualInsumos.getSelectedItem().toString();
-        String fechaInicial=dateFormat.format(servicio.getListaRegistros().getFirst().getFecha());
-        String fechaFinal=dateFormat.format(servicio.getListaRegistros().getLast().getFecha());
+        String fechaInicial=dateFormat.format(sala.getListaRegistros().getFirst().getFecha());
+        String fechaFinal=dateFormat.format(sala.getListaRegistros().getLast().getFecha());
         
         int total=0;
        
@@ -312,7 +327,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         }
         
 
-        String mensaje = "El servicio "+ servicio.getServicio()+" consumio un total de "+total+" del insumo "+insTotal+"."+"\n"+"Desde la fecha "+fechaInicial+" hasta la fecha "+ fechaFinal;
+        String mensaje = "El servicio "+ servicio.getNombreServicio()+" consumio un total de "+total+" del insumo "+insTotal+"."+"\n"+"Desde la fecha "+fechaInicial+" hasta la fecha "+ fechaFinal;
         mostrarMensaje(mensaje,"Informacion", "Conteo finalizado");
 
         btnBuscarTotalInsumo.setEnabled(true);
@@ -322,8 +337,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         if(jListaServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
 
         }
-        else{
-            servicio.setObservaciones(txtObservaciones.getText());
+        else{sala.setObservaciones(txtObservaciones.getText());
             controlLogica.editarServicio(servicio);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -356,7 +370,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         else{
 
             int numeroDeRegistro=1;
-            listaRegistros=servicio.getListaRegistros();
+            listaRegistros=sala.getListaRegistros();
     
             String insumoAListar ="";
 
@@ -374,14 +388,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                
                 if(listaRegistros.get(i).getInsumos_retirados().size()==1){
                 
-                    String date = dateFormat.format(servicio.getListaRegistros().get(i).getFecha());
+                    String date = dateFormat.format(sala.getListaRegistros().get(i).getFecha());
                     Object[] registroAgregar = {numeroDeRegistro,date, listaRegistros.get(i).getInsumos_retirados().get(0),
                         listaRegistros.get(i).getCantidad_Insumos().get(0), listaRegistros.get(i).getSala().getNombreResponsable(),listaRegistros.get(i).getSala().getDniResponsable()};
                     tabla.addRow(registroAgregar);
 
                     jTableRegistro.setModel(tabla);
                   
-                    insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(0);   
+                    insumoAListar = sala.getListaRegistros().get(i).getInsumos_retirados().get(0);   
                     if(!insumosNombreTotal.contains(insumoAListar)){
                         insumosNombreTotal.add(insumoAListar);
                     }
@@ -391,13 +405,13 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                 else if(listaRegistros.get(i).getInsumos_retirados().size()>1){
                     
                     for(int z=0;z<listaRegistros.get(i).getInsumos_retirados().size();z++){
-                        Object[] registroAgregar = {numeroDeRegistro,servicio.getListaRegistros().get(i).getFecha(), listaRegistros.get(i).getInsumos_retirados().get(z),
+                        Object[] registroAgregar = {numeroDeRegistro,sala.getListaRegistros().get(i).getFecha(), listaRegistros.get(i).getInsumos_retirados().get(z),
                         listaRegistros.get(i).getCantidad_Insumos().get(z), listaRegistros.get(i).getSala().getNombreResponsable(),listaRegistros.get(i).getSala().getDniResponsable()};
                         tabla.addRow(registroAgregar);
 
                         jTableRegistro.setModel(tabla);
                       
-                        insumoAListar = servicio.getListaRegistros().get(i).getInsumos_retirados().get(z);
+                        insumoAListar = sala.getListaRegistros().get(i).getInsumos_retirados().get(z);
                         if(!insumosNombreTotal.contains(insumoAListar)){
                             insumosNombreTotal.add(insumoAListar);
                         }
@@ -430,12 +444,12 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         
  
         if(listaServicio!=null){
-            for(Sala servi : listaServicio){
-                if(jListaServicios.getSelectedItem().toString().equals(servi.getServicio())){
+            for(Servicio servi : listaServicio){
+                if(jListaServicios.getSelectedItem().toString().equals(servi.getNombreServicio())){
                     idSelect = (servi.getId());
                     servicio = controlLogica.buscarServicio(idSelect);
                     txtId.setText(Integer.toString(idSelect));
-                    txtObservaciones.setText(servi.getObservaciones());
+                    txtObservaciones.setText(sala.getObservaciones());
                     break;
                 }
             }
@@ -449,13 +463,17 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtras2ActionPerformed
 
+    private void jListaServicios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaServicios1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListaServicios1ActionPerformed
+
 
     private void cargarListaServicios() {
         DefaultComboBoxModel comboBox = new DefaultComboBoxModel();
         comboBox.addElement("Seleccione un servicio");
         if(listaServicio!=null){
-            for(Sala servicio : listaServicio){
-                comboBox.addElement(servicio.getServicio());
+            for(Servicio servicio : listaServicio){
+                comboBox.addElement(servicio.getNombreServicio());
                 jListaServicios.setModel(comboBox);
             }
         }    
@@ -485,6 +503,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JComboBox<String> jListaServicios;
+    private javax.swing.JComboBox<String> jListaServicios1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel9;

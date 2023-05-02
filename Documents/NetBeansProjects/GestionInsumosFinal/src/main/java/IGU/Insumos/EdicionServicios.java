@@ -3,6 +3,7 @@ package IGU.Insumos;
 
 import Logica.Controladora;
 import Logica.Sala;
+import Logica.Servicio;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ public class EdicionServicios extends javax.swing.JFrame {
 
  
     Controladora controlLogica = new Controladora();
+    Sala sala = null;
     
     public EdicionServicios() {
         initComponents();
@@ -234,10 +236,10 @@ public class EdicionServicios extends javax.swing.JFrame {
         String titulos[] = {"ID", "Servicio","Numero de sala","Jefe de sala","Responsable","Dni responsable","Numero de interno"};
         tabla.setColumnIdentifiers(titulos);
         
-        List <Sala> listaServicios = controlLogica.buscarListaServicio();
+        List <Servicio> listaServicios = controlLogica.buscarListaServicios();
         if(listaServicios!= null){
-            for(Sala servicio : listaServicios){
-               Object objeto[] ={servicio.getId(),servicio.getServicio(),servicio.getSala(),servicio.getJefeSala(),servicio.getNombreResponsable(),servicio.getDniResponsable(),servicio.getNumeroInterno()};
+            for(Servicio servicio : listaServicios){
+               Object objeto[] ={servicio.getId(),servicio.getNombreServicio(),servicio.getSala(),sala.getJefeSala(),sala.getNombreResponsable(),sala.getDniResponsable(),sala.getNumeroInterno()};
                tabla.addRow(objeto);
                jTable1.setModel(tabla);
             }

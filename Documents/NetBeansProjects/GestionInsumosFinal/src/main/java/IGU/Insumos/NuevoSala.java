@@ -9,11 +9,14 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
-public class NuevoServicio extends javax.swing.JFrame {
+public class NuevoSala extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
-  
-    public NuevoServicio() {
+    Servicio servi = null;
+    
+    public NuevoSala(Servicio servicioSeleccionado) {
+        
+        servi = servicioSeleccionado;
         initComponents();
         this.setTitle("Gestion de insumos informaticos");        
     }
@@ -28,12 +31,18 @@ public class NuevoServicio extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtNumeroServ = new javax.swing.JTextField();
         txtJefe = new javax.swing.JTextField();
+        txtResponsable = new javax.swing.JTextField();
         btnCargarTinta = new javax.swing.JButton();
         btnCancelarCarga = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtDni = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtNumeroInterno = new javax.swing.JTextField();
         txtError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,7 +51,7 @@ public class NuevoServicio extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Servicios");
+        jLabel5.setText("Salas");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/wolf (1).png"))); // NOI18N
 
@@ -69,9 +78,11 @@ public class NuevoServicio extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
 
-        jLabel7.setText("Nombre de servicio ");
+        jLabel8.setText("Sala / Sector");
 
         jLabel9.setText("Responsable (Jefatura)");
+
+        jLabel10.setText("Responsable del retiro");
 
         btnCargarTinta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lifting.png"))); // NOI18N
         btnCargarTinta.setToolTipText("Cargar");
@@ -89,6 +100,10 @@ public class NuevoServicio extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Dni responsable");
+
+        jLabel12.setText("Numero interno");
+
         txtError.setForeground(new java.awt.Color(255, 0, 51));
         txtError.setText("-");
 
@@ -100,23 +115,36 @@ public class NuevoServicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(199, 199, 199))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumeroServ, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(16, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtJefe, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addComponent(btnCargarTinta)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnCancelarCarga)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtJefe, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(btnCargarTinta)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCancelarCarga)))
+                                .addComponent(txtNumeroInterno, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -124,13 +152,25 @@ public class NuevoServicio extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel8)
+                    .addComponent(txtNumeroServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtJefe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtNumeroInterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnCargarTinta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +186,7 @@ public class NuevoServicio extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,15 +214,19 @@ public class NuevoServicio extends javax.swing.JFrame {
 
     private void btnCargarTintaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTintaActionPerformed
         //Evalua que todos los campos estes completos
-        if(!txtNombre.getText().equals("")){
-            if(!txtJefe.getText().equals("")){
-                
-                    Servicio servicio = new Servicio();
+        if(!txtNumeroServ.getText().equals("")){
+            if(!txtResponsable.getText().equals("")){
+                if(!txtJefe.getText().equals("")){
+                    Sala sala = new Sala();
+                    sala.setSala(txtNumeroServ.getText());                    
+                    sala.setJefeSala(txtJefe.getText());
+                    sala.setNombreResponsable(txtResponsable.getText());
+                    sala.setNumeroInterno(txtNumeroInterno.getText());
+                    sala.setDniResponsable(txtDni.getText());
                     
-                    servicio.setNombreServicio(capitalize(txtNombre.getText()));
-                    servicio.setJefeServicio(txtJefe.getText());
-   
-                    controlLogica.nuevoServicio(servicio);
+                    sala.setServicio(servi);
+                 
+                    controlLogica.nuevoSala(sala);
 
                     JOptionPane ventana = new JOptionPane("Carga Exitosa");
                     ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -195,7 +239,11 @@ public class NuevoServicio extends javax.swing.JFrame {
                     primaria.setVisible(true);
                     primaria.setLocationRelativeTo(this);
 
-                    this.dispose(); 
+                    this.dispose();
+                }
+                else{
+                    txtError.setText("Ingrese un responsable");
+                }                
             }
             else{
                 txtError.setText("Ingrese un nombre de sala o sector");
@@ -222,15 +270,21 @@ public class NuevoServicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarCarga;
     private javax.swing.JButton btnCargarTinta;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField txtDni;
     private javax.swing.JLabel txtError;
     private javax.swing.JTextField txtJefe;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNumeroInterno;
+    private javax.swing.JTextField txtNumeroServ;
+    private javax.swing.JTextField txtResponsable;
     // End of variables declaration//GEN-END:variables
 }
