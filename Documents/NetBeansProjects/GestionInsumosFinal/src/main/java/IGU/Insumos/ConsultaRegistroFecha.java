@@ -244,7 +244,7 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
                 if(date.equals(date2)){
 
                     Object[]regisAgregar={numeroDeRegistro,date,regis.getInsumos_retirados(),
-                                        regis.getCantidad_Insumos(),regis.getServicio()};
+                                        regis.getCantidad_Insumos(),regis.getSala().getSala()};
 
                     tabla.addRow(regisAgregar);
                     jTableRegistro.setModel(tabla);

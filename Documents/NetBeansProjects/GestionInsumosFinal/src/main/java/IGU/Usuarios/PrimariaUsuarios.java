@@ -1,5 +1,5 @@
 
-package IGU.Insumos;
+package IGU.Usuarios;
 
 import Logica.Controladora;
 import Logica.Servicio;

@@ -23,10 +23,14 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
 
     Controladora controlLogica = new Controladora();
+    
     Servicio servicio = null;
     Sala sala = null;
+    
+    ArrayList<Sala> listaSalas = new ArrayList();
     ArrayList<Servicio> listaServicio;
     LinkedList<Registro>listaRegistros;
+    
     int idSelect;
     
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -64,7 +68,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         comboListaIndividualInsumos = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRegistro = new javax.swing.JTable();
-        jListaServicios1 = new javax.swing.JComboBox<>();
+        jListaSalas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -125,6 +129,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seo (1).png"))); // NOI18N
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -173,10 +178,10 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTableRegistro);
 
-        jListaServicios1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jListaServicios1.addActionListener(new java.awt.event.ActionListener() {
+        jListaSalas.setEnabled(false);
+        jListaSalas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jListaServicios1ActionPerformed(evt);
+                jListaSalasActionPerformed(evt);
             }
         });
 
@@ -198,7 +203,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jListaServicios1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jListaSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +233,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
                             .addContainerGap()
                             .addComponent(jListaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jListaServicios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jListaSalas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,12 +366,17 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         btnBuscarTotalInsumo.setEnabled(false);
         comboListaIndividualInsumos.removeAllItems();
 
-        if(jListaServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
+        if(jListaServicios.getSelectedItem().toString().equals("Seleccione un servicio") || jListaSalas.getSelectedItem().toString().equals("Seleccione un sector")){
             txtObservaciones.setEnabled(false);
             txtObservaciones.setText("");
             btnBuscarTotalInsumo.setEnabled(false);
 
         }
+        
+        else if(jListaSalas.getSelectedItem().toString().equals("Todos los sectores")){
+            //Listar todos el consumo de todos los sectores de un servicio
+        }        
+        
         else{
 
             int numeroDeRegistro=1;
@@ -442,17 +452,29 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
     private void jListaServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaServiciosActionPerformed
         
- 
         if(listaServicio!=null){
+                     
             for(Servicio servi : listaServicio){
                 if(jListaServicios.getSelectedItem().toString().equals(servi.getNombreServicio())){
                     idSelect = (servi.getId());
                     servicio = controlLogica.buscarServicio(idSelect);
-                    txtId.setText(Integer.toString(idSelect));
-                    txtObservaciones.setText(sala.getObservaciones());
+                    txtId.setText(Integer.toString(idSelect));                  
+                    
+                    jListaSalas.setEnabled(true);
+                    jListaSalas.removeAllItems();
+                    jListaSalas.addItem("Seleccione un sector");
+                    for(int i=0;i<servi.getSala().size();i++){
+                        jListaSalas.addItem(servi.getSala().get(i).getSala());
+                    }
+                    jListaSalas.addItem("Todos los sectores");
+                    
                     break;
                 }
             }
+        }
+        else{
+            jListaSalas.setEnabled(false);
+            
         }
     }//GEN-LAST:event_jListaServiciosActionPerformed
 
@@ -463,9 +485,38 @@ public class ConsultaRegistro extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtras2ActionPerformed
 
-    private void jListaServicios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaServicios1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jListaServicios1ActionPerformed
+    private void jListaSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListaSalasActionPerformed
+        
+        Object selectedItem=jListaSalas.getSelectedItem();
+        String selectedValue=null;
+        
+        if(selectedItem!=null){
+            selectedValue = selectedItem.toString();
+        }
+        
+        if(selectedValue!=null){
+            switch (selectedValue) {
+                case "Seleccione un sector":
+                    jButton1.setEnabled(false);
+                    break;
+                    
+                case "Todos los sectores":
+                    listaSalas = servicio.getSala();
+                    break;
+                    
+                default:
+                    listaSalas = servicio.getSala();
+                    for(Sala sal : listaSalas){
+                        if(sal.getSala().equals(jListaSalas.getSelectedItem().toString())){
+                            sala = sal;
+                            txtObservaciones.setText(sala.getObservaciones());
+                            jButton1.setEnabled(true);
+                            break;
+                        }
+                    }   break;
+            }
+        }
+    }//GEN-LAST:event_jListaSalasActionPerformed
 
 
     private void cargarListaServicios() {
@@ -502,8 +553,8 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<String> jListaSalas;
     private javax.swing.JComboBox<String> jListaServicios;
-    private javax.swing.JComboBox<String> jListaServicios1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel9;

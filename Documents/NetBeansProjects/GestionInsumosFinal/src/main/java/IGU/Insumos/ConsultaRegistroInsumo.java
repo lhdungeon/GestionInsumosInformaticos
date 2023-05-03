@@ -321,7 +321,7 @@ public class ConsultaRegistroInsumo extends javax.swing.JFrame {
                     Object[] registroAgregar = {numeroDeRegistro,date, 
                                                 registro.getInsumos_retirados().get(i),
                                                 registro.getCantidad_Insumos().get(i),
-                                                registro.getServicio()};
+                                                registro.getSala().getSala()};
                        
                     tabla.addRow(registroAgregar);
                     jTableRegistro.setModel(tabla);

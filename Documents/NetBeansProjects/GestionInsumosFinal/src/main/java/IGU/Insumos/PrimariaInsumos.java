@@ -841,7 +841,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
         boolean hardCargada=false;
         boolean compuCargada= false;
         
-        if(boxServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
+        if(boxServicios.getSelectedItem().toString().equals("Seleccione un servicio") || boxListaSalas.getSelectedItem().toString().equals("Seleccione un sector")){
             mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
         }
         else{
@@ -935,7 +935,12 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        if(!boxServicios.getSelectedItem().toString().equals("Seleccione un servicio")){
+        if(boxServicios.getSelectedItem().toString().equals("Seleccione un servicio") || boxListaSalas.getSelectedItem().toString().equals("Seleccione un sector")){
+            
+            mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
+                
+        }
+        else{
             
             servicioSeleccionado = controlLogica.buscarServicio(idServicio);
 
@@ -952,9 +957,6 @@ public class PrimariaInsumos extends javax.swing.JFrame {
             resumenW.setLocationRelativeTo(null);
             resumenW.setResizable(false);
             resumenW.setAlwaysOnTop(true);
-        }
-        else{
-            mostrarMensaje("El servicio seleccionado no es correcto","Error","Verifique el servicio");
         }
     }//GEN-LAST:event_btnPrintActionPerformed
 
@@ -974,6 +976,7 @@ public class PrimariaInsumos extends javax.swing.JFrame {
             if(servicioSeleccionado != null){
                 
                 boxListaSalas.removeAllItems();
+                boxListaSalas.addItem("Seleccione un sector");
                 if(!servicioSeleccionado.getSala().isEmpty()){
                     for(int i=0; i< servicioSeleccionado.getSala().size();i++){
                         boxListaSalas.addItem(servicioSeleccionado.getSala().get(i).getSala());
@@ -1010,7 +1013,9 @@ public class PrimariaInsumos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarSalaActionPerformed
 
     private void boxListaSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxListaSalasActionPerformed
-       
+
+        //salaSeleccionado = null;
+        
             for(Sala sala : listaSalas){
                 if(sala.getSala().equals(boxListaSalas.getSelectedItem())){
                     salaSeleccionado = sala;
