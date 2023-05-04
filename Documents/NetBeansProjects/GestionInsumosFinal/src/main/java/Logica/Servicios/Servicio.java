@@ -1,5 +1,5 @@
 
-package Logica;
+package Logica.Servicios;
 
 import java.io.Serializable;
 import java.util.ArrayList;

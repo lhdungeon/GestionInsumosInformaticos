@@ -3,9 +3,9 @@
 package IGU.Insumos;
 
 import Logica.Controladora;
-import Logica.Registro;
-import Logica.Sala;
-import Logica.Servicio;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class ConsultaRegistro extends javax.swing.JFrame {
     
     ArrayList<Sala> listaSalas = new ArrayList();
     ArrayList<Servicio> listaServicio;
-    LinkedList<Registro>listaRegistros;
+    LinkedList<RegistroInsumos>listaRegistros;
     
     int idSelect;
     
@@ -386,9 +386,9 @@ public class ConsultaRegistro extends javax.swing.JFrame {
 
             tabla.setColumnIdentifiers(titulos);
             
-            Collections.sort(listaRegistros, new Comparator<Registro>() {
+            Collections.sort(listaRegistros, new Comparator<RegistroInsumos>() {
                 @Override
-                public int compare(Registro o1, Registro o2) {
+                public int compare(RegistroInsumos o1, RegistroInsumos o2) {
                     return o1.getFecha().compareTo(o2.getFecha());
                 }
             });

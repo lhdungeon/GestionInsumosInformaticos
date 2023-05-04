@@ -2,13 +2,13 @@
 package IGU.Insumos;
 
 import IGU.InicialServer;
-import Logica.Computadora;
+import Logica.Insumos.Computadora;
 import Logica.Controladora;
-import Logica.Hardware;
-import Logica.Registro;
-import Logica.Sala;
-import Logica.Servicio;
-import Logica.Tinta;
+import Logica.Insumos.Hardware;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.Tinta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -902,9 +902,9 @@ public class PrimariaInsumos extends javax.swing.JFrame {
             }
 
 
-            LinkedList<Registro>listaRegistro = salaSeleccionado.getListaRegistros();                    
+            LinkedList<RegistroInsumos>listaRegistro = salaSeleccionado.getListaRegistros();                    
 
-            Registro registro = new Registro();
+            RegistroInsumos registro = new RegistroInsumos();
             registro.setFecha(controlLogica.getDateUnformat());
             registro.setServicio(boxServicios.getSelectedItem().toString());
             registro.setInsumos_retirados(lista);

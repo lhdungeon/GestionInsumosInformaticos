@@ -1,7 +1,7 @@
 
 package IGU.Insumos;
 
-import Logica.Computadora;
+import Logica.Insumos.Computadora;
 import Logica.Controladora;
 import java.util.List;
 import javax.swing.JDialog;

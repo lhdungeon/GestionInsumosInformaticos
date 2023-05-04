@@ -2,7 +2,7 @@
 package IGU.Usuarios;
 
 import Logica.Controladora;
-import Logica.Servicio;
+import Logica.Servicios.Servicio;
 
 
 public class PrimariaUsuarios extends javax.swing.JFrame {

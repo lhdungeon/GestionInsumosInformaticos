@@ -1,12 +1,12 @@
 
 package Persistence;
 
-import Logica.Hardware;
-import Logica.Sala;
-import Logica.Computadora;
-import Logica.Registro;
-import Logica.Servicio;
-import Logica.Tinta;
+import Logica.Insumos.Hardware;
+import Logica.Servicios.Sala;
+import Logica.Insumos.Computadora;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.Tinta;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ControladoraPersistencia {
         compuJpaControl.create(nuevoComputadora);
     }
     
-    public void nuevoRegistro(Registro nuevoRegistro){
+    public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         registroJpaControl.create(nuevoRegistro);
     }
 
@@ -137,7 +137,7 @@ public class ControladoraPersistencia {
         }
     }
     
-    public void editarRegistro(Registro registro){
+    public void editarRegistro(RegistroInsumos registro){
         try {
             registroJpaControl.edit(registro);
         } catch (Exception ex) {
@@ -166,7 +166,7 @@ public class ControladoraPersistencia {
         return servicioJpaControl.findServicio(Id);
     }
     
-    public Registro buscarRegistro(int id){
+    public RegistroInsumos buscarRegistro(int id){
         return registroJpaControl.findRegistro(id);
     }
 
@@ -200,9 +200,9 @@ public class ControladoraPersistencia {
         return listaServicioArrayList;
     }
     
-    public ArrayList<Registro> buscarListaRegistro(){
-        List<Registro> listaRegistro = registroJpaControl.findRegistroEntities();
-        ArrayList<Registro>listaRegistroArrayList = new ArrayList(listaRegistro);
+    public ArrayList<RegistroInsumos> buscarListaRegistro(){
+        List<RegistroInsumos> listaRegistro = registroJpaControl.findRegistroEntities();
+        ArrayList<RegistroInsumos>listaRegistroArrayList = new ArrayList(listaRegistro);
         return listaRegistroArrayList;
     }
 

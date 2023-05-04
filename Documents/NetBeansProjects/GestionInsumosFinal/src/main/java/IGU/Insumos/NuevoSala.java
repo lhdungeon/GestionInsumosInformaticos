@@ -1,9 +1,9 @@
 
 package IGU.Insumos;
 import Logica.Controladora;
-import Logica.Registro;
-import Logica.Sala;
-import Logica.Servicio;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
 import java.util.LinkedList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;

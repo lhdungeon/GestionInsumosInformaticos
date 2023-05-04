@@ -1,5 +1,5 @@
 
-package Logica;
+package Logica.Insumos;
 
 import javax.persistence.Basic;
 import javax.persistence.MappedSuperclass;

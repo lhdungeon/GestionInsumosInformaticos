@@ -1,6 +1,8 @@
 
-package Logica;
+package Logica.Servicios;
 
+import Logica.Insumos.RegistroInsumos;
+import Logica.Login.Login;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Basic;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sala implements Serializable {
@@ -26,28 +29,40 @@ public class Sala implements Serializable {
     private String numeroInterno;
     private String Observaciones;
     
+    @OneToOne
+    private Login login;
     
     @ManyToOne
     private Servicio servicio;
     
     @OneToMany(mappedBy="sala")
-    private LinkedList<Registro> listaRegistros;
+    private LinkedList<RegistroInsumos> listaRegistros;
     
     public Sala() {
     }
 
-    public Sala(int id, String jefeSala, String sala, Servicio servicio, String nombreResponsable, String dniResponsable, String numeroInterno, String Observaciones, LinkedList<Registro> listaRegistros) {
+    public Sala(int id, String jefeSala, String sala, String nombreResponsable, String dniResponsable, String numeroInterno, String Observaciones, Login login, Servicio servicio, LinkedList<RegistroInsumos> listaRegistros) {
         this.id = id;
         this.jefeSala = jefeSala;
         this.sala = sala;
-        this.servicio = servicio;
         this.nombreResponsable = nombreResponsable;
         this.dniResponsable = dniResponsable;
         this.numeroInterno = numeroInterno;
         this.Observaciones = Observaciones;
+        this.login = login;
+        this.servicio = servicio;
         this.listaRegistros = listaRegistros;
     }
 
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+    
     public String getObservaciones() {
         return Observaciones;
     }
@@ -58,11 +73,11 @@ public class Sala implements Serializable {
 
 
 
-    public LinkedList<Registro> getListaRegistros() {
+    public LinkedList<RegistroInsumos> getListaRegistros() {
         return listaRegistros;
     }
 
-    public void setListaRegistros(LinkedList<Registro> listaRegistros) {
+    public void setListaRegistros(LinkedList<RegistroInsumos> listaRegistros) {
         this.listaRegistros = listaRegistros;
     }
 

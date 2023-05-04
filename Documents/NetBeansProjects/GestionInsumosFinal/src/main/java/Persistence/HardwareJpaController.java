@@ -4,7 +4,7 @@
  */
 package Persistence;
 
-import Logica.Hardware;
+import Logica.Insumos.Hardware;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;

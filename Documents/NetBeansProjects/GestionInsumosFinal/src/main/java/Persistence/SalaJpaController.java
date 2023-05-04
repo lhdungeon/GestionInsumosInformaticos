@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Persistence;
 
 import java.io.Serializable;
@@ -6,9 +9,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Logica.Servicio;
-import Logica.Registro;
-import Logica.Sala;
+import Logica.Login.Login;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Sala;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,14 +21,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
+/**
+ *
+ * @author Usuario
+ */
 public class SalaJpaController implements Serializable {
-    
+
     public SalaJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
-    
+
     public SalaJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
     }
@@ -35,35 +42,49 @@ public class SalaJpaController implements Serializable {
 
     public void create(Sala sala) {
         if (sala.getListaRegistros() == null) {
-            sala.setListaRegistros(new LinkedList<Registro>());//Se cambio arrayList por LinkedList
+            sala.setListaRegistros(new LinkedList<RegistroInsumos>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Login login = sala.getLogin();
+            if (login != null) {
+                login = em.getReference(login.getClass(), login.getId());
+                sala.setLogin(login);
+            }
             Servicio servicio = sala.getServicio();
             if (servicio != null) {
                 servicio = em.getReference(servicio.getClass(), servicio.getId());
                 sala.setServicio(servicio);
             }
-            LinkedList<Registro> attachedListaRegistros = new LinkedList<Registro>();//Se cambio arrayList por LinkedList
-            for (Registro listaRegistrosRegistroToAttach : sala.getListaRegistros()) {
-                listaRegistrosRegistroToAttach = em.getReference(listaRegistrosRegistroToAttach.getClass(), listaRegistrosRegistroToAttach.getId_registro());
-                attachedListaRegistros.add(listaRegistrosRegistroToAttach);
+            LinkedList<RegistroInsumos> attachedListaRegistros = new LinkedList<RegistroInsumos>();
+            for (RegistroInsumos listaRegistrosRegistroInsumosToAttach : sala.getListaRegistros()) {
+                listaRegistrosRegistroInsumosToAttach = em.getReference(listaRegistrosRegistroInsumosToAttach.getClass(), listaRegistrosRegistroInsumosToAttach.getId_registro());
+                attachedListaRegistros.add(listaRegistrosRegistroInsumosToAttach);
             }
             sala.setListaRegistros(attachedListaRegistros);
             em.persist(sala);
+            if (login != null) {
+                Sala oldSalaOfLogin = login.getSala();
+                if (oldSalaOfLogin != null) {
+                    oldSalaOfLogin.setLogin(null);
+                    oldSalaOfLogin = em.merge(oldSalaOfLogin);
+                }
+                login.setSala(sala);
+                login = em.merge(login);
+            }
             if (servicio != null) {
                 servicio.getSala().add(sala);
                 servicio = em.merge(servicio);
             }
-            for (Registro listaRegistrosRegistro : sala.getListaRegistros()) {
-                Sala oldSalaOfListaRegistrosRegistro = listaRegistrosRegistro.getSala();
-                listaRegistrosRegistro.setSala(sala);
-                listaRegistrosRegistro = em.merge(listaRegistrosRegistro);
-                if (oldSalaOfListaRegistrosRegistro != null) {
-                    oldSalaOfListaRegistrosRegistro.getListaRegistros().remove(listaRegistrosRegistro);
-                    oldSalaOfListaRegistrosRegistro = em.merge(oldSalaOfListaRegistrosRegistro);
+            for (RegistroInsumos listaRegistrosRegistroInsumos : sala.getListaRegistros()) {
+                Sala oldSalaOfListaRegistrosRegistroInsumos = listaRegistrosRegistroInsumos.getSala();
+                listaRegistrosRegistroInsumos.setSala(sala);
+                listaRegistrosRegistroInsumos = em.merge(listaRegistrosRegistroInsumos);
+                if (oldSalaOfListaRegistrosRegistroInsumos != null) {
+                    oldSalaOfListaRegistrosRegistroInsumos.getListaRegistros().remove(listaRegistrosRegistroInsumos);
+                    oldSalaOfListaRegistrosRegistroInsumos = em.merge(oldSalaOfListaRegistrosRegistroInsumos);
                 }
             }
             em.getTransaction().commit();
@@ -80,22 +101,41 @@ public class SalaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Sala persistentSala = em.find(Sala.class, sala.getId());
+            Login loginOld = persistentSala.getLogin();
+            Login loginNew = sala.getLogin();
             Servicio servicioOld = persistentSala.getServicio();
             Servicio servicioNew = sala.getServicio();
-            LinkedList<Registro> listaRegistrosOld = persistentSala.getListaRegistros();
-            LinkedList<Registro> listaRegistrosNew = sala.getListaRegistros();
+            LinkedList<RegistroInsumos> listaRegistrosOld = persistentSala.getListaRegistros();
+            LinkedList<RegistroInsumos> listaRegistrosNew = sala.getListaRegistros();
+            if (loginNew != null) {
+                loginNew = em.getReference(loginNew.getClass(), loginNew.getId());
+                sala.setLogin(loginNew);
+            }
             if (servicioNew != null) {
                 servicioNew = em.getReference(servicioNew.getClass(), servicioNew.getId());
                 sala.setServicio(servicioNew);
             }
-            LinkedList<Registro> attachedListaRegistrosNew = new LinkedList<Registro>();//Se cambio arrayList por LinkedList
-            for (Registro listaRegistrosNewRegistroToAttach : listaRegistrosNew) {
-                listaRegistrosNewRegistroToAttach = em.getReference(listaRegistrosNewRegistroToAttach.getClass(), listaRegistrosNewRegistroToAttach.getId_registro());
-                attachedListaRegistrosNew.add(listaRegistrosNewRegistroToAttach);
+            LinkedList<RegistroInsumos> attachedListaRegistrosNew = new LinkedList<RegistroInsumos>();
+            for (RegistroInsumos listaRegistrosNewRegistroInsumosToAttach : listaRegistrosNew) {
+                listaRegistrosNewRegistroInsumosToAttach = em.getReference(listaRegistrosNewRegistroInsumosToAttach.getClass(), listaRegistrosNewRegistroInsumosToAttach.getId_registro());
+                attachedListaRegistrosNew.add(listaRegistrosNewRegistroInsumosToAttach);
             }
             listaRegistrosNew = attachedListaRegistrosNew;
             sala.setListaRegistros(listaRegistrosNew);
             sala = em.merge(sala);
+            if (loginOld != null && !loginOld.equals(loginNew)) {
+                loginOld.setSala(null);
+                loginOld = em.merge(loginOld);
+            }
+            if (loginNew != null && !loginNew.equals(loginOld)) {
+                Sala oldSalaOfLogin = loginNew.getSala();
+                if (oldSalaOfLogin != null) {
+                    oldSalaOfLogin.setLogin(null);
+                    oldSalaOfLogin = em.merge(oldSalaOfLogin);
+                }
+                loginNew.setSala(sala);
+                loginNew = em.merge(loginNew);
+            }
             if (servicioOld != null && !servicioOld.equals(servicioNew)) {
                 servicioOld.getSala().remove(sala);
                 servicioOld = em.merge(servicioOld);
@@ -104,20 +144,20 @@ public class SalaJpaController implements Serializable {
                 servicioNew.getSala().add(sala);
                 servicioNew = em.merge(servicioNew);
             }
-            for (Registro listaRegistrosOldRegistro : listaRegistrosOld) {
-                if (!listaRegistrosNew.contains(listaRegistrosOldRegistro)) {
-                    listaRegistrosOldRegistro.setSala(null);
-                    listaRegistrosOldRegistro = em.merge(listaRegistrosOldRegistro);
+            for (RegistroInsumos listaRegistrosOldRegistroInsumos : listaRegistrosOld) {
+                if (!listaRegistrosNew.contains(listaRegistrosOldRegistroInsumos)) {
+                    listaRegistrosOldRegistroInsumos.setSala(null);
+                    listaRegistrosOldRegistroInsumos = em.merge(listaRegistrosOldRegistroInsumos);
                 }
             }
-            for (Registro listaRegistrosNewRegistro : listaRegistrosNew) {
-                if (!listaRegistrosOld.contains(listaRegistrosNewRegistro)) {
-                    Sala oldSalaOfListaRegistrosNewRegistro = listaRegistrosNewRegistro.getSala();
-                    listaRegistrosNewRegistro.setSala(sala);
-                    listaRegistrosNewRegistro = em.merge(listaRegistrosNewRegistro);
-                    if (oldSalaOfListaRegistrosNewRegistro != null && !oldSalaOfListaRegistrosNewRegistro.equals(sala)) {
-                        oldSalaOfListaRegistrosNewRegistro.getListaRegistros().remove(listaRegistrosNewRegistro);
-                        oldSalaOfListaRegistrosNewRegistro = em.merge(oldSalaOfListaRegistrosNewRegistro);
+            for (RegistroInsumos listaRegistrosNewRegistroInsumos : listaRegistrosNew) {
+                if (!listaRegistrosOld.contains(listaRegistrosNewRegistroInsumos)) {
+                    Sala oldSalaOfListaRegistrosNewRegistroInsumos = listaRegistrosNewRegistroInsumos.getSala();
+                    listaRegistrosNewRegistroInsumos.setSala(sala);
+                    listaRegistrosNewRegistroInsumos = em.merge(listaRegistrosNewRegistroInsumos);
+                    if (oldSalaOfListaRegistrosNewRegistroInsumos != null && !oldSalaOfListaRegistrosNewRegistroInsumos.equals(sala)) {
+                        oldSalaOfListaRegistrosNewRegistroInsumos.getListaRegistros().remove(listaRegistrosNewRegistroInsumos);
+                        oldSalaOfListaRegistrosNewRegistroInsumos = em.merge(oldSalaOfListaRegistrosNewRegistroInsumos);
                     }
                 }
             }
@@ -150,15 +190,20 @@ public class SalaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The sala with id " + id + " no longer exists.", enfe);
             }
+            Login login = sala.getLogin();
+            if (login != null) {
+                login.setSala(null);
+                login = em.merge(login);
+            }
             Servicio servicio = sala.getServicio();
             if (servicio != null) {
                 servicio.getSala().remove(sala);
                 servicio = em.merge(servicio);
             }
-            LinkedList<Registro> listaRegistros = sala.getListaRegistros();
-            for (Registro listaRegistrosRegistro : listaRegistros) {
-                listaRegistrosRegistro.setSala(null);
-                listaRegistrosRegistro = em.merge(listaRegistrosRegistro);
+            LinkedList<RegistroInsumos> listaRegistros = sala.getListaRegistros();
+            for (RegistroInsumos listaRegistrosRegistroInsumos : listaRegistros) {
+                listaRegistrosRegistroInsumos.setSala(null);
+                listaRegistrosRegistroInsumos = em.merge(listaRegistrosRegistroInsumos);
             }
             em.remove(sala);
             em.getTransaction().commit();

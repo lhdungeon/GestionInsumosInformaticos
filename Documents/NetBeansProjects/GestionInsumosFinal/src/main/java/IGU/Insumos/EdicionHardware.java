@@ -2,7 +2,7 @@
 package IGU.Insumos;
 
 import Logica.Controladora;
-import Logica.Hardware;
+import Logica.Insumos.Hardware;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;

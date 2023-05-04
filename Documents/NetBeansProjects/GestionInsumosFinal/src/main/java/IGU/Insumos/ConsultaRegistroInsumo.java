@@ -2,12 +2,12 @@
 
 package IGU.Insumos;
 
-import Logica.Computadora;
+import Logica.Insumos.Computadora;
 import Logica.Controladora;
-import Logica.Hardware;
-import Logica.Registro;
-import Logica.Sala;
-import Logica.Tinta;
+import Logica.Insumos.Hardware;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Sala;
+import Logica.Insumos.Tinta;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ConsultaRegistroInsumo extends javax.swing.JFrame {
     ArrayList<Hardware> listaHard;
     ArrayList<Computadora>listaCompu;
     ArrayList<Tinta>listaTinta;
-    ArrayList<Registro>listaRegistros;
+    ArrayList<RegistroInsumos>listaRegistros;
     
     int idSelect;
     
@@ -312,7 +312,7 @@ public class ConsultaRegistroInsumo extends javax.swing.JFrame {
         
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
-        for(Registro registro : listaRegistros){
+        for(RegistroInsumos registro : listaRegistros){
             for(int i=0;i<registro.getInsumos_retirados().size();i++){
                 if(insumoSelec.equals(registro.getInsumos_retirados().get(i))){
                     

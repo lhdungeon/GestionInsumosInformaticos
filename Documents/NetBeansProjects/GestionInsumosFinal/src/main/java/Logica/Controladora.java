@@ -1,6 +1,12 @@
 
 package Logica;
 
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.Computadora;
+import Logica.Insumos.Hardware;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Insumos.Tinta;
 import Persistence.ControladoraPersistencia;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,7 +59,7 @@ public class Controladora {
         controlPersis.nuevoComputadora(nuevoComputadora);
     }
     
-    public void nuevoRegistro(Registro nuevoRegistro){
+    public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         controlPersis.nuevoRegistro(nuevoRegistro);
     }
     
@@ -99,7 +105,7 @@ public class Controladora {
         controlPersis.editarComputadora(computadora);
     }
     
-    public void editarRegistro(Registro registro){
+    public void editarRegistro(RegistroInsumos registro){
         controlPersis.editarRegistro(registro);
     }
     
@@ -125,7 +131,7 @@ public class Controladora {
         return controlPersis.buscarServicio(Id);
     }
     
-    public Registro buscarRegistro(int id){
+    public RegistroInsumos buscarRegistro(int id){
         return controlPersis.buscarRegistro(id);
     }
     
@@ -149,7 +155,7 @@ public class Controladora {
         return controlPersis.buscarListaServicios();
     }
     
-    public ArrayList<Registro>buscarListaRegistro(){
+    public ArrayList<RegistroInsumos>buscarListaRegistro(){
         return controlPersis.buscarListaRegistro();
     }
        

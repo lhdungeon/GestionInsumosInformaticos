@@ -3,7 +3,7 @@
 package IGU.Insumos;
 
 import Logica.Controladora;
-import Logica.Registro;
+import Logica.Insumos.RegistroInsumos;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
  
-    ArrayList<Registro>listaRegistros;
+    ArrayList<RegistroInsumos>listaRegistros;
 
     DefaultTableModel tabla=null;
     
@@ -236,7 +236,7 @@ public class ConsultaRegistroFecha extends javax.swing.JFrame {
         if(jDate.getDate()!=null){
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-            for(Registro regis : listaRegistros){
+            for(RegistroInsumos regis : listaRegistros){
 
                 String date = dateFormat.format(regis.getFecha());
                 String date2 = dateFormat.format(jDate.getDate());

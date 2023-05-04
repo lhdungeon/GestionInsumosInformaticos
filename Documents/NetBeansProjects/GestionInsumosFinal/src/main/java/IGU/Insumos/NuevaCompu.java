@@ -1,6 +1,6 @@
 
 package IGU.Insumos;
-import Logica.Computadora;
+import Logica.Insumos.Computadora;
 import Logica.Controladora;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;

@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Persistence;
 
 import java.io.Serializable;
@@ -6,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Logica.Sala;
-import Logica.Servicio;
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
+/**
+ *
+ * @author Usuario
+ */
 public class ServicioJpaController implements Serializable {
 
     public ServicioJpaController(EntityManagerFactory emf) {

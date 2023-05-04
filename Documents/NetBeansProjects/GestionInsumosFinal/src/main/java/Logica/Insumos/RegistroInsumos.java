@@ -1,6 +1,7 @@
 
-package Logica;
+package Logica.Insumos;
 
+import Logica.Servicios.Sala;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Registro implements Serializable {
+public class RegistroInsumos implements Serializable {
     
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -31,10 +32,10 @@ public class Registro implements Serializable {
     @ManyToOne
     private Sala sala;
 
-    public Registro() {
+    public RegistroInsumos() {
     }
 
-    public Registro(int id_registro, ArrayList<String> insumos_retirados, ArrayList<Integer> cantidad_Insumos, String servicio, Date fecha, Sala sala) {
+    public RegistroInsumos(int id_registro, ArrayList<String> insumos_retirados, ArrayList<Integer> cantidad_Insumos, String servicio, Date fecha, Sala sala) {
         this.id_registro = id_registro;
         this.insumos_retirados = insumos_retirados;
         this.cantidad_Insumos = cantidad_Insumos;
