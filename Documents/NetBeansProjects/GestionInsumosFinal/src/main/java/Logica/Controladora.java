@@ -7,6 +7,7 @@ import Logica.Insumos.Computadora;
 import Logica.Insumos.Hardware;
 import Logica.Insumos.RegistroInsumos;
 import Logica.Insumos.Tinta;
+import Logica.Login.Login;
 import Persistence.ControladoraPersistencia;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,9 +35,7 @@ public class Controladora {
  
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Date date = new Date();
-        return date;
-        
-           
+        return date;  
     }
     
     //ALTAS
@@ -47,6 +46,11 @@ public class Controladora {
     public void nuevoSala(Sala nuevoSala){
         controlPersis.nuevoSala(nuevoSala);
     }
+    
+    public void nuevoLogin(Login nuevoLogin){
+        controlPersis.nuevoLogin(nuevoLogin);
+    }
+    
     public void nuevoServicio(Servicio nuevoServicio){
         controlPersis.nuevoServicio(nuevoServicio);
     }
@@ -72,6 +76,10 @@ public class Controladora {
         controlPersis.eliminarServicio(id);
     }
     
+    public void eliminarLogin(int id){
+        controlPersis.eliminarLogin(id);
+    }
+    
     public void eliminarHardware(int id){
         controlPersis.eliminarHardware(id);
     }
@@ -91,6 +99,10 @@ public class Controladora {
     
     public void editarHardware(Hardware hardware){
         controlPersis.editarHardware(hardware);
+    }
+    
+    public void editarLogin(Login login){
+        controlPersis.editarLogin(login);
     }
     
     public void editarSala(Sala sala){
@@ -123,6 +135,10 @@ public class Controladora {
         return controlPersis.buscarHardware(Id);
     }
     
+    public Login buscarLogin(int id){
+        return controlPersis.buscarLogin(id);
+    }
+    
     public Sala buscarSala(int Id){
         return controlPersis.buscarSala(Id);
     }
@@ -141,6 +157,10 @@ public class Controladora {
     
     public ArrayList<Computadora>buscarListaComputadora(){
         return controlPersis.buscarListaComputadoras();
+    }
+    
+    public ArrayList<Login>buscarListaLogin(){
+        return controlPersis.buscarListaLogin();    
     }
     
     public ArrayList<Hardware>buscarListaHardware(){

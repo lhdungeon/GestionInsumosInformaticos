@@ -1,5 +1,5 @@
 
-package IGU.Insumos;
+package IGU.Usuarios;
 import Logica.Controladora;
 import Logica.Insumos.RegistroInsumos;
 import Logica.Servicios.Sala;
@@ -191,9 +191,9 @@ public class NuevoServicio extends javax.swing.JFrame {
                     dialog.setLocationRelativeTo(this);
                     dialog.setVisible(true);
 
-                    PrimariaInsumos primaria = new PrimariaInsumos();
-                    primaria.setVisible(true);
-                    primaria.setLocationRelativeTo(this);
+                    PrimariaUsuarios usu = new PrimariaUsuarios();
+                    usu.setVisible(true);
+                    usu.setLocationRelativeTo(this);
 
                     this.dispose(); 
             }
@@ -208,9 +208,10 @@ public class NuevoServicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarTintaActionPerformed
 
     private void btnCancelarCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCargaActionPerformed
-        PrimariaInsumos primaria = new PrimariaInsumos();
-        primaria.setVisible(true);
-        primaria.setLocationRelativeTo(this);
+        PrimariaUsuarios usu = new PrimariaUsuarios();
+        usu.setVisible(true);
+        usu.setLocationRelativeTo(this);
+
         this.dispose();
     }//GEN-LAST:event_btnCancelarCargaActionPerformed
 

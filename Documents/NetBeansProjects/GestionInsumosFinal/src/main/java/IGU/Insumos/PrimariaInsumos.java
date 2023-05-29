@@ -1,6 +1,7 @@
 
 package IGU.Insumos;
 
+import IGU.Usuarios.NuevoServicio;
 import IGU.InicialServer;
 import Logica.Insumos.Computadora;
 import Logica.Controladora;

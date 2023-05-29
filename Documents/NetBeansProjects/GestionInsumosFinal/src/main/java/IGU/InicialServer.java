@@ -3,6 +3,7 @@ package IGU;
 
 import IGU.Insumos.PrimariaInsumos;
 import IGU.Reparaciones.PrimariaReparaciones;
+import IGU.Usuarios.PrimariaUsuarios;
 
 public class InicialServer extends javax.swing.JFrame {
 
@@ -100,7 +101,10 @@ public class InicialServer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        // TODO add your handling code here:
+        PrimariaUsuarios usuarios = new PrimariaUsuarios ();
+        usuarios.setVisible(true);
+        usuarios.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnReparacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReparacionesActionPerformed

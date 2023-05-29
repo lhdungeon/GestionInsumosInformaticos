@@ -15,6 +15,7 @@ import Persistence.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -27,6 +28,10 @@ public class LoginJpaController implements Serializable {
     }
     private EntityManagerFactory emf = null;
 
+    public LoginJpaController(){
+        emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
+    }
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
