@@ -15,6 +15,13 @@ public class Servicio implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int id;
 
+    
+    private String nombreServicio;
+    private String jefeServicio;
+    
+    @OneToMany(mappedBy="servicio")
+    private ArrayList <Sala> sala;
+
     public Servicio() {
 
     }
@@ -26,13 +33,6 @@ public class Servicio implements Serializable {
         this.sala = sala;
     }
 
-
-    
-    private String nombreServicio;
-    private String jefeServicio;
-    
-    @OneToMany(mappedBy="servicio")
-    private ArrayList <Sala> sala;
 
     public int getId() {
         return id;

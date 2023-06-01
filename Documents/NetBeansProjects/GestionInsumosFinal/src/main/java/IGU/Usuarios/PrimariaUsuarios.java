@@ -7,6 +7,8 @@ import Logica.Login.Login;
 import Logica.Servicios.Sala;
 import Logica.Servicios.Servicio;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 
 public class PrimariaUsuarios extends javax.swing.JFrame {
@@ -66,7 +68,7 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("INF-Hos Usuarios");
+        jLabel3.setText("Agregar nuevo usuario");
 
         jLabel4.setText("Servicio");
 
@@ -186,57 +188,60 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         String password = new String(txtPass.getPassword());
         String salaIngresada = txtSala.getText();
         
-        if(salaIngresada.isBlank()){
+        if(!salaIngresada.equals("")||!salaIngresada.equals(" ")){
             if(password.length()>=8){    
                 
                 ArrayList <Sala> listaSala = controlLogica.buscarListaSala();  
                 boolean salaExiste=false;
                 
                 for(Sala sal : listaSala){
-                    if(salaIngresada.equals(sal.getSala()));
-                    salaExiste=true;
+                    if(salaIngresada.equals(sal.getSala())){
+                        salaExiste=true;
+                    }
                 }
                 
                 if(!salaExiste){
+           
                     Login login = new Login();
                     Sala sala = new Sala();
+                    ArrayList <Sala> salasServicio = new ArrayList();
                     
-                    login.setUsuario(salaIngresada);
-                    login.setPassword(password);
-                    
-                    sala.setSala(salaIngresada);
-                    
-                    login.setSala(sala);
-                    sala.setLogin(login);
-
                     //encontrar el servicio seleccionado en el cBox
                     for(Servicio ser : listaServicios){
                         if(ser.getNombreServicio().equals(servicioSeleccionado.getNombreServicio())){
-                            servicioSeleccionado.setId(ser.getId());
-                            servicioSeleccionado.setJefeServicio(ser.getJefeServicio());
-                            servicioSeleccionado.getSala().add(sala);
+                            
+                            servicioSeleccionado = ser;
+                            
+                            salasServicio = servicioSeleccionado.getSala();
+                            
+                            login.setUsuario(salaIngresada);
+                            login.setPassword(password);
+
+                            sala.setSala(salaIngresada);
+                            controlLogica.nuevoSala(sala);
+                            
+                            login.setSala(sala);
+                            controlLogica.nuevoLogin(login);      
+                            
+                            salasServicio.add(sala);
+                                                        
+                            servicioSeleccionado.setSala(salasServicio);
+                            controlLogica.editarServicio(servicioSeleccionado);
+                            
+                            System.out.print(servicioSeleccionado.getSala().get(0).getSala());
+                            
+                            mostrarMensaje("Se agrego un nuevo login y una nueva sala a la base de datos","Carga Exitosa","Informacion");
+
                             break;
                         }
                         else{
                             mostrarMensaje("Error al buscar el servicio","Fatal error","Error");
                         }
                     }
-                    sala.setServicio(servicioSeleccionado);
-                    
-                    controlLogica.editarServicio(servicioSeleccionado);
-                    
-                    // ¿Login se crea antes o despues de sala?    Test!
-                    controlLogica.nuevoLogin(login);
-                    controlLogica.nuevoSala(sala);
-                    
-                    mostrarMensaje("Se agrego un nuevo login y una nueva sala a la base de datos","Carga Exitosa","Informacion");
-                    
                 }
                 else{
                     mostrarMensaje("El sector que ingreso ya existe en el sistema","Sala ya existe","Error");
                 }
-                
-                
             }
             else{
                 mostrarMensaje("El password es muy corto","Contraseña Incorrecta", "Error");
@@ -245,23 +250,37 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         else{
             mostrarMensaje("El usuario es incorrecto", "Usuario incorrecto","Error");
         }
-        
     }//GEN-LAST:event_btnRegisActionPerformed
 
     private void cBoxServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxServiciosActionPerformed
-        String seleccion = cBoxServicios.getSelectedItem().toString();
-        
-        if(seleccion.equals("Seleccione un servicio")){
-        
+        if(cBoxServicios.isValid()){
+         
+            String seleccion = cBoxServicios.getSelectedItem().toString();
+            servicioSeleccionado.setNombreServicio(cBoxServicios.getSelectedItem().toString());   
         }
-        else{
-            servicioSeleccionado.setNombreServicio(cBoxServicios.getSelectedItem().toString());
-        }
-        
     }//GEN-LAST:event_cBoxServiciosActionPerformed
 
     private void mostrarMensaje(String mensaje, String titulo, String tipo){
+      
+        JOptionPane ventana = new JOptionPane(mensaje);
+       
+        switch (tipo) {
+            case "Informacion":
+                ventana.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case "Error":
+                ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                break;
+        }
         
+        JDialog dialog = ventana.createDialog(titulo);
+        
+        dialog.setAlwaysOnTop(true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+       
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;

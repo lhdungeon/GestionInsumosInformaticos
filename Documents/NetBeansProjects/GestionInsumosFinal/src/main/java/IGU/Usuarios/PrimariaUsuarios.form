@@ -158,7 +158,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="INF-Hos Usuarios"/>
+            <Property name="text" type="java.lang.String" value="Agregar nuevo usuario"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPass">

@@ -266,31 +266,11 @@ public class NuevaCompu extends javax.swing.JFrame {
 
                     this.dispose();
                 }
-/*
-                JOptionPane ventana = new JOptionPane("Faltan datos a completas");
-                ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-                JDialog dialog = ventana.createDialog("Complete todos los datos");
-                dialog.setAlwaysOnTop(true);
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);*/
             }
-
-           /* JOptionPane ventana = new JOptionPane("Faltan datos a completas");
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = ventana.createDialog("Complete todos los datos");
-            dialog.setAlwaysOnTop(true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);*/
         }
 
         else {
 
-          /*  JOptionPane ventana = new JOptionPane("Faltan datos a completas");
-            ventana.setMessageType(JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = ventana.createDialog("Complete todos los datos");
-            dialog.setAlwaysOnTop(true);
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);*/
         }
     }//GEN-LAST:event_btnCargarTintaActionPerformed
 
