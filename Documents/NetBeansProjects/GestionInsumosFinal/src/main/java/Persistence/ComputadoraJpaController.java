@@ -4,7 +4,7 @@
  */
 package Persistence;
 
-import Logica.Computadora;
+import Logica.Insumos.Computadora;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
