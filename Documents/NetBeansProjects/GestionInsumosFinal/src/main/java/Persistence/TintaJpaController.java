@@ -1,7 +1,7 @@
 
 package Persistence;
 
-import Logica.Tinta;
+import Logica.Insumos.Tinta;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;

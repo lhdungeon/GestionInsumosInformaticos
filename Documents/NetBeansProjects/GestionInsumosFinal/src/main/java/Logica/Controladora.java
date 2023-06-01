@@ -1,6 +1,13 @@
 
 package Logica;
 
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.Computadora;
+import Logica.Insumos.Hardware;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Insumos.Tinta;
+import Logica.Login.Login;
 import Persistence.ControladoraPersistencia;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,14 +35,20 @@ public class Controladora {
  
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Date date = new Date();
-        return date;
-        
-           
+        return date;  
     }
     
     //ALTAS
     public void nuevoTinta(Tinta nuevoTinta){
         controlPersis.nuevoTinta(nuevoTinta);
+    }
+    
+    public void nuevoSala(Sala nuevoSala){
+        controlPersis.nuevoSala(nuevoSala);
+    }
+    
+    public void nuevoLogin(Login nuevoLogin){
+        controlPersis.nuevoLogin(nuevoLogin);
     }
     
     public void nuevoServicio(Servicio nuevoServicio){
@@ -50,7 +63,7 @@ public class Controladora {
         controlPersis.nuevoComputadora(nuevoComputadora);
     }
     
-    public void nuevoRegistro(Registro nuevoRegistro){
+    public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         controlPersis.nuevoRegistro(nuevoRegistro);
     }
     
@@ -61,6 +74,10 @@ public class Controladora {
     
     public void eliminarServicio(int id){
         controlPersis.eliminarServicio(id);
+    }
+    
+    public void eliminarLogin(int id){
+        controlPersis.eliminarLogin(id);
     }
     
     public void eliminarHardware(int id){
@@ -84,7 +101,15 @@ public class Controladora {
         controlPersis.editarHardware(hardware);
     }
     
-    public void editarServicio(Servicio servicio){
+    public void editarLogin(Login login){
+        controlPersis.editarLogin(login);
+    }
+    
+    public void editarSala(Sala sala){
+        controlPersis.editarSala(sala);
+    }
+    
+    public void editarServicio (Servicio servicio){
         controlPersis.editarServicio(servicio);
     }
     
@@ -92,7 +117,7 @@ public class Controladora {
         controlPersis.editarComputadora(computadora);
     }
     
-    public void editarRegistro(Registro registro){
+    public void editarRegistro(RegistroInsumos registro){
         controlPersis.editarRegistro(registro);
     }
     
@@ -110,11 +135,19 @@ public class Controladora {
         return controlPersis.buscarHardware(Id);
     }
     
+    public Login buscarLogin(int id){
+        return controlPersis.buscarLogin(id);
+    }
+    
+    public Sala buscarSala(int Id){
+        return controlPersis.buscarSala(Id);
+    }
+    
     public Servicio buscarServicio(int Id){
         return controlPersis.buscarServicio(Id);
     }
     
-    public Registro buscarRegistro(int id){
+    public RegistroInsumos buscarRegistro(int id){
         return controlPersis.buscarRegistro(id);
     }
     
@@ -126,15 +159,23 @@ public class Controladora {
         return controlPersis.buscarListaComputadoras();
     }
     
+    public ArrayList<Login>buscarListaLogin(){
+        return controlPersis.buscarListaLogin();    
+    }
+    
     public ArrayList<Hardware>buscarListaHardware(){
         return controlPersis.buscarListaHardware();
     }
     
-    public ArrayList<Servicio>buscarListaServicio(){
-        return controlPersis.buscarListaServicio();
+    public ArrayList<Sala>buscarListaSala(){
+        return controlPersis.buscarListaSalas();
     }
     
-    public ArrayList<Registro>buscarListaRegistro(){
+    public ArrayList<Servicio>buscarListaServicios(){
+        return controlPersis.buscarListaServicios();
+    }
+    
+    public ArrayList<RegistroInsumos>buscarListaRegistro(){
         return controlPersis.buscarListaRegistro();
     }
        

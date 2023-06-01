@@ -1,11 +1,13 @@
 
 package Persistence;
 
-import Logica.Hardware;
-import Logica.Servicio;
-import Logica.Computadora;
-import Logica.Registro;
-import Logica.Tinta;
+import Logica.Insumos.Hardware;
+import Logica.Servicios.Sala;
+import Logica.Insumos.Computadora;
+import Logica.Insumos.RegistroInsumos;
+import Logica.Servicios.Servicio;
+import Logica.Insumos.Tinta;
+import Logica.Login.Login;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +19,26 @@ public class ControladoraPersistencia {
     
     ComputadoraJpaController compuJpaControl = new ComputadoraJpaController();
     HardwareJpaController hardJpaControl = new HardwareJpaController();
+    SalaJpaController salaJpaControl = new SalaJpaController();
     ServicioJpaController servicioJpaControl = new ServicioJpaController();
     TintaJpaController tintaJpaControl = new TintaJpaController();
     RegistroJpaController registroJpaControl = new RegistroJpaController();
-
+    LoginJpaController loginJpaControl = new LoginJpaController();
+    
         //ALTAS
     public void nuevoTinta(Tinta nuevoTinta) {
         tintaJpaControl.create(nuevoTinta);
     }
 
+    public void nuevoSala(Sala nuevoSala) {
+        salaJpaControl.create(nuevoSala);
+    }
+    
+    
+    public void nuevoLogin(Login nuevoLogin) {
+        loginJpaControl.create(nuevoLogin);
+    }
+    
     public void nuevoServicio(Servicio nuevoServicio){     
         servicioJpaControl.create(nuevoServicio);
     }
@@ -38,10 +51,12 @@ public class ControladoraPersistencia {
         compuJpaControl.create(nuevoComputadora);
     }
     
-    public void nuevoRegistro(Registro nuevoRegistro){
+    public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         registroJpaControl.create(nuevoRegistro);
     }
 
+   
+    
     //BAJAS
     public void eliminarTinta(int id) {
         try {
@@ -51,6 +66,24 @@ public class ControladoraPersistencia {
         }
     }
 
+    public void eliminarSala(int id){
+    
+        try {
+            salaJpaControl.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void eliminarLogin(int id) {
+        try {
+            loginJpaControl.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
+    
     public void eliminarServicio(int id){
         try {
             servicioJpaControl.destroy(id);
@@ -92,6 +125,14 @@ public class ControladoraPersistencia {
         }
     }
 
+    public void editarSala(Sala sala){
+        
+        try {
+            salaJpaControl.edit(sala);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void editarHardware(Hardware hardware) {
         try {
             hardJpaControl.edit(hardware);
@@ -99,6 +140,15 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void editarLogin(Login login) {
+        try {
+            loginJpaControl.edit(login);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
+    
     public void editarServicio(Servicio servicio) {
         try {
             servicioJpaControl.edit(servicio);
@@ -114,7 +164,7 @@ public class ControladoraPersistencia {
         }
     }
     
-    public void editarRegistro(Registro registro){
+    public void editarRegistro(RegistroInsumos registro){
         try {
             registroJpaControl.edit(registro);
         } catch (Exception ex) {
@@ -130,16 +180,25 @@ public class ControladoraPersistencia {
     public Computadora buscarComputadora(int Id) {
         return compuJpaControl.findComputadora(Id);
     }
+    
+    public Login buscarLogin(int id) {
+        return loginJpaControl.findLogin(id);
+    }
+    
 
     public Hardware buscarHardware(int Id) {
         return hardJpaControl.findHardware(Id);
     }
 
+    public Sala buscarSala(int id){
+        return salaJpaControl.findSala(id);
+    }
+    
     public Servicio buscarServicio(int Id) {
         return servicioJpaControl.findServicio(Id);
     }
     
-    public Registro buscarRegistro(int id){
+    public RegistroInsumos buscarRegistro(int id){
         return registroJpaControl.findRegistro(id);
     }
 
@@ -155,24 +214,38 @@ public class ControladoraPersistencia {
          return listaCompuArrayList;
     }
 
+
+
+    public ArrayList<Login> buscarListaLogin() {
+        List<Login> listaLogin = loginJpaControl.findLoginEntities();
+        ArrayList<Login>listaLoginArrayList = new ArrayList(listaLogin);
+        return listaLoginArrayList;
+    }
+    
+
     public ArrayList<Hardware> buscarListaHardware() {
          List<Hardware> listaHard = hardJpaControl.findHardwareEntities();
          ArrayList<Hardware>listaHardArrayList = new ArrayList(listaHard);
          return listaHardArrayList;
     }
 
-    public ArrayList<Servicio> buscarListaServicio() {
-         List<Servicio> listaServicio = servicioJpaControl.findServicioEntities();
-         ArrayList<Servicio>listaServicioArrayList = new ArrayList(listaServicio);
-         return listaServicioArrayList;
+    public ArrayList<Sala> buscarListaSalas() {
+         List<Sala> listaSala = salaJpaControl.findSalaEntities();
+         ArrayList<Sala>listaSalaArrayList = new ArrayList(listaSala);
+         return listaSalaArrayList;
     }
     
-    public ArrayList<Registro> buscarListaRegistro(){
-        List<Registro> listaRegistro = registroJpaControl.findRegistroEntities();
-        ArrayList<Registro>listaRegistroArrayList = new ArrayList(listaRegistro);
+    public ArrayList<Servicio> buscarListaServicios(){
+        List<Servicio>listaServicio= servicioJpaControl.findServicioEntities();
+        ArrayList<Servicio>listaServicioArrayList= new ArrayList(listaServicio);
+        return listaServicioArrayList;
+    }
+    
+    public ArrayList<RegistroInsumos> buscarListaRegistro(){
+        List<RegistroInsumos> listaRegistro = registroJpaControl.findRegistroEntities();
+        ArrayList<RegistroInsumos>listaRegistroArrayList = new ArrayList(listaRegistro);
         return listaRegistroArrayList;
     }
-
 
 }
 
