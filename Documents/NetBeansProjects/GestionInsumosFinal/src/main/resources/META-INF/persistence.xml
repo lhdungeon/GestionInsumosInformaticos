@@ -9,6 +9,8 @@
     <class>Logica.Servicios.Sala</class>
     <class>Logica.Servicios.Servicio</class>
     <class>Logica.Login.Login</class>
+    <class>Logica.Reparaciones.Reparacion</class>
+    <class>Logica.Reparaciones.Tecnico</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestioninsumos?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

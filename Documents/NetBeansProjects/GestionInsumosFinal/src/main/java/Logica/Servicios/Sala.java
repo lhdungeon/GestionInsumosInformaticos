@@ -39,14 +39,14 @@ public class Sala implements Serializable {
     @OneToMany(mappedBy="sala")
     private LinkedList<RegistroInsumos> listaRegistros;
      
-    @OneToMany(mappedBy="reparacion")
+  /*  @OneToMany(mappedBy="Reparacion")
     private LinkedList<Reparacion> listaReparacion;
-     
+    */ 
     public Sala() {
     }
 
     public Sala(int id, String jefeSala, String sala, String nombreResponsable, String dniResponsable, String numeroInterno,
-                String Observaciones, Login login, Servicio servicio, LinkedList<RegistroInsumos> listaRegistros, LinkedList<Reparacion> listaReparacion ) {
+                String Observaciones, Login login, Servicio servicio, LinkedList<RegistroInsumos> listaRegistros) {
         this.id = id;
         this.jefeSala = jefeSala;
         this.sala = sala;
@@ -57,7 +57,6 @@ public class Sala implements Serializable {
         this.login = login;
         this.servicio = servicio;
         this.listaRegistros = listaRegistros;
-        this.listaReparacion = listaReparacion;
     }
 
     public Login getLogin() {

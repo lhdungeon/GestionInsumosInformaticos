@@ -8,6 +8,8 @@ import Logica.Insumos.Hardware;
 import Logica.Insumos.RegistroInsumos;
 import Logica.Insumos.Tinta;
 import Logica.Login.Login;
+import Logica.Reparaciones.Reparacion;
+import Logica.Reparaciones.Tecnico;
 import Persistence.ControladoraPersistencia;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -66,6 +68,14 @@ public class Controladora {
     public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         controlPersis.nuevoRegistro(nuevoRegistro);
     }
+     
+    public void nuevoReparacion(Reparacion nuevoReparacion){
+        controlPersis.nuevaReparacion(nuevoReparacion);
+    }
+    
+    public void nuevoTecnico(Tecnico nuevoTecnico){
+        controlPersis.nuevoTecnico(nuevoTecnico);
+    }
     
     //BAJAS
     public void eliminarTinta(int id){
@@ -90,6 +100,14 @@ public class Controladora {
     
     public void eliminarRegistro(int id){
         controlPersis.eliminarRegistro(id);
+    }
+    
+    public void eliminarReparacion(int id){
+        controlPersis.eliminarReparacion(id);
+    }
+    
+    public void eliminarTecnico(int id){
+        controlPersis.eliminarTecnico(id);
     }
     
     //MODIFICACION 
@@ -121,6 +139,13 @@ public class Controladora {
         controlPersis.editarRegistro(registro);
     }
     
+    public void editarReparacion(Reparacion reparacion){
+        controlPersis.editarReparacion(reparacion);
+    }
+    
+    public void editarTecnico(Tecnico tecnico){
+        controlPersis.editarTecnico(tecnico);
+    }
     
     //LECTURA
     public Tinta buscarTinta(int Id){
@@ -151,6 +176,14 @@ public class Controladora {
         return controlPersis.buscarRegistro(id);
     }
     
+    public Reparacion buscarReparacion(int id){
+        return controlPersis.buscarReparacion(id);
+    }
+    
+    public Tecnico buscarTecnico(int id){
+        return controlPersis.buscarTecnico(id);
+    }
+    
     public ArrayList<Tinta>buscarListaTinta(){
         return controlPersis.buscarListaTinta();
     }
@@ -179,6 +212,13 @@ public class Controladora {
         return controlPersis.buscarListaRegistro();
     }
        
+    public ArrayList<Reparacion>buscarListaReparacion(){
+        return controlPersis.buscarListaReparacion();
+    }
+    
+    public ArrayList<Tecnico> buscarListaTecnico(){
+        return controlPersis.buscarListaTecnico();
+    }
 }
 
     

@@ -8,6 +8,8 @@ import Logica.Insumos.RegistroInsumos;
 import Logica.Servicios.Servicio;
 import Logica.Insumos.Tinta;
 import Logica.Login.Login;
+import Logica.Reparaciones.Reparacion;
+import Logica.Reparaciones.Tecnico;
 import Persistence.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class ControladoraPersistencia {
     TintaJpaController tintaJpaControl = new TintaJpaController();
     RegistroJpaController registroJpaControl = new RegistroJpaController();
     LoginJpaController loginJpaControl = new LoginJpaController();
+    ReparacionJpaController reparacionJpaControl = new ReparacionJpaController();
+    TecnicoJpaController tecnicoJpaControl = new TecnicoJpaController();
     
         //ALTAS
     public void nuevoTinta(Tinta nuevoTinta) {
@@ -53,6 +57,14 @@ public class ControladoraPersistencia {
     
     public void nuevoRegistro(RegistroInsumos nuevoRegistro){
         registroJpaControl.create(nuevoRegistro);
+    }
+    
+    public void nuevaReparacion(Reparacion nuevaReparacion){
+        reparacionJpaControl.create(nuevaReparacion);
+    }
+
+    public void nuevoTecnico(Tecnico nuevoTecnico){
+        tecnicoJpaControl.create(nuevoTecnico);
     }
 
    
@@ -115,6 +127,22 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   
+    public void eliminarReparacion(int id){
+        try {
+            reparacionJpaControl.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void eliminarTecnico(int id){
+        try {
+            tecnicoJpaControl.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     //MODIFICACION
     public void editarTinta(Tinta tinta) {
@@ -171,6 +199,25 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void editarReparacion(Reparacion reparacion){
+        try {
+            reparacionJpaControl.edit(reparacion);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void editarTecnico(Tecnico tecnico){
+        try {
+            tecnicoJpaControl.edit(tecnico);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
 
     //LECTURA
     public Tinta buscarTinta(int Id) {
@@ -201,6 +248,15 @@ public class ControladoraPersistencia {
     public RegistroInsumos buscarRegistro(int id){
         return registroJpaControl.findRegistro(id);
     }
+    
+    public Reparacion buscarReparacion(int Id) {
+        return reparacionJpaControl.findReparacion(Id);
+    }
+    
+    public Tecnico buscarTecnico(int Id) {
+        return tecnicoJpaControl.findTecnico(Id);
+    }
+    
 
     public ArrayList<Tinta> buscarListaTinta() {
         List<Tinta> listaTinta = tintaJpaControl.findTintaEntities();
@@ -246,6 +302,19 @@ public class ControladoraPersistencia {
         ArrayList<RegistroInsumos>listaRegistroArrayList = new ArrayList(listaRegistro);
         return listaRegistroArrayList;
     }
+    
+    public ArrayList<Reparacion> buscarListaReparacion(){
+        List<Reparacion> listaReparacion = reparacionJpaControl.findReparacionEntities();
+        ArrayList<Reparacion>listaReparacionArrayList = new ArrayList(listaReparacion);
+        return listaReparacionArrayList;
+    }
+
+    public ArrayList<Tecnico> buscarListaTecnico(){
+        List<Tecnico> listaTecnico = tecnicoJpaControl.findTecnicoEntities();
+        ArrayList<Tecnico>listaTecnicoArrayList = new ArrayList(listaTecnico);
+        return listaTecnicoArrayList;
+    }
+
 
 }
 
