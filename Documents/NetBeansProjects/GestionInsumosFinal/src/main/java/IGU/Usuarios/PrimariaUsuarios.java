@@ -9,17 +9,35 @@ import Logica.Servicios.Servicio;
 import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrimariaUsuarios extends javax.swing.JFrame {
 
     Controladora controlLogica = null;
     ArrayList <Servicio> listaServicios = new ArrayList();
+    ArrayList<Integer>idListaSala = new ArrayList();
     Servicio servicioSeleccionado = new Servicio();
+    int idServicio;
+    DefaultTableModel tableSector = null;
     
     public PrimariaUsuarios() {
-        controlLogica = new Controladora();
         initComponents();
+        
+        controlLogica = new Controladora();
+          
+        setearTabla();
+    }
+    
+    public void setearTabla(){
+        tableSector = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column){return false;}
+        };
+        String titulos[] = {"Sala/Usuario","Contraseña"};
+        tableSector.setColumnIdentifiers(titulos);
+        
+        tableSectores.setModel(tableSector);
     }
 
  
@@ -37,6 +55,8 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         txtPass = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         cBoxServicios = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableSectores = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -79,13 +99,31 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
             }
         });
 
+        tableSectores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        tableSectores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableSectoresMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableSectores);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -100,10 +138,14 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSala, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(txtSala)
                             .addComponent(txtPass)
-                            .addComponent(cBoxServicios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cBoxServicios, 0, 158, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +167,9 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegis, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jMenu1.setText("Opciones");
@@ -149,11 +193,11 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -201,42 +245,46 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
                 }
                 
                 if(!salaExiste){
-           
                     Login login = new Login();
                     Sala sala = new Sala();
                     ArrayList <Sala> salasServicio = new ArrayList();
+                    boolean servicioExiste = false;
                     
-                    //encontrar el servicio seleccionado en el cBox
                     for(Servicio ser : listaServicios){
                         if(ser.getNombreServicio().equals(servicioSeleccionado.getNombreServicio())){
                             
                             servicioSeleccionado = ser;
-                            
-                            salasServicio = servicioSeleccionado.getSala();
-                            
-                            login.setUsuario(salaIngresada);
-                            login.setPassword(password);
-
-                            sala.setSala(salaIngresada);
-                            controlLogica.nuevoSala(sala);
-                            
-                            login.setSala(sala);
-                            controlLogica.nuevoLogin(login);      
-                            
-                            salasServicio.add(sala);
-                                                        
-                            servicioSeleccionado.setSala(salasServicio);
-                            controlLogica.editarServicio(servicioSeleccionado);
-                            
-                            System.out.print(servicioSeleccionado.getSala().get(0).getSala());
-                            
-                            mostrarMensaje("Se agrego un nuevo login y una nueva sala a la base de datos","Carga Exitosa","Informacion");
-
+                            idServicio = ser.getId();
+                            servicioExiste = true;
                             break;
                         }
-                        else{
-                            mostrarMensaje("Error al buscar el servicio","Fatal error","Error");
-                        }
+                    }
+                    if(servicioExiste){
+                        salasServicio = servicioSeleccionado.getSala();
+                            
+                        login.setUsuario(salaIngresada);
+                        login.setPassword(password);
+
+                        sala.setSala(salaIngresada);
+                        controlLogica.nuevoSala(sala);
+                            
+                        login.setSala(sala);
+                        controlLogica.nuevoLogin(login);      
+                            
+                        salasServicio.add(sala);
+                                                        
+                        servicioSeleccionado.setSala(salasServicio);
+                        controlLogica.editarServicio(servicioSeleccionado);
+                            
+                        mostrarMensaje("Se agrego un nuevo login y una nueva sala a la base de datos","Carga Exitosa","Informacion");
+                        
+                        PrimariaUsuarios primariaUsu = new PrimariaUsuarios();
+                        primariaUsu.setVisible(true);
+                        primariaUsu.setLocationRelativeTo(null);
+                        this.dispose();
+                    }
+                    else{
+                        mostrarMensaje("Error al buscar el servicio","Fatal error","Error");
                     }
                 }
                 else{
@@ -256,9 +304,52 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
         if(cBoxServicios.isValid()){
          
             String seleccion = cBoxServicios.getSelectedItem().toString();
-            servicioSeleccionado.setNombreServicio(cBoxServicios.getSelectedItem().toString());   
+            servicioSeleccionado.setNombreServicio(cBoxServicios.getSelectedItem().toString());
+            
+            for(Servicio ser : listaServicios){
+                if(ser.getNombreServicio().equals(servicioSeleccionado.getNombreServicio())){
+                    idServicio = ser.getId();
+                    break;
+                }
+            }
+            
+            ArrayList<Sala>listaSalas = controlLogica.buscarServicio(idServicio).getSala();
+            
+            idListaSala.clear();
+            tableSector.setRowCount(0);
+            for(Sala sala : listaSalas){
+                
+                String nombreSala = sala.getLogin().getUsuario();
+                String password = sala.getLogin().getPassword();
+                
+                Object[] itemAgregar = {nombreSala,password};
+                tableSector.addRow(itemAgregar);
+                idListaSala.add(sala.getId());                
+            }
+            tableSectores.setModel(tableSector);
         }
     }//GEN-LAST:event_cBoxServiciosActionPerformed
+
+    private void tableSectoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSectoresMouseClicked
+
+        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+            evt.consume();
+            
+            String row, column;
+            row = tableSectores.getValueAt(tableSectores.getSelectedRow(), tableSectores.getSelectedColumn()).toString();
+            column = tableSectores.getColumnName(tableSectores.getSelectedColumn());
+            
+            if(column.equals("Sala/Usuario")){
+                
+                int idSala = idListaSala.get(tableSectores.getSelectedRow());                
+                
+                EditarUsuario editarUsu = new EditarUsuario(idSala);
+                editarUsu.setVisible(true);
+                editarUsu.setLocationRelativeTo(null);
+                this.dispose();
+            }    
+        }
+    }//GEN-LAST:event_tableSectoresMouseClicked
 
     private void mostrarMensaje(String mensaje, String titulo, String tipo){
       
@@ -295,6 +386,8 @@ public class PrimariaUsuarios extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tableSectores;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtSala;
     // End of variables declaration//GEN-END:variables

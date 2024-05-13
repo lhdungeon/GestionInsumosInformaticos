@@ -2,6 +2,7 @@
 package Logica.Servicios;
 
 import Logica.Insumos.RegistroInsumos;
+import Logica.Reparaciones.Reparacion;
 import Logica.Login.Login;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -37,11 +38,15 @@ public class Sala implements Serializable {
     
     @OneToMany(mappedBy="sala")
     private LinkedList<RegistroInsumos> listaRegistros;
-    
+     
+    @OneToMany(mappedBy="reparacion")
+    private LinkedList<Reparacion> listaReparacion;
+     
     public Sala() {
     }
 
-    public Sala(int id, String jefeSala, String sala, String nombreResponsable, String dniResponsable, String numeroInterno, String Observaciones, Login login, Servicio servicio, LinkedList<RegistroInsumos> listaRegistros) {
+    public Sala(int id, String jefeSala, String sala, String nombreResponsable, String dniResponsable, String numeroInterno,
+                String Observaciones, Login login, Servicio servicio, LinkedList<RegistroInsumos> listaRegistros, LinkedList<Reparacion> listaReparacion ) {
         this.id = id;
         this.jefeSala = jefeSala;
         this.sala = sala;
@@ -52,6 +57,7 @@ public class Sala implements Serializable {
         this.login = login;
         this.servicio = servicio;
         this.listaRegistros = listaRegistros;
+        this.listaReparacion = listaReparacion;
     }
 
     public Login getLogin() {

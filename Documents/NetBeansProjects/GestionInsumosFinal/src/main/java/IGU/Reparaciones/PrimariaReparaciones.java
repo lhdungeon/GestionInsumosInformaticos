@@ -6,7 +6,6 @@ import IGU.InicialServer;
 
 public class PrimariaReparaciones extends javax.swing.JFrame {
 
-    String[] estado = {"Pendiente", "En revision", "Completado","Requiere insumo"};
     
     
     public PrimariaReparaciones() {
