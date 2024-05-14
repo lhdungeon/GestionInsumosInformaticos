@@ -26,7 +26,7 @@ public class ReparacionJpaController implements Serializable {
         this.emf = emf;
     }
     
-        public ReparacionJpaController(){
+    public ReparacionJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
     }
     

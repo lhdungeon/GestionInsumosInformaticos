@@ -24,6 +24,8 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuNuevaReparacion = new javax.swing.JMenuItem();
+        jMenuNuevoTecnico = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -67,6 +69,23 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Nuevo");
+
+        jMenuNuevaReparacion.setText("Nueva Reparacion");
+        jMenuNuevaReparacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuNuevaReparacionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuNuevaReparacion);
+
+        jMenuNuevoTecnico.setText("Nuevo Tecnico");
+        jMenuNuevoTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuNuevoTecnicoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuNuevoTecnico);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Editar");
@@ -95,6 +114,23 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosed
 
+    private void jMenuNuevaReparacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNuevaReparacionActionPerformed
+        // Nueva Reparacion
+        NuevaReparacion nuevaRep = new NuevaReparacion();
+        nuevaRep.setVisible(true);
+        nuevaRep.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenuNuevaReparacionActionPerformed
+
+    private void jMenuNuevoTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNuevoTecnicoActionPerformed
+        // Nuevo Tecnico
+        NuevoTecnico nuevoTec = new NuevoTecnico();
+        nuevoTec.setVisible(true);
+        nuevoTec.setLocationRelativeTo(null);
+        this.dispose();
+        
+    }//GEN-LAST:event_jMenuNuevoTecnicoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -102,6 +138,8 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuNuevaReparacion;
+    private javax.swing.JMenuItem jMenuNuevoTecnico;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
