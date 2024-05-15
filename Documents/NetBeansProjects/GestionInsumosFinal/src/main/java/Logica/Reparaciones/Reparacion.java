@@ -27,19 +27,21 @@ public class Reparacion implements Serializable {
     
     @OneToOne
     public Tecnico receptor;
+    @OneToOne
     Tecnico reparador;
+    @OneToOne
     Tecnico quienEntrega;
     
-    public String[] estado = {"Pendiente", "En revision", "Completado","Requiere insumo"};
+    String estado;// = {"Pendiente", "En revision", "Completado","Requiere insumo"};
     String modelo;
     String diagnostico;
     String detalleTecnico;
     
-    public String[] tipoDeReparacion = {"Computadora", "Impresora", "Hardware","Otro"};
+    String tipoDeReparacion;
 
-    DateFormat fechaRecepcion = new SimpleDateFormat("dd-MM-yyyy");
-    DateFormat fechaEstimativa = new SimpleDateFormat("dd-MM-yyyy");
-    DateFormat fechaFinalizacion = new SimpleDateFormat("dd-MM-yyyy");
+    String fechaRecepcion;
+    String fechaEstimativa;
+    String fechaFinalizacion;
 
     
     /* Orden de trabajo corresponde a toda la informacion requerida */ 
@@ -101,11 +103,11 @@ public class Reparacion implements Serializable {
         this.quienEntrega = quienEntrega;
     }
 
-    public String[] getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(String[] estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -133,38 +135,36 @@ public class Reparacion implements Serializable {
         this.detalleTecnico = detalleTecnico;
     }
 
-    public String[] getTipoDeReparacion() {
+    public String getTipoDeReparacion() {
         return tipoDeReparacion;
     }
 
-    public void setTipoDeReparacion(String[] tipoDeReparacion) {
+    public void setTipoDeReparacion(String tipoDeReparacion) {
         this.tipoDeReparacion = tipoDeReparacion;
     }
 
-    public DateFormat getFechaRecepcion() {
+    public String getFechaRecepcion() {
         return fechaRecepcion;
     }
 
-    public void setFechaRecepcion(DateFormat fechaRecepcion) {
+    public void setFechaRecepcion(String fechaRecepcion) {
         this.fechaRecepcion = fechaRecepcion;
     }
 
-    public DateFormat getFechaEstimativa() {
+    public String getFechaEstimativa() {
         return fechaEstimativa;
     }
 
-    public void setFechaEstimativa(DateFormat fechaEstimativa) {
+    public void setFechaEstimativa(String fechaEstimativa) {
         this.fechaEstimativa = fechaEstimativa;
     }
 
-    public DateFormat getFechaFinalizacion() {
+    public String getFechaFinalizacion() {
         return fechaFinalizacion;
     }
 
-    public void setFechaFinalizacion(DateFormat fechaFinalizacion) {
+    public void setFechaFinalizacion(String fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
-    }
-
-    
+    }   
 
 }

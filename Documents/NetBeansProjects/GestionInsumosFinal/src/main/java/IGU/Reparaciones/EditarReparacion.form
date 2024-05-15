@@ -178,7 +178,7 @@
                   <Font name="Monospaced" size="36" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Nueva Reparacion"/>
+                <Property name="text" type="java.lang.String" value="Reparacion"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">

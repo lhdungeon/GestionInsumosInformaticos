@@ -5,7 +5,6 @@
 package IGU.Reparaciones;
 import Logica.Reparaciones.Tecnico;
 import Logica.Controladora;
-import Logica.Reparaciones.Reparacion;
 import Logica.Servicios.Sala;
 import Logica.Servicios.Servicio;
 import java.text.DateFormat;
@@ -18,7 +17,7 @@ import java.util.Date;
  *
  * @author Usuario
  */
-public class NuevaReparacion extends javax.swing.JFrame {
+public class EditarReparacion extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
     
@@ -27,7 +26,7 @@ public class NuevaReparacion extends javax.swing.JFrame {
     ArrayList <Sala> listaSalas = controlLogica.buscarListaSala();
     int idServicioSelect;
 
-    public NuevaReparacion() {
+    public EditarReparacion() {
         initComponents();
                 
         rellenarCampos();
@@ -127,7 +126,7 @@ public class NuevaReparacion extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Nueva Reparacion");
+        jLabel1.setText("Reparacion");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Tipo de Reparacion");
@@ -290,48 +289,11 @@ public class NuevaReparacion extends javax.swing.JFrame {
 
     private void jButtonCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargaActionPerformed
 
-        Reparacion reparacion = new Reparacion();
-        Sala sala = new Sala();
-        Tecnico receptor = new Tecnico();
-
-        String tipo = jCBTipoRep.getSelectedItem().toString();
-        String modelo = jTextModelo.getText();
-        String diagnostico = jTextDiag.getText();
-        String detalle = jTextDetalle.getText();
-        
-        for(Sala sal : listaSalas){
-            if(sal.getSala().equals(jCBSala.getSelectedItem().toString())){
-                sala = controlLogica.buscarSala(sal.getId());
-                break;
-            }
-            else{
-               //mostrar mensaje error en la sala
-            }
-        }
-        
-        for(Tecnico tec : listaTecnicos){
-            if(tec.getNombre().equals(jCbReceptor.getSelectedItem().toString())){
-                receptor = controlLogica.buscarTecnico(tec.getId());
-                break;
-            }
-            else{
-                //mostrar mensaje error en el tecnico
-            }
-        }
-        
-        
-        reparacion.setSala(sala);
-        reparacion.setTipoDeReparacion(tipo);
-        reparacion.setModelo(modelo);
-        reparacion.setDiagnostico(diagnostico);
-        reparacion.setDetalleTecnico(detalle);
-        reparacion.setReceptor(receptor);
-        reparacion.setFechaRecepcion(jDateFechaRecepcion.getText());
-        reparacion.setFechaEstimativa(jDateFechaEstimativa.getText());
-        reparacion.setEstado("Recibido");
-        
-        controlLogica.nuevoReparacion(reparacion);
-        
+        /* String nombre = jTextNombre.getText();
+        Tecnico nuevoTecnico = new Tecnico();
+        nuevoTecnico.setNombre(nombre);
+        controlPersis.nuevoTecnico(nuevoTecnico);
+        */
         PrimariaReparaciones reparaciones = new PrimariaReparaciones ();
         reparaciones.setVisible(true);
         reparaciones.setLocationRelativeTo(null);

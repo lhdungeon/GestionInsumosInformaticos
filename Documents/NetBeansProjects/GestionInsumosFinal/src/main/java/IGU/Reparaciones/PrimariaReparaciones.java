@@ -2,14 +2,23 @@
 package IGU.Reparaciones;
 
 import IGU.InicialServer;
+import Logica.Controladora;
+import Logica.Reparaciones.Reparacion;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrimariaReparaciones extends javax.swing.JFrame {
 
+    Controladora controlLogica = new Controladora();
     
+    DefaultTableModel tabla=null;
     
     public PrimariaReparaciones() {
         initComponents();
+        
+        cargarTabla();
+        cargarReparaciones();
     }
 
  
@@ -18,8 +27,6 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -35,8 +42,6 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-
-        jScrollPane1.setViewportView(jTree1);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -55,16 +60,10 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
         );
 
@@ -130,7 +129,40 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_jMenuNuevoTecnicoActionPerformed
-
+   
+    private void cargarTabla(){
+        tabla = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){return false;}
+        };
+    
+    }
+    
+    private void cargarReparaciones() {
+        ArrayList <Reparacion> listaReparacion = controlLogica.buscarListaReparacion();
+        
+        String titulos[] = {"N°", "Sala", "Equipo", "Diagnostico","Fecha de recepcion","Estado"};
+              
+        tabla = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row,int column){return false;}
+        };
+               
+        tabla.setColumnIdentifiers(titulos);
+        
+        jTable1.setModel(tabla);
+        
+        int numeroDeRegistros = 1;
+        for(Reparacion repa : listaReparacion){
+            Object[] repaAgregar = {numeroDeRegistros, repa.getSala().getSala(), repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado().toString()};
+            tabla.addRow(repaAgregar);
+            jTable1.setModel(tabla);
+            numeroDeRegistros++;
+        
+        }
+       
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -141,9 +173,9 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuNuevaReparacion;
     private javax.swing.JMenuItem jMenuNuevoTecnico;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
+
+
 }
