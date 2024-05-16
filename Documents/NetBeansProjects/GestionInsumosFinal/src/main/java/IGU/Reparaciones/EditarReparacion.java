@@ -5,14 +5,11 @@
 package IGU.Reparaciones;
 import Logica.Reparaciones.Tecnico;
 import Logica.Controladora;
-import Logica.Servicios.Sala;
+import Logica.Reparaciones.Reparacion;
 import Logica.Servicios.Servicio;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 /**
  *
  * @author Usuario
@@ -20,13 +17,15 @@ import java.util.Date;
 public class EditarReparacion extends javax.swing.JFrame {
 
     Controladora controlLogica = new Controladora();
+    Reparacion reparacion = new Reparacion();
+  
+    int idRepa;
     
     ArrayList <Tecnico> listaTecnicos = controlLogica.buscarListaTecnico();
     ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicios();
-    ArrayList <Sala> listaSalas = controlLogica.buscarListaSala();
-    int idServicioSelect;
 
-    public EditarReparacion() {
+    public EditarReparacion(int idRepa) {
+        this.idRepa = idRepa;
         initComponents();
                 
         rellenarCampos();
@@ -42,22 +41,6 @@ public class EditarReparacion extends javax.swing.JFrame {
             }
 
         });
-        
-        //Rellenar campos de servicio
-        jCBServicio.removeAllItems();
-        
-        if(!listaServicios.isEmpty()){         
-            jCBServicio.addItem("Seleccione un servicio");
-            
-            for(Servicio servi : listaServicios){
-                jCBServicio.addItem(servi.getNombreServicio());                 
-            }
-        }
-        
-        else{
-            jCBServicio.addItem("Cargue un servicio");
-        }
-        
         //Rellenar campos de tecnicos
         jCbReceptor.removeAllItems();
         if(listaTecnicos.isEmpty()){
@@ -66,20 +49,59 @@ public class EditarReparacion extends javax.swing.JFrame {
         else{
             for(Tecnico tecni : listaTecnicos){
                 jCbReceptor.addItem(tecni.getNombre());
+                jCbReparador.addItem(tecni.getNombre());
+                jCbEmisor.addItem(tecni.getNombre());
             }
         }
         
-        //Setear Fechas
-        //Fecha de recepcion
-        jDateFechaRecepcion.setText(controlLogica.getDate());
         
-        //Fecha estimativa (Recepcion + 15 dias)
-        Date dt = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        Date tomorrow = new Date(dt.getTime() + (15000 * 60 * 60 * 24));
-        String fecha = dateFormat.format(tomorrow);
+        //Rellenar campos de servicio
+        jCBServicio.removeAllItems();
+        jCBSala.removeAllItems();
+        jCbEstado.removeAllItems();
+      
+        jCbEstado.addItem("Recibido");
+        jCbEstado.addItem("En Proceso");
+        jCbEstado.addItem("Diagnostico");
+        jCbEstado.addItem("Reparada");
+        jCbEstado.addItem("Entregada");
+        
+        
+        reparacion = controlLogica.buscarReparacion(idRepa);
+        
+        jCBServicio.addItem(reparacion.getSala().getServicio().getNombreServicio());
+        jCBSala.addItem(reparacion.getSala().getSala());
+        jCBTipoRep.setSelectedItem(reparacion.getTipoDeReparacion());
+        jTextModelo.setText(reparacion.getModelo());
+        jTextDiag.setText(reparacion.getDiagnostico());
+        jDateFechaRecepcion.setText(reparacion.getFechaRecepcion());
+        jDateFechaEstimativa.setText(reparacion.getFechaEstimativa());
+        jCbReceptor.setSelectedItem(reparacion.getReceptor().getNombre());
+        
+        jCBServicio.setEnabled(false);
+        jCBSala.setEnabled(false);
+        jCBTipoRep.setEnabled(false);
+        jTextModelo.setEnabled(false);
+        jTextDiag.setEnabled(false);
+        jCbReceptor.setEnabled(false);
+        
+        jTextDetalle.setText(reparacion.getDetalleTecnico());
+        jCbEstado.setSelectedItem(reparacion.getEstado());
 
-        jDateFechaEstimativa.setText(fecha);
+        //no lee correctamente el tecnico q corresponde a los casilleros
+        if(reparacion.getReparador() != null){
+            jCbReparador.setSelectedItem(reparacion.getReparador().getNombre());
+        }
+        else{
+            jCbReparador.setSelectedIndex(0);
+        }
+        if(reparacion.getQuienEntrega() != null){
+            jCbEmisor.setSelectedItem(reparacion.getQuienEntrega().getNombre());
+        }
+        else{
+            jCbEmisor.setSelectedIndex(0);
+        }
+   
     }
         
     /**
@@ -98,7 +120,7 @@ public class EditarReparacion extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButtonBack = new javax.swing.JButton();
+        jButtonPrint = new javax.swing.JButton();
         jButtonCarga = new javax.swing.JButton();
         jCBServicio = new javax.swing.JComboBox<>();
         jCBTipoRep = new javax.swing.JComboBox<>();
@@ -116,6 +138,15 @@ public class EditarReparacion extends javax.swing.JFrame {
         jDateFechaEstimativa = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextDetalle = new javax.swing.JTextPane();
+        jButtonBack1 = new javax.swing.JButton();
+        jCbReparador = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jCbEmisor = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jDateFechaFinalizacion = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jCbEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,13 +165,14 @@ public class EditarReparacion extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Modelo");
 
-        jButtonBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flecha-izquierda.png"))); // NOI18N
-        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/impresora.png"))); // NOI18N
+        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackActionPerformed(evt);
+                jButtonPrintActionPerformed(evt);
             }
         });
 
+        jButtonCarga.setForeground(new java.awt.Color(60, 63, 65));
         jButtonCarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lifting.png"))); // NOI18N
         jButtonCarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +214,43 @@ public class EditarReparacion extends javax.swing.JFrame {
         jTextDetalle.setToolTipText("Detalle tecnico");
         jScrollPane3.setViewportView(jTextDetalle);
 
+        jButtonBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flecha-izquierda.png"))); // NOI18N
+        jButtonBack1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBack1ActionPerformed(evt);
+            }
+        });
+
+        jCbReparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
+
+        jLabel6.setText("Diagnosticado por");
+
+        jLabel8.setText("Finalizado por");
+
+        jCbEmisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
+
+        jLabel10.setText("Fecha finalizacion");
+
+        jDateFechaFinalizacion.setText("-");
+
+        jLabel11.setText("Estado de la reparacion");
+
+        jCbEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCbEstadoItemStateChanged(evt);
+            }
+        });
+        jCbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCbEstadoActionPerformed(evt);
+            }
+        });
+        jCbEstado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCbEstadoPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -191,31 +260,44 @@ public class EditarReparacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 6, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonBack)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButtonBack1)
+                                .addGap(26, 26, 26)
+                                .addComponent(jButtonPrint)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCBTipoRep, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jCBSala, javax.swing.GroupLayout.Alignment.TRAILING, 0, 174, Short.MAX_VALUE)
-                            .addComponent(jButtonCarga, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jButtonCarga))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jDateFechaEstimativa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jDateFechaRecepcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCbReceptor, 0, 180, Short.MAX_VALUE))))
+                                .addComponent(jCbReceptor, 0, 180, Short.MAX_VALUE)
+                                .addComponent(jCbReparador, 0, 180, Short.MAX_VALUE)
+                                .addComponent(jCbEmisor, 0, 180, Short.MAX_VALUE)
+                                .addComponent(jCbEstado, 0, 180, Short.MAX_VALUE))
+                            .addComponent(jDateFechaFinalizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -251,6 +333,18 @@ public class EditarReparacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCbReceptor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jCbReparador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jCbEmisor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jCbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -259,13 +353,18 @@ public class EditarReparacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jDateFechaEstimativa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jDateFechaFinalizacion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonCarga)
-                    .addComponent(jButtonBack))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonBack1)
+                    .addComponent(jButtonPrint))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 726));
@@ -281,7 +380,7 @@ public class EditarReparacion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 571, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
         );
 
         pack();
@@ -289,69 +388,124 @@ public class EditarReparacion extends javax.swing.JFrame {
 
     private void jButtonCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargaActionPerformed
 
-        /* String nombre = jTextNombre.getText();
-        Tecnico nuevoTecnico = new Tecnico();
-        nuevoTecnico.setNombre(nombre);
-        controlPersis.nuevoTecnico(nuevoTecnico);
-        */
+        int tecId;
+        
+        reparacion.setDetalleTecnico(jTextDetalle.getText());
+        reparacion.setEstado(jCbEstado.getSelectedItem().toString());
+        
+        for(Tecnico tec : listaTecnicos){
+            if(jCbReparador.getSelectedItem().equals(tec.getNombre())){
+                tecId = tec.getId();
+                reparacion.setReparador(controlLogica.buscarTecnico(tecId));
+                break;
+            }
+            else{
+                 reparacion.setReparador(null);
+            }
+        }
+        for(Tecnico tec : listaTecnicos){
+            if(jCbEmisor.getSelectedItem().equals(tec.getNombre())){
+                tecId = tec.getId();
+                reparacion.setQuienEntrega(controlLogica.buscarTecnico(tecId));
+                break;
+            }
+            else{
+                reparacion.setQuienEntrega(null);
+            }
+        }
+
+        if(!jDateFechaFinalizacion.getText().equals("-")){
+            reparacion.setFechaFinalizacion(jDateFechaFinalizacion.getText());
+        }
+        
+        
+        controlLogica.editarReparacion(reparacion);
+        
         PrimariaReparaciones reparaciones = new PrimariaReparaciones ();
         reparaciones.setVisible(true);
         reparaciones.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jButtonCargaActionPerformed
 
-    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+    private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
+
+    }//GEN-LAST:event_jButtonPrintActionPerformed
+
+    private void jCBServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicioActionPerformed
+
+    }//GEN-LAST:event_jCBServicioActionPerformed
+
+    private void jButtonBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBack1ActionPerformed
         PrimariaReparaciones reparaciones = new PrimariaReparaciones ();
         reparaciones.setVisible(true);
         reparaciones.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_jButtonBackActionPerformed
+    }//GEN-LAST:event_jButtonBack1ActionPerformed
 
-    private void jCBServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicioActionPerformed
-      
-        if(jCBServicio.getSelectedIndex() > 0){
-            for(Servicio servi : listaServicios){
-                if(servi.getNombreServicio().equals(jCBServicio.getSelectedItem().toString())){
-                    idServicioSelect = servi.getId();
+    private void jCbEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCbEstadoItemStateChanged
+
+    }//GEN-LAST:event_jCbEstadoItemStateChanged
+
+    private void jCbEstadoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCbEstadoPropertyChange
+    }//GEN-LAST:event_jCbEstadoPropertyChange
+
+    private void jCbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCbEstadoActionPerformed
+        if(jCbEstado.getSelectedIndex() >= 0){
+            
+            switch (jCbEstado.getSelectedIndex()){
+                case 0://Recibido
+                    jDateFechaFinalizacion.setText("-");
                     break;
-                }
+                    
+                case 1://En proceso
+                    jDateFechaFinalizacion.setText("-");
+                    break;
+                    
+                case 2://diagnostico
+                    jCbReparador.requestFocus();
+                    jDateFechaFinalizacion.setText("-");
+
+                    break;
+                    
+                case 3://Finalizada
+                    jCbEmisor.requestFocusInWindow();
+                    jDateFechaFinalizacion.setText(controlLogica.getDate());
+                    break;
+                    
+                case 4://Entregada
+                    jDateFechaFinalizacion.setText(controlLogica.getDate());
+                    break;
+                    
             }
-      
-            jCBSala.removeAllItems();
-            jCBSala.addItem("Seleccione una sala");
             
-            for(Sala sala : listaSalas){
-                if(sala.getServicio().getId() == idServicioSelect){
-                    jCBSala.addItem(sala.getSala());
-                }
-            }
         }
-        
-        else if(jCBServicio.getSelectedIndex() == 0){
-            jCBSala.removeAllItems();
-            jCBSala.addItem("Seleccione un servicio");
-            idServicioSelect = -1;
-        }
-            
-        
-    }//GEN-LAST:event_jCBServicioActionPerformed
+    }//GEN-LAST:event_jCbEstadoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonBack1;
     private javax.swing.JButton jButtonCarga;
+    private javax.swing.JButton jButtonPrint;
     private javax.swing.JComboBox<String> jCBSala;
     private javax.swing.JComboBox<String> jCBServicio;
     private javax.swing.JComboBox<String> jCBTipoRep;
+    private javax.swing.JComboBox<String> jCbEmisor;
+    private javax.swing.JComboBox<String> jCbEstado;
     private javax.swing.JComboBox<String> jCbReceptor;
+    private javax.swing.JComboBox<String> jCbReparador;
     private javax.swing.JLabel jDateFechaEstimativa;
+    private javax.swing.JLabel jDateFechaFinalizacion;
     private javax.swing.JLabel jDateFechaRecepcion;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -4,7 +4,11 @@ package IGU.Reparaciones;
 import IGU.InicialServer;
 import Logica.Controladora;
 import Logica.Reparaciones.Reparacion;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -13,6 +17,7 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     Controladora controlLogica = new Controladora();
     
     DefaultTableModel tabla=null;
+    int idOrdenSelect;
     
     public PrimariaReparaciones() {
         initComponents();
@@ -54,6 +59,11 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
                 "Servicio", "Equipo", "Diagnostico", "Fecha de carga", "Estado"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -129,6 +139,25 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_jMenuNuevoTecnicoActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        JTable table =(JTable) evt.getSource();
+        Point point = evt.getPoint();
+        int row = table.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && table.getSelectedRow() != -1) {
+            
+            String id =jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount()-1).toString();
+            idOrdenSelect = Integer.parseInt(id); 
+            
+            EditarReparacion editRep = new EditarReparacion(idOrdenSelect);
+            
+            editRep.setVisible(true);
+            editRep.setAlwaysOnTop(true);
+            editRep.setLocationRelativeTo(this);
+            
+            this.dispose();
+        }
+    }//GEN-LAST:event_jTable1MousePressed
    
     private void cargarTabla(){
         tabla = new DefaultTableModel(){
@@ -141,8 +170,8 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private void cargarReparaciones() {
         ArrayList <Reparacion> listaReparacion = controlLogica.buscarListaReparacion();
         
-        String titulos[] = {"N°", "Sala", "Equipo", "Diagnostico","Fecha de recepcion","Estado"};
-              
+        String titulos[] = {"Sala", "Equipo", "Diagnostico","Fecha de recepcion","Estado", "ID"}; //si se desea agregar mas columnas,
+                                                                                                  //ID Siempre debe ser la ultima columna             
         tabla = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){return false;}
@@ -152,18 +181,30 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         
         jTable1.setModel(tabla);
         
-        int numeroDeRegistros = 1;
         for(Reparacion repa : listaReparacion){
-            Object[] repaAgregar = {numeroDeRegistros, repa.getSala().getSala(), repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado().toString()};
+            Object[] repaAgregar = {repa.getSala().getSala(), repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado(), repa.getId()};
             tabla.addRow(repaAgregar);
-            jTable1.setModel(tabla);
-            numeroDeRegistros++;
-        
+            
+            jTable1.setModel(tabla); 
+            
+            if(repa.getEstado().equals("Recibido")){
+                
+            
+                jTable1.setBackground(Color.red);
+                    //pintar solo la fila deseada
+            
+            }
         }
+         
+        
+      //  jTable1.setGridColor(Color.BLUE);
+        //jTable1.setForeground(Color.BLACK);
+
        
     }
     
-
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
