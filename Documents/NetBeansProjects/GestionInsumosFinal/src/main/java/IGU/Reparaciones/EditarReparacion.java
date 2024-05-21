@@ -60,11 +60,11 @@ public class EditarReparacion extends javax.swing.JFrame {
         jCBSala.removeAllItems();
         jCbEstado.removeAllItems();
       
-        jCbEstado.addItem("Recibido");
-        jCbEstado.addItem("En Proceso");
-        jCbEstado.addItem("Diagnostico");
-        jCbEstado.addItem("Reparada");
-        jCbEstado.addItem("Entregada");
+        jCbEstado.addItem("A: Recibido");
+        jCbEstado.addItem("B: En Proceso");
+        jCbEstado.addItem("C: Diagnostico");
+        jCbEstado.addItem("D: Reparada");
+        jCbEstado.addItem("E: Entregada");
         
         
         reparacion = controlLogica.buscarReparacion(idRepa);

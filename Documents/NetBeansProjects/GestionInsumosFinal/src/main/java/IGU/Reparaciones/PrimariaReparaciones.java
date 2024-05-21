@@ -5,9 +5,12 @@ import IGU.InicialServer;
 import Logica.Controladora;
 import Logica.Reparaciones.Reparacion;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -60,6 +63,9 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTable1MousePressed(evt);
             }
@@ -158,6 +164,24 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jTable1MousePressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("A: Recibido")){
+            jTable1.setSelectionBackground(Color.RED);
+        }
+        else if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("B: En Proceso")){
+            jTable1.setSelectionBackground(Color.YELLOW);
+        }
+        else if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("C: Diagnostico")){
+            jTable1.setSelectionBackground(Color.BLUE);
+        }
+        else if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("D: Reparada")){
+            jTable1.setSelectionBackground(Color.GREEN);
+        }
+        else if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("E: Entregada")){
+            jTable1.setSelectionBackground(Color.gray);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
    
     private void cargarTabla(){
         tabla = new DefaultTableModel(){
@@ -180,30 +204,27 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         tabla.setColumnIdentifiers(titulos);
         
         jTable1.setModel(tabla);
+      
+            Collections.sort(listaReparacion, new Comparator <Reparacion>() {
+            @Override
+            public int compare(Reparacion o1, Reparacion o2) {
+                return o1.getEstado().compareTo(o2.getEstado());
+            }
+        });
+       // Collections.reverse(listaReparacion);
         
+       
         for(Reparacion repa : listaReparacion){
             Object[] repaAgregar = {repa.getSala().getSala(), repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado(), repa.getId()};
+            
+            
+            
             tabla.addRow(repaAgregar);
-            
             jTable1.setModel(tabla); 
-            
-            if(repa.getEstado().equals("Recibido")){
-                
-            
-                jTable1.setBackground(Color.red);
-                    //pintar solo la fila deseada
-            
-            }
         }
-         
-        
-      //  jTable1.setGridColor(Color.BLUE);
-        //jTable1.setForeground(Color.BLACK);
-
-       
     }
     
-    
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

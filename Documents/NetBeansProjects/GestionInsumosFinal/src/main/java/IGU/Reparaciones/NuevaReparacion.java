@@ -328,7 +328,7 @@ public class NuevaReparacion extends javax.swing.JFrame {
         reparacion.setReceptor(receptor);
         reparacion.setFechaRecepcion(jDateFechaRecepcion.getText());
         reparacion.setFechaEstimativa(jDateFechaEstimativa.getText());
-        reparacion.setEstado("Recibido");
+        reparacion.setEstado("A: Recibido");
         
         controlLogica.nuevoReparacion(reparacion);
         
