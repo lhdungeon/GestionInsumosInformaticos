@@ -42,7 +42,6 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         jMenuNuevaReparacion = new javax.swing.JMenuItem();
         jMenuNuevoTecnico = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,11 +102,18 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Editar");
+        jMenu2.setText("Atras");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Consulta");
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -182,6 +188,17 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
             jTable1.setSelectionBackground(Color.gray);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        //Boton Atras ActionPerformed
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        InicialServer inicialServer = new InicialServer();
+        inicialServer.setVisible(true);
+        inicialServer.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenu2MouseClicked
    
     private void cargarTabla(){
         tabla = new DefaultTableModel(){
@@ -230,7 +247,6 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuNuevaReparacion;
     private javax.swing.JMenuItem jMenuNuevoTecnico;

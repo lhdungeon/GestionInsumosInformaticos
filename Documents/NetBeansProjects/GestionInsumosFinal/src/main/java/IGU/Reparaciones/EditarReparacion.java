@@ -223,9 +223,9 @@ public class EditarReparacion extends javax.swing.JFrame {
 
         jCbReparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
 
-        jLabel6.setText("Diagnosticado por");
+        jLabel6.setText("Diagnosticado/Reparado por");
 
-        jLabel8.setText("Finalizado por");
+        jLabel8.setText("Finalizado/Entregado por");
 
         jCbEmisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
 
@@ -428,7 +428,43 @@ public class EditarReparacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCargaActionPerformed
 
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
+         int tecId;
+        
+        reparacion.setDetalleTecnico(jTextDetalle.getText());
+        reparacion.setEstado(jCbEstado.getSelectedItem().toString());
+        
+        for(Tecnico tec : listaTecnicos){
+            if(jCbReparador.getSelectedItem().equals(tec.getNombre())){
+                tecId = tec.getId();
+                reparacion.setReparador(controlLogica.buscarTecnico(tecId));
+                break;
+            }
+            else{
+                 reparacion.setReparador(null);
+            }
+        }
+        for(Tecnico tec : listaTecnicos){
+            if(jCbEmisor.getSelectedItem().equals(tec.getNombre())){
+                tecId = tec.getId();
+                reparacion.setQuienEntrega(controlLogica.buscarTecnico(tecId));
+                break;
+            }
+            else{
+                reparacion.setQuienEntrega(null);
+            }
+        }
 
+        if(!jDateFechaFinalizacion.getText().equals("-")){
+            reparacion.setFechaFinalizacion(jDateFechaFinalizacion.getText());
+        }
+        
+        
+        controlLogica.editarReparacion(reparacion);
+     
+        ResumenReparacion resumen = new ResumenReparacion(reparacion.getId());
+        resumen.setVisible(true);
+        resumen.setLocationRelativeTo(null);
+        this.dispose(); 
     }//GEN-LAST:event_jButtonPrintActionPerformed
 
     private void jCBServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBServicioActionPerformed
