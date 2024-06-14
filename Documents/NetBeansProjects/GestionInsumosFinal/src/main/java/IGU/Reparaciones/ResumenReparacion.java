@@ -30,18 +30,44 @@ public class ResumenReparacion extends javax.swing.JFrame {
         
         if(repa != null){
             Servicio.setText("Servicio: " + repa.getSala().getServicio().getNombreServicio());
+            Servicio2.setText("Servicio: " + repa.getSala().getServicio().getNombreServicio());
+
             Sector.setText("Sector: " + repa.getSala().getSala());
+            Sector2.setText("Sector: " + repa.getSala().getSala());
+
             Modelo.setText(repa.getTipoDeReparacion());
+            Modelo2.setText(repa.getTipoDeReparacion());
+
             Detalle.setText(repa.getModelo());
+            Detalle2.setText(repa.getModelo());
+
             Diagnostico.setText("Diagnostico: " + repa.getDiagnostico());
+            Diagnostico2.setText("Diagnostico: " + repa.getDiagnostico());
+
             DetalleTec.setText("Detalle Tecnico: " + repa.getDetalleTecnico());
+            DetalleTec2.setText("Detalle Tecnico: " + repa.getDetalleTecnico());
+
             FechaRec.setText("Fecha Recepcion " + repa.getFechaRecepcion());
-            FechaFin.setText("Fecha Finalizacion " + repa.getFechaFinalizacion());
+            FechaRec2.setText("Fecha Recepcion " + repa.getFechaRecepcion());
+
+            if(repa.getFechaFinalizacion() != null){
+                FechaFin.setText("Fecha Finalizacion " + repa.getFechaFinalizacion());
+                FechaFin2.setText("Fecha Finalizacion " + repa.getFechaFinalizacion());
+            }
+            else{
+                FechaFin.setText("Fecha Estimativa " + repa.getFechaEstimativa());
+                FechaFin2.setText("Fecha Estimativa " + repa.getFechaEstimativa());
+            }
+            
             
             if(repa.getReparador()!=null){
                TecReparador.setText("Tecnico Reparador " + repa.getReparador().getNombre());
+               TecReparador2.setText("Tecnico Reparador " + repa.getReparador().getNombre());
             }
-            else{TecReparador.setText("Sin tecnico asignado");}
+            else{
+                TecReparador.setText("Sin tecnico asignado");
+                TecReparador2.setText("Sin tecnico asignado");
+            }
             
         }
     }
@@ -81,6 +107,7 @@ public class ResumenReparacion extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         Titulo.setFont(new java.awt.Font("DialogInput", 1, 18)); // NOI18N
         Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -293,7 +320,7 @@ public class ResumenReparacion extends javax.swing.JFrame {
 
                 Graphics2D g2 = (Graphics2D)graphics;
                 g2.translate(pageFormat.getImageableX(),pageFormat.getImageableY());
-                g2.scale(1,1);
+                g2.scale(1.2,.8);
 
                 jPanel1.paint(g2);
                 return Printable.PAGE_EXISTS;
