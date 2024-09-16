@@ -59,9 +59,9 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         jMenuFinalizado = new javax.swing.JMenuItem();
         jMenuTodo = new javax.swing.JMenuItem();
         jMenuAtras = new javax.swing.JMenu();
+        jMenuEliminar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -250,6 +250,20 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenuAtras);
 
+        jMenuEliminar.setText("Eliminar");
+        jMenuEliminar.setEnabled(false);
+        jMenuEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuEliminarMouseClicked(evt);
+            }
+        });
+        jMenuEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuEliminarActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenuEliminar);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -322,6 +336,7 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
         else if(jTable1.getValueAt(jTable1.getSelectedRow(), 4).equals("E: Entregada")){
             jTable1.setSelectionBackground(Color.gray);
         }
+        jMenuEliminar.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jMenuAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAtrasActionPerformed
@@ -451,6 +466,26 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private void jMenuFinalizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFinalizadoActionPerformed
         filtrarReparaciones("Estado", "D: Reparada");
     }//GEN-LAST:event_jMenuFinalizadoActionPerformed
+
+    private void jMenuEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuEliminarMouseClicked
+        
+        if(jTable1.getSelectedRow()>-1 && jMenuEliminar.isEnabled()){
+            String id = jTable1.getValueAt(jTable1.getSelectedRow(),5).toString();
+            int idToDelete = Integer.parseInt(id);
+            controlLogica.eliminarReparacion(idToDelete);
+            PrimariaReparaciones nueva = new PrimariaReparaciones();
+            nueva.setLocationRelativeTo(this);
+            this.dispose();   
+            nueva.setVisible(true);
+        }
+        else{
+            jMenuEliminar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jMenuEliminarMouseClicked
+
+    private void jMenuEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuEliminarActionPerformed
    
     private void cargarTabla(){
         tabla = new DefaultTableModel(){
@@ -503,10 +538,12 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
        }
 */       
         for(Reparacion repa : listaReparacion){
-            Object[] repaAgregar = {repa.getSala().getServicio().getNombreServicio()+ "/" +repa.getSala().getSala(), repa.getTipoDeReparacion()+": "+repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado(), repa.getId()};
-             
-            tabla.addRow(repaAgregar);
-            jTable1.setModel(tabla); 
+            if(!repa.getEstado().equals("E: Entregada")){
+                Object[] repaAgregar = {repa.getSala().getServicio().getNombreServicio()+ "/" +repa.getSala().getSala(), repa.getTipoDeReparacion()+": "+repa.getModelo(), repa.getDiagnostico(),repa.getFechaRecepcion(),repa.getEstado(), repa.getId()};
+
+                tabla.addRow(repaAgregar);
+                jTable1.setModel(tabla);
+            }
         }
     }
     
@@ -538,6 +575,7 @@ public class PrimariaReparaciones extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuComputadora;
     private javax.swing.JMenuItem jMenuDiagnosticado;
+    private javax.swing.JMenu jMenuEliminar;
     private javax.swing.JMenuItem jMenuEnProceso;
     private javax.swing.JMenuItem jMenuEntregado;
     private javax.swing.JMenu jMenuEstado;

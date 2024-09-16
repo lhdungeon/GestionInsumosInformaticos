@@ -23,12 +23,15 @@ public class EditarReparacion extends javax.swing.JFrame {
     
     ArrayList <Tecnico> listaTecnicos = controlLogica.buscarListaTecnico();
     ArrayList <Servicio> listaServicios = controlLogica.buscarListaServicios();
-
+    
+    
+    
     public EditarReparacion(int idRepa) {
         this.idRepa = idRepa;
         initComponents();
                 
         rellenarCampos();
+        
         this.setTitle("Gestion de insumos informaticos");   
     }
     
@@ -73,7 +76,7 @@ public class EditarReparacion extends javax.swing.JFrame {
         jCBSala.addItem(reparacion.getSala().getSala());
         jCBTipoRep.setSelectedItem(reparacion.getTipoDeReparacion());
         jTextModelo.setText(reparacion.getModelo());
-        jTextDiag.setText(reparacion.getDiagnostico());
+        jTextAreaDiag.setText(reparacion.getDiagnostico());
         jDateFechaRecepcion.setText(reparacion.getFechaRecepcion());
         jDateFechaEstimativa.setText(reparacion.getFechaEstimativa());
         jCbReceptor.setSelectedItem(reparacion.getReceptor().getNombre());
@@ -82,10 +85,10 @@ public class EditarReparacion extends javax.swing.JFrame {
         jCBSala.setEnabled(false);
         jCBTipoRep.setEnabled(false);
         jTextModelo.setEnabled(false);
-        jTextDiag.setEnabled(false);
+        jTextAreaDiag.setEnabled(false);
         jCbReceptor.setEnabled(false);
         
-        jTextDetalle.setText(reparacion.getDetalleTecnico());
+        jTextAreaDetalle.setText(reparacion.getDetalleTecnico());
         jCbEstado.setSelectedItem(reparacion.getEstado());
 
         //no lee correctamente el tecnico q corresponde a los casilleros
@@ -128,16 +131,12 @@ public class EditarReparacion extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextModelo = new javax.swing.JTextPane();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextDiag = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jCbReceptor = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jDateFechaRecepcion = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jDateFechaEstimativa = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextDetalle = new javax.swing.JTextPane();
         jButtonBack1 = new javax.swing.JButton();
         jCbReparador = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -147,9 +146,12 @@ public class EditarReparacion extends javax.swing.JFrame {
         jDateFechaFinalizacion = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jCbEstado = new javax.swing.JComboBox<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextAreaDetalle = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaDiag = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,9 +199,6 @@ public class EditarReparacion extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel5.setText("La fecha estimativa puede variar. Consulte al int 1829 - Computos");
 
-        jTextDiag.setToolTipText("Diagnostico");
-        jScrollPane1.setViewportView(jTextDiag);
-
         jLabel2.setText("Recibido por");
 
         jCbReceptor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
@@ -211,9 +210,6 @@ public class EditarReparacion extends javax.swing.JFrame {
         jLabel9.setText("Fecha estimativa");
 
         jDateFechaEstimativa.setText("Fecha");
-
-        jTextDetalle.setToolTipText("Detalle tecnico");
-        jScrollPane3.setViewportView(jTextDetalle);
 
         jButtonBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flecha-izquierda.png"))); // NOI18N
         jButtonBack1.addActionListener(new java.awt.event.ActionListener() {
@@ -252,6 +248,16 @@ public class EditarReparacion extends javax.swing.JFrame {
             }
         });
 
+        jTextAreaDetalle.setColumns(20);
+        jTextAreaDetalle.setLineWrap(true);
+        jTextAreaDetalle.setRows(5);
+        jScrollPane4.setViewportView(jTextAreaDetalle);
+
+        jTextAreaDiag.setColumns(20);
+        jTextAreaDiag.setLineWrap(true);
+        jTextAreaDiag.setRows(5);
+        jScrollPane3.setViewportView(jTextAreaDiag);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -259,7 +265,6 @@ public class EditarReparacion extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 6, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -299,12 +304,13 @@ public class EditarReparacion extends javax.swing.JFrame {
                                 .addComponent(jCbEmisor, 0, 180, Short.MAX_VALUE)
                                 .addComponent(jCbEstado, 0, 180, Short.MAX_VALUE))
                             .addComponent(jDateFechaFinalizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                             .addComponent(jCBServicio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -326,11 +332,11 @@ public class EditarReparacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCbReceptor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -391,7 +397,7 @@ public class EditarReparacion extends javax.swing.JFrame {
 
         int tecId;
         
-        reparacion.setDetalleTecnico(jTextDetalle.getText());
+        reparacion.setDetalleTecnico(jTextAreaDetalle.getText());
         reparacion.setEstado(jCbEstado.getSelectedItem().toString());
         
         for(Tecnico tec : listaTecnicos){
@@ -431,7 +437,7 @@ public class EditarReparacion extends javax.swing.JFrame {
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
          int tecId;
         
-        reparacion.setDetalleTecnico(jTextDetalle.getText());
+        reparacion.setDetalleTecnico(jTextAreaDetalle.getText());
         reparacion.setEstado(jCbEstado.getSelectedItem().toString());
         
         for(Tecnico tec : listaTecnicos){
@@ -546,12 +552,12 @@ public class EditarReparacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextPane jTextDetalle;
-    private javax.swing.JTextPane jTextDiag;
+    private javax.swing.JTextArea jTextAreaDetalle;
+    private javax.swing.JTextArea jTextAreaDiag;
     private javax.swing.JTextPane jTextModelo;
     // End of variables declaration//GEN-END:variables
 }

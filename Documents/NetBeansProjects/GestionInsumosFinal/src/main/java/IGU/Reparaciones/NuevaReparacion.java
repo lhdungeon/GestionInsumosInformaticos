@@ -107,16 +107,16 @@ public class NuevaReparacion extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextModelo = new javax.swing.JTextPane();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextDiag = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
         jCbReceptor = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jDateFechaRecepcion = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jDateFechaEstimativa = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextDetalle = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextAreaDiag = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaDetalle = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,9 +165,6 @@ public class NuevaReparacion extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel5.setText("La fecha estimativa puede variar. Consulte al int 1829 - Computos");
 
-        jTextDiag.setToolTipText("Diagnostico");
-        jScrollPane1.setViewportView(jTextDiag);
-
         jLabel2.setText("Recibido por");
 
         jCbReceptor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnico" }));
@@ -180,8 +177,15 @@ public class NuevaReparacion extends javax.swing.JFrame {
 
         jDateFechaEstimativa.setText("Fecha");
 
-        jTextDetalle.setToolTipText("Detalle tecnico");
-        jScrollPane3.setViewportView(jTextDetalle);
+        jTextAreaDiag.setColumns(20);
+        jTextAreaDiag.setLineWrap(true);
+        jTextAreaDiag.setRows(5);
+        jScrollPane4.setViewportView(jTextAreaDiag);
+
+        jTextAreaDetalle.setColumns(20);
+        jTextAreaDetalle.setLineWrap(true);
+        jTextAreaDetalle.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDetalle);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -190,7 +194,6 @@ public class NuevaReparacion extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -217,12 +220,13 @@ public class NuevaReparacion extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jDateFechaRecepcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jCbReceptor, 0, 180, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                             .addComponent(jCBServicio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -245,10 +249,10 @@ public class NuevaReparacion extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCbReceptor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,7 +270,7 @@ public class NuevaReparacion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonCarga)
                     .addComponent(jButtonBack))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 726));
@@ -296,8 +300,8 @@ public class NuevaReparacion extends javax.swing.JFrame {
 
         String tipo = jCBTipoRep.getSelectedItem().toString();
         String modelo = jTextModelo.getText();
-        String diagnostico = jTextDiag.getText();
-        String detalle = jTextDetalle.getText();
+        String diagnostico = jTextAreaDiag.getText();
+        String detalle = jTextAreaDetalle.getText();
         
         for(Sala sal : listaSalas){
             if(sal.getSala().equals(jCBSala.getSelectedItem().toString())){
@@ -395,10 +399,10 @@ public class NuevaReparacion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextPane jTextDetalle;
-    private javax.swing.JTextPane jTextDiag;
+    private javax.swing.JTextArea jTextAreaDetalle;
+    private javax.swing.JTextArea jTextAreaDiag;
     private javax.swing.JTextPane jTextModelo;
     // End of variables declaration//GEN-END:variables
 }
