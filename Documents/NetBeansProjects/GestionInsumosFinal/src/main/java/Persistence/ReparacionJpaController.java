@@ -4,7 +4,7 @@
  */
 package Persistence;
 
-import Logica.Insumos.Hardware;
+import Logica.Reparaciones.Reparacion;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -18,15 +18,15 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Administrador
+ * @author Usuario
  */
-public class HardwareJpaController implements Serializable {
+public class ReparacionJpaController implements Serializable {
 
-    public HardwareJpaController(EntityManagerFactory emf) {
+    public ReparacionJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     
-    public HardwareJpaController(){
+    public ReparacionJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
     }
     
@@ -36,12 +36,12 @@ public class HardwareJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Hardware hardware) {
+    public void create(Reparacion reparacion) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(hardware);
+            em.persist(reparacion);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,19 +50,19 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public void edit(Hardware hardware) throws NonexistentEntityException, Exception {
+    public void edit(Reparacion reparacion) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            hardware = em.merge(hardware);
+            reparacion = em.merge(reparacion);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = hardware.getId();
-                if (findHardware(id) == null) {
-                    throw new NonexistentEntityException("The hardware with id " + id + " no longer exists.");
+                int id = reparacion.getId();
+                if (findReparacion(id) == null) {
+                    throw new NonexistentEntityException("The reparacion with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -78,14 +78,14 @@ public class HardwareJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Hardware hardware;
+            Reparacion reparacion;
             try {
-                hardware = em.getReference(Hardware.class, id);
-                hardware.getId();
+                reparacion = em.getReference(Reparacion.class, id);
+                reparacion.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The hardware with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The reparacion with id " + id + " no longer exists.", enfe);
             }
-            em.remove(hardware);
+            em.remove(reparacion);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -94,19 +94,19 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public List<Hardware> findHardwareEntities() {
-        return findHardwareEntities(true, -1, -1);
+    public List<Reparacion> findReparacionEntities() {
+        return findReparacionEntities(true, -1, -1);
     }
 
-    public List<Hardware> findHardwareEntities(int maxResults, int firstResult) {
-        return findHardwareEntities(false, maxResults, firstResult);
+    public List<Reparacion> findReparacionEntities(int maxResults, int firstResult) {
+        return findReparacionEntities(false, maxResults, firstResult);
     }
 
-    private List<Hardware> findHardwareEntities(boolean all, int maxResults, int firstResult) {
+    private List<Reparacion> findReparacionEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Hardware.class));
+            cq.select(cq.from(Reparacion.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -118,20 +118,20 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public Hardware findHardware(int id) {
+    public Reparacion findReparacion(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Hardware.class, id);
+            return em.find(Reparacion.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getHardwareCount() {
+    public int getReparacionCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Hardware> rt = cq.from(Hardware.class);
+            Root<Reparacion> rt = cq.from(Reparacion.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

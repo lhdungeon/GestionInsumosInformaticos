@@ -4,7 +4,7 @@
  */
 package Persistence;
 
-import Logica.Registro;
+import Logica.Insumos.RegistroInsumos;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +26,7 @@ public class RegistroJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+
     
     public RegistroJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
@@ -34,7 +35,7 @@ public class RegistroJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Registro registro) {
+    public void create(RegistroInsumos registro) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -48,7 +49,7 @@ public class RegistroJpaController implements Serializable {
         }
     }
 
-    public void edit(Registro registro) throws NonexistentEntityException, Exception {
+    public void edit(RegistroInsumos registro) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -76,9 +77,9 @@ public class RegistroJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Registro registro;
+            RegistroInsumos registro;
             try {
-                registro = em.getReference(Registro.class, id);
+                registro = em.getReference(RegistroInsumos.class, id);
                 registro.getId_registro();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The registro with id " + id + " no longer exists.", enfe);
@@ -92,19 +93,19 @@ public class RegistroJpaController implements Serializable {
         }
     }
 
-    public List<Registro> findRegistroEntities() {
+    public List<RegistroInsumos> findRegistroEntities() {
         return findRegistroEntities(true, -1, -1);
     }
 
-    public List<Registro> findRegistroEntities(int maxResults, int firstResult) {
+    public List<RegistroInsumos> findRegistroEntities(int maxResults, int firstResult) {
         return findRegistroEntities(false, maxResults, firstResult);
     }
 
-    private List<Registro> findRegistroEntities(boolean all, int maxResults, int firstResult) {
+    private List<RegistroInsumos> findRegistroEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Registro.class));
+            cq.select(cq.from(RegistroInsumos.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -116,10 +117,10 @@ public class RegistroJpaController implements Serializable {
         }
     }
 
-    public Registro findRegistro(int id) {
+    public RegistroInsumos findRegistro(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Registro.class, id);
+            return em.find(RegistroInsumos.class, id);
         } finally {
             em.close();
         }
@@ -129,7 +130,7 @@ public class RegistroJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Registro> rt = cq.from(Registro.class);
+            Root<RegistroInsumos> rt = cq.from(RegistroInsumos.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

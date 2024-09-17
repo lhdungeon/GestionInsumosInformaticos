@@ -4,21 +4,23 @@
  */
 package Persistence;
 
-import Logica.Servicio;
-import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import Logica.Servicios.Sala;
+import Logica.Servicios.Servicio;
+import Persistence.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Administrador
+ * @author Usuario
  */
 public class ServicioJpaController implements Serializable {
 
@@ -26,19 +28,39 @@ public class ServicioJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+    
     public ServicioJpaController(){
         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
     }
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
     public void create(Servicio servicio) {
+        if (servicio.getSala() == null) {
+            servicio.setSala(new ArrayList<Sala>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            ArrayList<Sala> attachedSala = new ArrayList<Sala>();
+            for (Sala salaSalaToAttach : servicio.getSala()) {
+                salaSalaToAttach = em.getReference(salaSalaToAttach.getClass(), salaSalaToAttach.getId());
+                attachedSala.add(salaSalaToAttach);
+            }
+            servicio.setSala(attachedSala);
             em.persist(servicio);
+            for (Sala salaSala : servicio.getSala()) {
+                Servicio oldServicioOfSalaSala = salaSala.getServicio();
+                salaSala.setServicio(servicio);
+                salaSala = em.merge(salaSala);
+                if (oldServicioOfSalaSala != null) {
+                    oldServicioOfSalaSala.getSala().remove(salaSala);
+                    oldServicioOfSalaSala = em.merge(oldServicioOfSalaSala);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -52,7 +74,34 @@ public class ServicioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Servicio persistentServicio = em.find(Servicio.class, servicio.getId());
+            ArrayList<Sala> salaOld = persistentServicio.getSala();
+            ArrayList<Sala> salaNew = servicio.getSala();
+            ArrayList<Sala> attachedSalaNew = new ArrayList<Sala>();
+            for (Sala salaNewSalaToAttach : salaNew) {
+                salaNewSalaToAttach = em.getReference(salaNewSalaToAttach.getClass(), salaNewSalaToAttach.getId());
+                attachedSalaNew.add(salaNewSalaToAttach);
+            }
+            salaNew = attachedSalaNew;
+            servicio.setSala(salaNew);
             servicio = em.merge(servicio);
+            for (Sala salaOldSala : salaOld) {
+                if (!salaNew.contains(salaOldSala)) {
+                    salaOldSala.setServicio(null);
+                    salaOldSala = em.merge(salaOldSala);
+                }
+            }
+            for (Sala salaNewSala : salaNew) {
+                if (!salaOld.contains(salaNewSala)) {
+                    Servicio oldServicioOfSalaNewSala = salaNewSala.getServicio();
+                    salaNewSala.setServicio(servicio);
+                    salaNewSala = em.merge(salaNewSala);
+                    if (oldServicioOfSalaNewSala != null && !oldServicioOfSalaNewSala.equals(servicio)) {
+                        oldServicioOfSalaNewSala.getSala().remove(salaNewSala);
+                        oldServicioOfSalaNewSala = em.merge(oldServicioOfSalaNewSala);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -81,6 +130,11 @@ public class ServicioJpaController implements Serializable {
                 servicio.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The servicio with id " + id + " no longer exists.", enfe);
+            }
+            ArrayList<Sala> sala = servicio.getSala();
+            for (Sala salaSala : sala) {
+                salaSala.setServicio(null);
+                salaSala = em.merge(salaSala);
             }
             em.remove(servicio);
             em.getTransaction().commit();

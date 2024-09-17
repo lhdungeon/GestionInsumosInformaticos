@@ -4,7 +4,7 @@
  */
 package Persistence;
 
-import Logica.Insumos.Hardware;
+import Logica.Reparaciones.Tecnico;
 import Persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -18,16 +18,16 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Administrador
+ * @author Usuario
  */
-public class HardwareJpaController implements Serializable {
+public class TecnicoJpaController implements Serializable {
 
-    public HardwareJpaController(EntityManagerFactory emf) {
+    public TecnicoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     
-    public HardwareJpaController(){
-        emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
+    public TecnicoJpaController(){
+         emf=Persistence.createEntityManagerFactory("gestionInsumosPersistence");
     }
     
     private EntityManagerFactory emf = null;
@@ -36,12 +36,12 @@ public class HardwareJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Hardware hardware) {
+    public void create(Tecnico tecnico) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(hardware);
+            em.persist(tecnico);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,19 +50,19 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public void edit(Hardware hardware) throws NonexistentEntityException, Exception {
+    public void edit(Tecnico tecnico) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            hardware = em.merge(hardware);
+            tecnico = em.merge(tecnico);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = hardware.getId();
-                if (findHardware(id) == null) {
-                    throw new NonexistentEntityException("The hardware with id " + id + " no longer exists.");
+                int id = tecnico.getId();
+                if (findTecnico(id) == null) {
+                    throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -78,14 +78,14 @@ public class HardwareJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Hardware hardware;
+            Tecnico tecnico;
             try {
-                hardware = em.getReference(Hardware.class, id);
-                hardware.getId();
+                tecnico = em.getReference(Tecnico.class, id);
+                tecnico.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The hardware with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.", enfe);
             }
-            em.remove(hardware);
+            em.remove(tecnico);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -94,19 +94,19 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public List<Hardware> findHardwareEntities() {
-        return findHardwareEntities(true, -1, -1);
+    public List<Tecnico> findTecnicoEntities() {
+        return findTecnicoEntities(true, -1, -1);
     }
 
-    public List<Hardware> findHardwareEntities(int maxResults, int firstResult) {
-        return findHardwareEntities(false, maxResults, firstResult);
+    public List<Tecnico> findTecnicoEntities(int maxResults, int firstResult) {
+        return findTecnicoEntities(false, maxResults, firstResult);
     }
 
-    private List<Hardware> findHardwareEntities(boolean all, int maxResults, int firstResult) {
+    private List<Tecnico> findTecnicoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Hardware.class));
+            cq.select(cq.from(Tecnico.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -118,20 +118,20 @@ public class HardwareJpaController implements Serializable {
         }
     }
 
-    public Hardware findHardware(int id) {
+    public Tecnico findTecnico(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Hardware.class, id);
+            return em.find(Tecnico.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getHardwareCount() {
+    public int getTecnicoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Hardware> rt = cq.from(Hardware.class);
+            Root<Tecnico> rt = cq.from(Tecnico.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
